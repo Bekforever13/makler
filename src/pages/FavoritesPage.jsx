@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import Container from '../components/Container'
 import CardItem from '../components/CardItem'
-import { useGetAllApartmentsQuery } from '../store/index.api'
-import { useSelector } from 'react-redux'
+import { useGetUsersFavoritesQuery } from '../store/index.api'
 
-const HomePage = () => {
+const FavoritesPage = () => {
   const [page, setPage] = useState(1)
-  const { filters } = useSelector((s) => s.apartments)
-  const { data, isFetching, isSuccess } = useGetAllApartmentsQuery({ ...filters, page, limit: 20 })
+  const { data, isFetching, isSuccess } = useGetUsersFavoritesQuery()
   const totalPages = Math.ceil(data?.total / 20)
 
   const renderPageNumbers = () => {
@@ -140,4 +138,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default FavoritesPage

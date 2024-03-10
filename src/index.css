@@ -34,13 +34,23 @@
   align-items: center;
 }
 
+.mySwiper,
+.mySwiper2 {
+  user-select: none;
+}
+
 .mySwiper {
   height: 100px;
 }
 
-.mySwiper,
 .mySwiper2 {
-  user-select: none;
+  margin-bottom: 20px;
+}
+
+.mySwiper2 img {
+  width: auto;
+  max-width: 100%;
+  max-height: 50vh;
 }
 
 .mySwiper .swiper-slide {

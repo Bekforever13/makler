@@ -11,7 +11,7 @@ export const api = createApi({
     },
   }),
   refetchOnFocus: false,
-  tagTypes: ['auth', 'apartments', 'subcategories', 'categories'],
+  tagTypes: ['auth', 'apartments', 'subcategories', 'categories', 'favorites', 'apartment'],
   endpoints: (build) => ({
     // authorization queries =================================================================
     checkUser: build.query({
@@ -26,7 +26,7 @@ export const api = createApi({
         method: 'POST',
         body: body,
       }),
-      invalidatesTags: ['auth'],
+      invalidatesTags: ['auth', 'apartments', 'favorites'],
     }),
     sendCode: build.mutation({
       query: (body) => ({
@@ -47,6 +47,20 @@ export const api = createApi({
       query: ({ id }) => ({
         url: `/apartment/${id}`,
       }),
+      providesTags: ['apartment'],
+    }),
+    getUsersFavorites: build.query({
+      query: () => ({
+        url: '/favoriteapartment',
+      }),
+      providesTags: ['favorites'],
+    }),
+    addToFavorite: build.mutation({
+      query: (id) => ({
+        url: `/favoriteapartment/${id}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['apartments', 'favorites', 'apartment'],
     }),
     // subcategories queries =================================================================
     getSubcategories: build.query({
@@ -75,4 +89,6 @@ export const {
   useCheckUserQuery,
   useGetCategoriesQuery,
   useGetSubcategoriesQuery,
+  useAddToFavoriteMutation,
+  useGetUsersFavoritesQuery,
 } = api

@@ -1,14 +1,19 @@
+import useWindowSize from '../hooks/useWindowSize'
 import bannerImg from '../images/image/banner3.jpg'
 import Container from './Container'
 import FiterTabs from './FiterTabs'
 
 const HomeBanner = () => {
+  const { width } = useWindowSize()
+
   return (
     <div className="w-full relative">
       <img
         src={bannerImg}
-        className="object-cover brightness-75 min-w-full max-h-[360px] min-h-[360px]"
-        alt=""
+        className={`object-cover brightness-75 min-w-full ${
+          width < 1000 ? 'h-[500px]' : 'h-[360px]'
+        }`}
+        alt="bg image"
       />
       <div className="absolute top-0 left-0 right-0">
         <Container>

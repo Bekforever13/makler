@@ -5,6 +5,7 @@ import RoomSelectInput from './FilterInputs/RoomSelectInput'
 import { useGetCategoriesQuery } from '../store/index.api'
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilters } from '../store/slices/apartment.slice'
+import useWindowSize from '../hooks/useWindowSize'
 
 const FiterTabs = () => {
   const [priceFrom, setPriceFrom] = useState('')
@@ -14,6 +15,7 @@ const FiterTabs = () => {
   const dispatch = useDispatch()
   const { filters } = useSelector((s) => s.apartments)
   const { data, isSuccess } = useGetCategoriesQuery()
+  const { width } = useWindowSize()
 
   const handleClearFilters = () => {
     dispatch(setFilters({ category_id: filters.category_id }))
@@ -75,11 +77,9 @@ const FiterTabs = () => {
             <Tab
               key={value}
               value={value}
-              className={
-                activeTab === value
-                  ? 'text-gray-900 text-[12px] font-semibold'
-                  : 'text-white text-[12px] font-semibold'
-              }
+              className={`text-[12px] font-semibold ${
+                activeTab === value ? 'text-gray-900' : 'text-white'
+              }`}
               onClick={() => {
                 setActiveTab(value)
                 dispatch(setFilters({ category_id: value }))
@@ -89,11 +89,15 @@ const FiterTabs = () => {
             </Tab>
           ))}
         </TabsHeader>
-        <TabsBody className={'bg-white rounded-sm rounded-tl-none overflow-visible'}>
+        <TabsBody className="bg-white rounded-sm rounded-tl-none overflow-visible">
           {categories?.map(({ value }) => {
             return (
               <TabPanel key={value} value={value} className="overflow-visible">
-                <div className="flex justify-between items-center gap-2">
+                <div
+                  className={`flex justify-between items-center gap-2 ${
+                    width < 1000 && 'flex-wrap'
+                  }`}
+                >
                   <SelectInput />
                   <RoomSelectInput />
                   <Input

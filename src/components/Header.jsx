@@ -6,14 +6,16 @@ import { BiListPlus } from 'react-icons/bi'
 import { useState } from 'react'
 import Container from './Container'
 import logo from '../images/logo/logo.svg'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Button, Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react'
 import LoginRegister from './LoginRegister'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsAuthenticated } from '../store/slices/auth.slice'
+import { api } from '../store/index.api'
 
 const Header = () => {
   const [open, setOpen] = useState(false)
+  const { pathname } = useLocation()
   const { isAuthenticated } = useSelector((s) => s.auth)
   const dispatch = useDispatch()
 
@@ -21,6 +23,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem('makler_token')
     dispatch(setIsAuthenticated(false))
+    api.endpoints.getAllApartments.refetch()
   }
 
   return (
@@ -37,14 +40,41 @@ const Header = () => {
           </Link>
           <div>
             <ul className="flex justify-center items-center gap-4 font-semibold sm:hidden  lg:flex">
-              <li className="text-gray-900 text-[14px] hover:text-blue-100">
+              <li
+                className={
+                  pathname === '/'
+                    ? 'text-blue-100 text-sm'
+                    : 'text-gray-900 text-sm hover:text-blue-100'
+                }
+              >
                 <Link to={'/'}>Bas bet</Link>
               </li>
-              <li className="text-gray-900 text-[14px] hover:text-blue-100">
-                <Link to={'/arenda'}>Ijara</Link>
+              <li
+                className={
+                  pathname === '/rent'
+                    ? 'text-blue-100 text-sm'
+                    : 'text-gray-900 text-sm hover:text-blue-100'
+                }
+              >
+                <Link to={'/rent'}>Ijara</Link>
               </li>
-              <li className="text-gray-900 text-[14px] hover:text-blue-100">
-                <Link to={'/satiw'}>Satiw</Link>
+              <li
+                className={
+                  pathname === '/sale'
+                    ? 'text-blue-100 text-sm'
+                    : 'text-gray-900 text-sm hover:text-blue-100'
+                }
+              >
+                <Link to={'/sale'}>Satiw</Link>
+              </li>
+              <li
+                className={
+                  pathname === '/favorites'
+                    ? 'text-blue-100 text-sm'
+                    : 'text-gray-900 text-sm hover:text-blue-100'
+                }
+              >
+                <Link to={'/favorites'}>Saylandilar</Link>
               </li>
             </ul>
           </div>
@@ -86,7 +116,7 @@ const Header = () => {
                 </MenuList>
               </Menu>
             </div>
-            <div className="sm:hidden md:flex flex justify-center items-center gap-4 text-gray-800 text-[20px]">
+            {/* <div className="sm:hidden md:flex flex justify-center items-center gap-4 text-gray-800 text-[20px]">
               <i className="hover:scale-110 cursor-pointer">
                 <BiListPlus />
               </i>
@@ -99,7 +129,7 @@ const Header = () => {
               <i className="hover:scale-110 cursor-pointer">
                 <MdNotificationsNone />
               </i>
-            </div>
+            </div> */}
             <div className="flex justify-center items-center gap-1">
               <Button
                 className="normal-case rounded-[5px] px-6 text-[12px] font-medium sm:hidden md:flex"

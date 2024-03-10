@@ -3,20 +3,18 @@ import { AiFillHeart } from 'react-icons/ai'
 // import { AiTwotoneHeart } from "react-icons/ai";
 import { AiOutlineHeart } from 'react-icons/ai'
 import { BsHouseDoor } from 'react-icons/bs'
-// import { CiLocationOn } from "react-icons/ci";
 import { Card, CardBody, CardHeader, IconButton, Typography } from '@material-tailwind/react'
-import { useState } from 'react'
 import { formatPrice } from '../utils/shared'
 import { useNavigate } from 'react-router-dom/dist'
-// import CardItemCarusel from "./CardItemCarusel";
+import { useAddToFavoriteMutation } from '../store/index.api'
 
 const CardItem = ({ item }) => {
-  const [active, setActive] = useState(false)
   const navigate = useNavigate()
+  const [addToFavorite] = useAddToFavoriteMutation()
 
-  const handleClick = () => {
-    navigate(`/info/${item.id}`)
-  }
+  const handleClick = () => navigate(`/info/${item.id}`)
+
+  const handleClickFavorite = (id) => addToFavorite(id)
 
   return (
     <Card className="max-w-[24rem] overflow-hidden rounded-md border-[1px] cursor-pointer group">
@@ -34,13 +32,13 @@ const CardItem = ({ item }) => {
         />
         <IconButton
           size="sm"
-          variant={active ? 'filled' : 'outlined'}
+          variant="outlined"
           color="white"
-          onClick={() => setActive((prev) => !prev)}
+          onClick={() => handleClickFavorite(item.id)}
           className="!absolute top-3 right-3 rounded-full text-[20px] bg-black bg-opacity-30"
         >
-          {active ? (
-            <AiFillHeart className="text-red-500" />
+          {item.favorite === 1 ? (
+            <AiFillHeart color='red' />
           ) : (
             <AiOutlineHeart className="text-white" />
           )}
