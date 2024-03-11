@@ -187,9 +187,14 @@ const InfoPage = () => {
             </li>
             <li className="flex items-center justify-between border-b-[1px]">
               <b>Qosimsha: </b>{' '}
-              {apartmentData?.data.tags.map((el) => (
-                <span key={el.id}>{el.name}</span>
-              ))}
+              <div className="flex items-center gap-2">
+                {apartmentData?.data.tags.map((el, i) => (
+                  <span key={el.id}>
+                    {el.name}
+                    {apartmentData?.data.tags.length !== i + 1 && ','}
+                  </span>
+                ))}
+              </div>
             </li>
             <li className="flex items-center justify-between border-b-[1px]">
               <b>Bahasi:</b> <b>{formatPrice(apartmentData?.data?.price)} sum</b>

@@ -53,6 +53,15 @@ const Header = () => {
               </li>
               <li
                 className={
+                  pathname === '/map'
+                    ? 'text-blue-100 text-sm'
+                    : 'text-gray-900 text-sm hover:text-blue-100'
+                }
+              >
+                <Link to={'/map'}>Karta</Link>
+              </li>
+              <li
+                className={
                   pathname === '/rent'
                     ? 'text-blue-100 text-sm'
                     : 'text-gray-900 text-sm hover:text-blue-100'
@@ -102,6 +111,9 @@ const Header = () => {
                 <MenuList className="p-2">
                   <Link to={'/'}>
                     <MenuItem>Bas bet</MenuItem>
+                  </Link>
+                  <Link to={'/map'}>
+                    <MenuItem>Karta</MenuItem>
                   </Link>
                   <Link to={'/rent'}>
                     <MenuItem>Ijara</MenuItem>

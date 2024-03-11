@@ -79,6 +79,11 @@ export const api = createApi({
       }),
       invalidatesTags: ['apartments'],
     }),
+    getAllCoordinates: build.query({
+      query: () => ({
+        url: '/apartments/coordinates',
+      }),
+    }),
     // regions queries ====================================================================
     getAllRegions: build.query({
       query: () => ({
@@ -125,4 +130,5 @@ export const {
   useGetAllRegionsQuery,
   useGetAllTagsQuery,
   useCreateNewApartmentMutation,
+  useGetAllCoordinatesQuery,
 } = api

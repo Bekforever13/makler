@@ -14,6 +14,7 @@ import SignUp from './pages/SignUp'
 // import KavartiraPage from './pages/KavartiraPage'
 import InfoPage from './pages/InfoPage'
 import FavoritesPage from './pages/FavoritesPage'
+import MapPage from './pages/MapPage'
 
 const App = () => {
   const router = createBrowserRouter(
@@ -24,9 +25,7 @@ const App = () => {
           <Route path="/rent" element={<ArendaPage />} />
           <Route path="/sale" element={<SatiwPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
-          {/* <Route path="jer_jay" element={<JerJayPage />} />
-          <Route path="imarat" element={<ImaratPage />} />
-          <Route path="kvartira" element={<KavartiraPage />} /> */}
+          <Route path="/map" element={<MapPage />} />
           <Route path="/info/:id" element={<InfoPage />} />
         </Route>
         <Route path="/signup" element={<SignUp />} />
