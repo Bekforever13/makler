@@ -11,7 +11,16 @@ export const api = createApi({
     },
   }),
   refetchOnFocus: false,
-  tagTypes: ['auth', 'apartments', 'subcategories', 'categories', 'favorites', 'apartment'],
+  tagTypes: [
+    'auth',
+    'apartments',
+    'subcategories',
+    'categories',
+    'favorites',
+    'apartment',
+    'regions',
+    'tags',
+  ],
   endpoints: (build) => ({
     // authorization queries =================================================================
     checkUser: build.query({
@@ -62,6 +71,28 @@ export const api = createApi({
       }),
       invalidatesTags: ['apartments', 'favorites', 'apartment'],
     }),
+    createNewApartment: build.mutation({
+      query: (body) => ({
+        url: '/apartment',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['apartments'],
+    }),
+    // regions queries ====================================================================
+    getAllRegions: build.query({
+      query: () => ({
+        url: '/region',
+      }),
+      providesTags: ['regions'],
+    }),
+    // tags queries ====================================================================
+    getAllTags: build.query({
+      query: () => ({
+        url: '/tag',
+      }),
+      providesTags: ['tags'],
+    }),
     // subcategories queries =================================================================
     getSubcategories: build.query({
       query: (body) => ({
@@ -91,4 +122,7 @@ export const {
   useGetSubcategoriesQuery,
   useAddToFavoriteMutation,
   useGetUsersFavoritesQuery,
+  useGetAllRegionsQuery,
+  useGetAllTagsQuery,
+  useCreateNewApartmentMutation,
 } = api

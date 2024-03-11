@@ -12,9 +12,11 @@ import LoginRegister from './LoginRegister'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsAuthenticated } from '../store/slices/auth.slice'
 import { api } from '../store/index.api'
+import UserCreateModal from './UserCreateModal'
 
 const Header = () => {
   const [open, setOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { pathname } = useLocation()
   const { isAuthenticated } = useSelector((s) => s.auth)
   const dispatch = useDispatch()
@@ -98,44 +100,28 @@ const Header = () => {
                   </Button>
                 </MenuHandler>
                 <MenuList className="p-2">
-                  <Link to={'/arenda'}>
-                    <MenuItem>Arenda</MenuItem>
+                  <Link to={'/'}>
+                    <MenuItem>Bas bet</MenuItem>
                   </Link>
-                  <Link to={'/satiw'}>
+                  <Link to={'/rent'}>
+                    <MenuItem>Ijara</MenuItem>
+                  </Link>
+                  <Link to={'/sale'}>
                     <MenuItem>Satiw</MenuItem>
                   </Link>
-                  <Link to={'/jer_jay'}>
-                    <MenuItem>Jer jay</MenuItem>
-                  </Link>
-                  <Link to={'/imarat'}>
-                    <MenuItem>Imarat</MenuItem>
-                  </Link>
-                  <Link to={'/kvartira'}>
-                    <MenuItem>Kvartira</MenuItem>
+                  <Link to={'/favorites'}>
+                    <MenuItem>Saylandilar</MenuItem>
                   </Link>
                 </MenuList>
               </Menu>
             </div>
-            {/* <div className="sm:hidden md:flex flex justify-center items-center gap-4 text-gray-800 text-[20px]">
-              <i className="hover:scale-110 cursor-pointer">
-                <BiListPlus />
-              </i>
-              <i className="hover:scale-110 cursor-pointer">
-                <AiOutlineMessage />
-              </i>
-              <i className="hover:scale-110 cursor-pointer">
-                <AiOutlineHeart />
-              </i>
-              <i className="hover:scale-110 cursor-pointer">
-                <MdNotificationsNone />
-              </i>
-            </div> */}
             <div className="flex justify-center items-center gap-1">
               <Button
                 className="normal-case rounded-[5px] px-6 text-[12px] font-medium sm:hidden md:flex"
                 color="blue"
                 variant="gradient"
                 size="sm"
+                onClick={() => setIsModalOpen((p) => !p)}
               >
                 + Biypul jayg'astiriw
               </Button>
@@ -165,6 +151,7 @@ const Header = () => {
         </header>
       </Container>
       <LoginRegister open={open} handleOpen={handleOpen} />
+      <UserCreateModal open={isModalOpen} setIsOpen={setIsModalOpen} />
     </div>
   )
 }

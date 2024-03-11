@@ -3,7 +3,7 @@ import { useAddToFavoriteMutation, useGetOneApartmentsQuery } from '../store/ind
 import Container from '../components/Container'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { formatPhone, formatPrice } from '../utils/shared'
-import { FreeMode, Navigation, Thumbs, Zoom } from 'swiper/modules'
+import { FreeMode, Navigation, Thumbs } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
@@ -110,7 +110,7 @@ const InfoPage = () => {
         </div>
       </div>
       <div className="flex flex-col gap-20 py-20">
-        <div className="">
+        <div>
           <Swiper
             modules={[Navigation, Thumbs, FreeMode]}
             thumbs={{ swiper: thumbsSwiper }}
@@ -138,7 +138,7 @@ const InfoPage = () => {
             {apartmentData?.data?.images?.map((img) => {
               return (
                 <SwiperSlide key={img.id}>
-                  <img src={img.url} alt="img" />
+                  <img src={img.url} className="cursor-pointer" alt="img" />
                 </SwiperSlide>
               )
             })}

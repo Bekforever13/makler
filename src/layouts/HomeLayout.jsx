@@ -1,6 +1,5 @@
 import Header from '../components/Header'
 import { Outlet, useLocation } from 'react-router-dom'
-import IconFooter from '../components/IconFooter'
 import HomeBanner from '../components/HomeBanner'
 import Footer from '../components/Footer'
 import { useEffect } from 'react'
@@ -26,10 +25,7 @@ const HomeLayout = () => {
         {pathname === '/' && <HomeBanner />}
         <Outlet />
       </div>
-      <div>
-        <Footer />
-        <IconFooter />
-      </div>
+      <Footer />
     </div>
   )
 }
