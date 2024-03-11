@@ -27,16 +27,24 @@ const CreatingForm = ({ setIsOpen }) => {
   const [regionsOptions, setRegionsOptions] = useState()
   const [subcategoriesOptions, setSubcategoriesOptions] = useState()
   const [categoriesOptions, setCategoriesOptions] = useState()
-  const [createApartment] = useCreateNewApartmentMutation()
+  const [createApartment, { isSuccess }] = useCreateNewApartmentMutation()
 
   const onSubmit = (data) => {
     createApartment({
       ...data,
-      tags: { ids: data.tags.map((el) => el.value), tag_names: data.tags.map((el) => el.label) },
+      tags: { tag_names: data.tags.tag_names.split(' '), ids: data.tags.ids.map((el) => el.value) },
+      category_id: data.category_id[0].value,
+      region_id: data.region_id[0].value,
+      subcategory_id: data.subcategory_id[0].value,
     })
-    setIsOpen(false)
-    reset()
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      setIsOpen(false)
+      reset()
+    }
+  }, [isSuccess])
 
   useEffect(() => {
     if (tagsData?.data) {
@@ -79,7 +87,7 @@ const CreatingForm = ({ setIsOpen }) => {
         </div>
         <div className="flex flex-col items-start gap-5 w-full h-[600px] pr-4 overflow-y-scroll">
           <label className="flex items-center justify-between w-full">
-            Санат:
+            Категория:
             <Controller
               name="category_id"
               control={control}
@@ -88,26 +96,15 @@ const CreatingForm = ({ setIsOpen }) => {
               render={({ field }) => (
                 <Select
                   {...field}
-                  isMulti
                   options={categoriesOptions}
                   className="basic-multi-select border py-1 px-2 rounded-md w-1/2"
                   classNamePrefix="select"
                 />
               )}
             />
-            {/* <select
-              className="border py-1 px-2 rounded-md w-1/2"
-              {...register('category_id', { required: true })}
-            >
-              {categoriesData?.data?.map((el) => (
-                <option key={el.id} value={el.id}>
-                  {el.name}
-                </option>
-              ))}
-            </select> */}
           </label>
           <label className="flex items-center justify-between w-full">
-            Санатша:
+            Подкатегория:
             <Controller
               name="subcategory_id"
               control={control}
@@ -116,26 +113,15 @@ const CreatingForm = ({ setIsOpen }) => {
               render={({ field }) => (
                 <Select
                   {...field}
-                  isMulti
                   options={subcategoriesOptions}
                   className="basic-multi-select border py-1 px-2 rounded-md w-1/2"
                   classNamePrefix="select"
                 />
               )}
             />
-            {/* <select
-              className="border py-1 px-2 rounded-md w-1/2"
-              {...register('subcategory_id', { required: true })}
-            >
-              {subcategoriesData?.data?.map((el) => (
-                <option key={el.id} value={el.id}>
-                  {el.name}
-                </option>
-              ))}
-            </select> */}
           </label>
           <label className="flex items-center justify-between w-full">
-            Аймақ:
+            Регион:
             <Controller
               name="region_id"
               control={control}
@@ -144,28 +130,17 @@ const CreatingForm = ({ setIsOpen }) => {
               render={({ field }) => (
                 <Select
                   {...field}
-                  isMulti
                   options={regionsOptions}
                   className="basic-multi-select border py-1 px-2 rounded-md w-1/2"
                   classNamePrefix="select"
                 />
               )}
             />
-            {/* <select
-              className="border py-1 px-2 rounded-md w-1/2"
-              {...register('region_id', { required: true })}
-            >
-              {regionsData?.data?.map((el) => (
-                <option key={el.id} value={el.id}>
-                  {el.name}
-                </option>
-              ))}
-            </select> */}
           </label>
           <label className="flex items-center justify-between w-full">
-            Тегтер:
+            Выберите Теги:
             <Controller
-              name="tags"
+              name="tags.ids"
               control={control}
               defaultValue=""
               rules={{ required: true }}
@@ -181,7 +156,16 @@ const CreatingForm = ({ setIsOpen }) => {
             />
           </label>
           <label className="flex items-center justify-between w-full">
-            Айналу:
+            Напишите вручную теги:
+            <input
+              className="border py-1 px-2 rounded-md w-1/2"
+              type="text"
+              placeholder="tag names"
+              {...register('tags.tag_names', { required: true })}
+            />
+          </label>
+          <label className="flex items-center justify-between w-full">
+            Адрес:
             <input
               className="border py-1 px-2 rounded-md w-1/2"
               type="text"
@@ -190,7 +174,7 @@ const CreatingForm = ({ setIsOpen }) => {
             />
           </label>
           <label className="flex items-center justify-between w-full">
-            Бахасы:
+            Цена:
             <div className="w-1/2 flex items-center gap-1">
               <input
                 className="border py-1 px-2 rounded-md flex-grow"
@@ -198,11 +182,11 @@ const CreatingForm = ({ setIsOpen }) => {
                 placeholder="price"
                 {...register('price', { required: true })}
               />
-              sum
+              сум
             </div>
           </label>
           <label className="flex items-center justify-between w-full">
-            Бөлмелер саны:
+            Количество комнат:
             <input
               className="border py-1 px-2 rounded-md w-1/2"
               type="number"
@@ -211,7 +195,7 @@ const CreatingForm = ({ setIsOpen }) => {
             />
           </label>
           <label className="flex items-center justify-between w-full">
-            Жалпы алаңы:
+            Общая площадь:
             <div className="w-1/2 flex items-center gap-1">
               <input
                 className="border py-1 px-2 rounded-md flex-grow"
@@ -223,7 +207,7 @@ const CreatingForm = ({ setIsOpen }) => {
             </div>
           </label>
           <label className="flex items-center justify-between w-full">
-            Еден:
+            Этаж:
             <input
               className="border py-1 px-2 rounded-md w-1/2"
               type="number"
@@ -232,7 +216,7 @@ const CreatingForm = ({ setIsOpen }) => {
             />
           </label>
           <label className="flex items-center justify-between w-full">
-            Ғимараттағы еден:
+            Всего этажей в доме:
             <input
               className="border py-1 px-2 rounded-md w-1/2"
               type="number"
@@ -241,7 +225,7 @@ const CreatingForm = ({ setIsOpen }) => {
             />
           </label>
           <label className="flex items-center justify-between w-full">
-            Түсіндірме:
+            Описание:
             <textarea
               className="border py-1 px-2 rounded-md w-1/2 min-h-[120px] resize-none"
               type="text"
@@ -250,7 +234,7 @@ const CreatingForm = ({ setIsOpen }) => {
             />
           </label>
           <label className="flex items-center justify-between w-full">
-            Суреттер:
+            Изображения:
             <input
               className="border py-1 px-2 rounded-md w-1/2"
               type="file"
