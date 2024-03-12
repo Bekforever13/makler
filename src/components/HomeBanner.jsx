@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import useWindowSize from '../hooks/useWindowSize'
 import bannerImg from '../images/image/banner3.jpg'
 import Container from './Container'
@@ -5,6 +6,7 @@ import FiterTabs from './FiterTabs'
 
 const HomeBanner = () => {
   const { width } = useWindowSize()
+  const { t } = useTranslation()
 
   return (
     <div className="w-full relative">
@@ -18,7 +20,7 @@ const HomeBanner = () => {
       <div className="absolute top-0 left-0 right-0">
         <Container>
           <h1 className="text-[25px] drop-shadow-lg text-white font-semibold my-6">
-            Jurip izlegenshe jatip izle
+            {t('homeBannerTitle')}
           </h1>
           <FiterTabs />
         </Container>

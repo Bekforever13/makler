@@ -6,16 +6,19 @@ import { useGetCategoriesQuery } from '../store/index.api'
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilters } from '../store/slices/apartment.slice'
 import useWindowSize from '../hooks/useWindowSize'
+import { useTranslation } from 'react-i18next'
 
 const FiterTabs = () => {
+  const lang = localStorage.getItem('makler_lang') || 'ru'
   const [priceFrom, setPriceFrom] = useState('')
   const [priceTo, setPriceTo] = useState('')
   const [categories, setCategories] = useState([])
   const [activeTab, setActiveTab] = useState(1)
   const dispatch = useDispatch()
   const { filters } = useSelector((s) => s.apartments)
-  const { data, isSuccess } = useGetCategoriesQuery()
+  const { data, isSuccess } = useGetCategoriesQuery({ lan: lang })
   const { width } = useWindowSize()
+  const { t } = useTranslation()
 
   const handleClearFilters = () => {
     dispatch(setFilters({ category_id: filters.category_id }))
@@ -68,7 +71,7 @@ const FiterTabs = () => {
     <div>
       <Tabs value={activeTab} className={'overflow-visible'}>
         <TabsHeader
-          className="w-[50%] p-0 bg-black rounded-none rounded-t-md"
+          className="w-[50%] p-0 bg-black rounded-none rounded-t-md z-10"
           indicatorProps={{
             className: 'shadow-none rounded-none rounded-t-md bg-gray-100 h-[27px]',
           }}
@@ -106,7 +109,7 @@ const FiterTabs = () => {
                       setPriceFrom(e.target.value)
                     }}
                     value={priceFrom}
-                    label="Цена Oт"
+                    label={t('price_from')}
                     type="number"
                   />
                   <Input
@@ -115,7 +118,7 @@ const FiterTabs = () => {
                       setPriceTo(e.target.value)
                     }}
                     value={priceTo}
-                    label="Цена До"
+                    label={t('price_to')}
                     type="number"
                   />
                 </div>
@@ -135,7 +138,7 @@ const FiterTabs = () => {
           color="blue"
           className="rounded-sm"
         >
-          Filterdi oshiriw
+          {t('clearFilters')}
         </Button>
       </div>
     </div>

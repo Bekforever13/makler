@@ -1,24 +1,33 @@
 import { GiHamburgerMenu } from 'react-icons/gi'
-import { MdNotificationsNone } from 'react-icons/md'
-import { AiOutlineHeart } from 'react-icons/ai'
-import { AiOutlineMessage } from 'react-icons/ai'
-import { BiListPlus } from 'react-icons/bi'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Container from './Container'
 import logo from '../images/logo/logo.svg'
 import { Link, useLocation } from 'react-router-dom'
-import { Button, Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react'
+import {
+  Button,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+  Select,
+  Option,
+} from '@material-tailwind/react'
 import LoginRegister from './LoginRegister'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsAuthenticated } from '../store/slices/auth.slice'
 import { api } from '../store/index.api'
 import UserCreateModal from './UserCreateModal'
+import { useTranslation } from 'react-i18next'
 
 const Header = () => {
+  const { t, i18n } = useTranslation()
+  const localLang = localStorage.getItem('makler_lang')
   const [open, setOpen] = useState(false)
+  const [lang, setLang] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isOpenProfile, setIsOpenProfile] = useState(false)
   const { pathname } = useLocation()
-  const { isAuthenticated } = useSelector((s) => s.auth)
+  const { isAuthenticated, user } = useSelector((s) => s.auth)
   const dispatch = useDispatch()
 
   const handleOpen = () => setOpen((cur) => !cur)
@@ -28,69 +37,82 @@ const Header = () => {
     api.endpoints.getAllApartments.refetch()
   }
 
+  const handleSelectLang = (e) => {
+    i18n.changeLanguage(e)
+    setLang(e)
+    localStorage.setItem('makler_lang', e)
+  }
+
+  useEffect(() => {
+    if (localLang) {
+      setLang(localLang)
+    }
+  }, [])
+
   return (
     <div className="w-full shadow-md bg-white sticky top-0 z-20">
       <Container>
         <header className="flex justify-between items-center gap-1 h-[60px]">
+          {/* LOGO */}
           <Link to={'/'}>
             <div className="flex justify-end items-end gap-[2px] cursor-pointer">
               <img src={logo} className="max-h-[25px] max-w-[25px]" />
               <span className="text-[15px] font-bold text-blue-100 uppercase italic min-w-max">
-                U'Y JAY
+                Makler
               </span>
             </div>
           </Link>
-          <div>
-            <ul className="flex justify-center items-center gap-4 font-semibold sm:hidden  lg:flex">
-              <li
-                className={
-                  pathname === '/'
-                    ? 'text-blue-100 text-sm'
-                    : 'text-gray-900 text-sm hover:text-blue-100'
-                }
-              >
-                <Link to={'/'}>Bas bet</Link>
-              </li>
-              <li
-                className={
-                  pathname === '/map'
-                    ? 'text-blue-100 text-sm'
-                    : 'text-gray-900 text-sm hover:text-blue-100'
-                }
-              >
-                <Link to={'/map'}>Karta</Link>
-              </li>
-              <li
-                className={
-                  pathname === '/rent'
-                    ? 'text-blue-100 text-sm'
-                    : 'text-gray-900 text-sm hover:text-blue-100'
-                }
-              >
-                <Link to={'/rent'}>Ijara</Link>
-              </li>
-              <li
-                className={
-                  pathname === '/sale'
-                    ? 'text-blue-100 text-sm'
-                    : 'text-gray-900 text-sm hover:text-blue-100'
-                }
-              >
-                <Link to={'/sale'}>Satiw</Link>
-              </li>
-              <li
-                className={
-                  pathname === '/favorites'
-                    ? 'text-blue-100 text-sm'
-                    : 'text-gray-900 text-sm hover:text-blue-100'
-                }
-              >
-                <Link to={'/favorites'}>Saylandilar</Link>
-              </li>
-            </ul>
-          </div>
+          {/* NAVIGATION */}
+          <ul className="flex justify-center items-center gap-4 font-semibold sm:hidden lg:flex">
+            <li
+              className={
+                pathname === '/'
+                  ? 'text-blue-100 text-sm'
+                  : 'text-gray-900 text-sm hover:text-blue-100'
+              }
+            >
+              <Link to={'/'}>{t('home')}</Link>
+            </li>
+            <li
+              className={
+                pathname === '/map'
+                  ? 'text-blue-100 text-sm'
+                  : 'text-gray-900 text-sm hover:text-blue-100'
+              }
+            >
+              <Link to={'/map'}>{t('map')}</Link>
+            </li>
+            <li
+              className={
+                pathname === '/rent'
+                  ? 'text-blue-100 text-sm'
+                  : 'text-gray-900 text-sm hover:text-blue-100'
+              }
+            >
+              <Link to={'/rent'}>{t('Аренда')}</Link>
+            </li>
+            <li
+              className={
+                pathname === '/sale'
+                  ? 'text-blue-100 text-sm'
+                  : 'text-gray-900 text-sm hover:text-blue-100'
+              }
+            >
+              <Link to={'/sale'}>{t('sale')}</Link>
+            </li>
+            <li
+              className={
+                pathname === '/favorites'
+                  ? 'text-blue-100 text-sm'
+                  : 'text-gray-900 text-sm hover:text-blue-100'
+              }
+            >
+              <Link to={'/favorites'}>{t('favorites')}</Link>
+            </li>
+          </ul>
+          {/* BUTTONS */}
           <div className="flex justify-center items-center gap-4">
-            <div className="sm:block lg:hidden flex justify-center items-center">
+            <div className="sm:hidden md:block lg:hidden flex justify-center items-center">
               <Menu
                 animate={{
                   mount: { y: 0 },
@@ -127,15 +149,22 @@ const Header = () => {
                 </MenuList>
               </Menu>
             </div>
-            <div className="flex justify-center items-center gap-1">
+            <div className="flex items-center gap-2">
+              <div className="md:block sm:hidden">
+                <Select value={lang} label={t('language')} onChange={(e) => handleSelectLang(e)}>
+                  <Option value="qr">Qaraqalpaqsha</Option>
+                  <Option value="kr">Каракалпакша</Option>
+                  <Option value="ru">Русский</Option>
+                </Select>
+              </div>
               <Button
-                className="normal-case rounded-[5px] px-6 text-[12px] font-medium sm:hidden md:flex"
+                className="normal-case rounded-[5px] px-6 text-[12px] font-medium sm:block md:flex w-full whitespace-nowrap"
                 color="blue"
                 variant="gradient"
                 size="sm"
                 onClick={() => setIsModalOpen((p) => !p)}
               >
-                + Biypul jayg'astiriw
+                {t('createNewApartment')}
               </Button>
               {!isAuthenticated ? (
                 <Button
@@ -145,18 +174,56 @@ const Header = () => {
                   color="light-blue"
                   size="sm"
                 >
-                  Kiriw
+                  {t('login')}
                 </Button>
               ) : (
-                <Button
-                  onClick={handleLogout}
-                  className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-[12px] font-semibold"
-                  variant="gradient"
-                  color="light-blue"
-                  size="sm"
-                >
-                  Shigiw
-                </Button>
+                <div className="relative">
+                  <Button
+                    onClick={() => setIsOpenProfile((s) => !s)}
+                    className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-[12px] font-semibold"
+                    variant="gradient"
+                    color="light-blue"
+                    size="sm"
+                  >
+                    {t('profile')}
+                  </Button>
+                  {isOpenProfile && (
+                    <div className="absolute bg-cyan-600	text-black font-semibold mt-3 z-[999] p-4 gap-5 right-0 w-80 flex flex-col shadow-lg">
+                      <span className="flex items-center justify-between w-full">
+                        {t('phone')}: <span>+{user.phone}</span>
+                      </span>
+                      <span className="flex items-center justify-between w-full">
+                        {t('role')}: <span>{user.role === 'admin' ? 'Админ' : user.role}</span>
+                      </span>
+                      <div className="md:hidden sm:block">
+                        <Select
+                          value={lang}
+                          label={t('language')}
+                          onChange={(e) => handleSelectLang(e)}
+                        >
+                          <Option style={{ fontWeight: 700, color: '#000' }} value="qr">
+                            Qaraqalpaqsha
+                          </Option>
+                          <Option style={{ fontWeight: 700, color: '#000' }} value="kr">
+                            Каракалпакша
+                          </Option>
+                          <Option style={{ fontWeight: 700, color: '#000' }} value="ru">
+                            Русский
+                          </Option>
+                        </Select>
+                      </div>
+                      <Button
+                        onClick={handleLogout}
+                        className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-[12px] font-semibold"
+                        variant="gradient"
+                        color="light-blue"
+                        size="sm"
+                      >
+                        {t('logout')}
+                      </Button>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           </div>

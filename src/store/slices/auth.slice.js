@@ -4,6 +4,7 @@ const initialState = {
   isAuthenticated: false,
   token: '',
   phoneNumber: '',
+  user: null,
 }
 
 const AuthSlice = createSlice({
@@ -26,9 +27,18 @@ const AuthSlice = createSlice({
     setPhoneNumber(state, { payload }) {
       state.phoneNumber = payload
     },
+    setUser(state, { payload }) {
+      state.user = payload
+    },
   },
 })
-export const { removeToken, setCurrentUserRole, setIsAuthenticated, setToken, setPhoneNumber } =
-  AuthSlice.actions
+export const {
+  removeToken,
+  setCurrentUserRole,
+  setIsAuthenticated,
+  setToken,
+  setPhoneNumber,
+  setUser,
+} = AuthSlice.actions
 
 export default AuthSlice.reducer

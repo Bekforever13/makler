@@ -3,10 +3,12 @@ import { Option, Select } from '@material-tailwind/react'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilters } from '../../store/slices/apartment.slice'
+import { useTranslation } from 'react-i18next'
 
 const RoomSelectInput = () => {
   const [value, setValue] = useState()
   const dispatch = useDispatch()
+  const {t} = useTranslation()
   const { filters } = useSelector((s) => s.apartments)
 
   const handleSelect = (val) => {
@@ -21,13 +23,13 @@ const RoomSelectInput = () => {
   }, [filters])
 
   return (
-    <Select label="Bo'lmeler" value={value} onChange={handleSelect}>
-      <Option value="1">1 bo'lme</Option>
-      <Option value="2">2 bo'lme</Option>
-      <Option value="3">3 bo'lme</Option>
-      <Option value="4">4 bo'lme</Option>
-      <Option value="5">5 bo'lme</Option>
-      <Option value="6">6+ bo'lme</Option>
+    <Select label={t('rooms')} value={value} onChange={handleSelect}>
+      <Option value="1">1 {t('room')}</Option>
+      <Option value="2">2 {t('rooms')}</Option>
+      <Option value="3">3 {t('rooms')}</Option>
+      <Option value="4">4 {t('rooms')}</Option>
+      <Option value="5">5 {t('rooms')}</Option>
+      <Option value="6">6+ {t('rooms')}</Option>
     </Select>
   )
 }

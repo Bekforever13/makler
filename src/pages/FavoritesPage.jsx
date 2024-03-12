@@ -2,11 +2,14 @@ import { useState } from 'react'
 import Container from '../components/Container'
 import CardItem from '../components/CardItem'
 import { useGetUsersFavoritesQuery } from '../store/index.api'
+import { useTranslation } from 'react-i18next'
 
 const FavoritesPage = () => {
   const [page, setPage] = useState(1)
-  const { data, isFetching, isSuccess } = useGetUsersFavoritesQuery()
+  const lang = localStorage.getItem('makler_lang') || 'ru'
+  const { data, isFetching, isSuccess } = useGetUsersFavoritesQuery({ lan: lang })
   const totalPages = Math.ceil(data?.total / 20)
+  const { t } = useTranslation()
 
   const renderPageNumbers = () => {
     const pageNumbers = []
@@ -43,7 +46,7 @@ const FavoritesPage = () => {
   return (
     <div className="py-4">
       <Container>
-        <h1 className="text-[20px] text-gray-800 font-semibold my-3">Siz izlegen u'yler</h1>
+        <h1 className="text-[20px] text-gray-800 font-semibold my-3">{t('yourFavorites')}</h1>
         <div className="flex flex-col items-center gap-10">
           {/* loading spinner */}
           {isFetching && (
@@ -105,7 +108,7 @@ const FavoritesPage = () => {
                   d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
                 ></path>
               </svg>
-              Artqa
+              {t('back')}
             </button>
             <div className="flex items-center gap-2">{renderPageNumbers()}</div>
             <button
@@ -114,7 +117,7 @@ const FavoritesPage = () => {
               className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="button"
             >
-              Alg'a
+              {t('next')}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

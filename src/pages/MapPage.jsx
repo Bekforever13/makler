@@ -19,7 +19,11 @@ const MapPage = () => {
               key={item.id}
               options={{ draggable: false }}
               modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
-              geometry={[item.coordinates.latitude, item.coordinates.longitude]}
+              geometry={
+                item?.coordinates?.latitude !== null && item?.coordinates?.longitude !== null
+                  ? [item?.coordinates?.latitude, item?.coordinates?.longitude]
+                  : [25.117531, 55.134291]
+              }
               properties={{ hintContent: `${formatPrice(item.price)} sum` }}
               onClick={() => navigate(`/info/${item.id}`)}
             />

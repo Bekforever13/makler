@@ -9,6 +9,11 @@ export const api = createApi({
       token && headers.set('Authorization', `Bearer ${token}`)
       return headers
     },
+    // prepareParams: (params, api, { getState }) => {
+    //   const lang = getState().lang // Assuming you have a slice called "lang"
+    //   params.lan = lang
+    //   return params
+    // },
   }),
   refetchOnFocus: false,
   tagTypes: [
@@ -33,7 +38,7 @@ export const api = createApi({
       query: (body) => ({
         url: '/register',
         method: 'POST',
-        body: body,
+        body,
       }),
       invalidatesTags: ['auth', 'apartments', 'favorites'],
     }),
@@ -41,7 +46,7 @@ export const api = createApi({
       query: (body) => ({
         url: '/sms',
         method: 'POST',
-        body: body,
+        body,
       }),
     }),
     // apartments queries =================================================================
@@ -53,14 +58,16 @@ export const api = createApi({
       providesTags: ['apartments'],
     }),
     getOneApartments: build.query({
-      query: ({ id }) => ({
+      query: ({ id, lang }) => ({
         url: `/apartment/${id}`,
+        params: { lan: lang },
       }),
       providesTags: ['apartment'],
     }),
     getUsersFavorites: build.query({
-      query: () => ({
+      query: (body) => ({
         url: '/favoriteapartment',
+        params: body,
       }),
       providesTags: ['favorites'],
     }),
@@ -73,9 +80,16 @@ export const api = createApi({
     }),
     createNewApartment: build.mutation({
       query: (body) => ({
-        url: '/apartment',
+        url: '/apartment1',
         method: 'POST',
         body,
+      }),
+      invalidatesTags: ['apartments'],
+    }),
+    deleteApartment: build.mutation({
+      query: (id) => ({
+        url: `/apartment/${id}`,
+        method: 'DELETE',
       }),
       invalidatesTags: ['apartments'],
     }),
@@ -86,15 +100,17 @@ export const api = createApi({
     }),
     // regions queries ====================================================================
     getAllRegions: build.query({
-      query: () => ({
+      query: (body) => ({
         url: '/region',
+        params: body,
       }),
       providesTags: ['regions'],
     }),
     // tags queries ====================================================================
     getAllTags: build.query({
-      query: () => ({
+      query: (body) => ({
         url: '/tag',
+        params: body,
       }),
       providesTags: ['tags'],
     }),
@@ -131,4 +147,5 @@ export const {
   useGetAllTagsQuery,
   useCreateNewApartmentMutation,
   useGetAllCoordinatesQuery,
+  useDeleteApartmentMutation,
 } = api

@@ -5,7 +5,8 @@ import Footer from '../components/Footer'
 import { useEffect } from 'react'
 import { useCheckUserQuery } from '../store/index.api'
 import { useDispatch } from 'react-redux'
-import { setIsAuthenticated } from '../store/slices/auth.slice'
+import { setIsAuthenticated, setUser } from '../store/slices/auth.slice'
+import IconFooter from '../components/IconFooter'
 
 const HomeLayout = () => {
   const { pathname } = useLocation()
@@ -14,6 +15,7 @@ const HomeLayout = () => {
 
   useEffect(() => {
     if (data) {
+      dispatch(setUser(data?.data))
       dispatch(setIsAuthenticated(true))
     }
   }, [isSuccess])
@@ -25,7 +27,10 @@ const HomeLayout = () => {
         {pathname === '/' && <HomeBanner />}
         <Outlet />
       </div>
-      <Footer />
+      <div>
+        <Footer />
+        <IconFooter />
+      </div>
     </div>
   )
 }

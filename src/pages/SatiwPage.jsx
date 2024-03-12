@@ -5,8 +5,11 @@ import CardItem from '../components/CardItem'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button } from '@material-tailwind/react'
 import { setFilters } from '../store/slices/apartment.slice'
+import { useTranslation } from 'react-i18next'
 
 const SatiwPage = () => {
+  const { t } = useTranslation()
+  const lang = localStorage.getItem('makler_lang') || 'ru'
   const [activeSubcategory, setActiveSubcategory] = useState('all')
   const [page, setPage] = useState(1)
   const { filters } = useSelector((s) => s.apartments)
@@ -15,9 +18,10 @@ const SatiwPage = () => {
     category_id: 2,
     page,
     limit: 20,
+    lan: lang,
     ...filters,
   })
-  const { data: subcategories } = useGetSubcategoriesQuery({ category_id: 2 })
+  const { data: subcategories } = useGetSubcategoriesQuery({ category_id: 2, lan: lang })
   const totalPages = Math.ceil(data?.total / 20)
 
   const renderPageNumbers = () => {
@@ -66,29 +70,19 @@ const SatiwPage = () => {
     <div className="py-4">
       <Container>
         <div className="mb-10">
-          <h1 className="text-[20px] text-gray-800 font-semibold my-3">Satilatin jaylar</h1>
+          <h1 className="text-[20px] text-gray-800 font-semibold my-3">{t('houseForSale')}</h1>
           <div className="flex items-center gap-5">
-            {activeSubcategory !== 'all' ? (
-              <Button
-                onClick={() => handleSelectAll()}
-                className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-[12px] font-semibold"
-                variant="gradient"
-                color="light-blue"
-                size="sm"
-              >
-                Barshesi
-              </Button>
-            ) : (
-              <Button
-                onClick={() => handleSelectSubcategory(el)}
-                className="normal-case rounded-[5px] px-6 text-[12px] font-medium sm:hidden md:flex"
-                color="blue"
-                variant="gradient"
-                size="sm"
-              >
-                Barshesi
-              </Button>
-            )}
+            <Button
+              onClick={() => handleSelectAll()}
+              className={`normal-case rounded-[5px] px-6 text-[12px] font-semibold py-2 ${
+                activeSubcategory !== 'all' ? 'text-blue-100' : 'text-white'
+              }`}
+              variant="gradient"
+              color={activeSubcategory !== 'all' ? 'light-blue' : 'blue'}
+              size="sm"
+            >
+              {t('all')}
+            </Button>
             {subcategories?.data?.map((el) => {
               return (
                 <div key={el.id}>
@@ -179,7 +173,7 @@ const SatiwPage = () => {
                   d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
                 ></path>
               </svg>
-              Artqa
+              {t('back')}
             </button>
             <div className="flex items-center gap-2">{renderPageNumbers()}</div>
             <button
@@ -188,7 +182,7 @@ const SatiwPage = () => {
               className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="button"
             >
-              Alg'a
+              {t('next')}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
