@@ -1,5 +1,5 @@
 import Container from '../components/Container'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useGetAllApartmentsQuery, useGetSubcategoriesQuery } from '../store/index.api'
 import CardItem from '../components/CardItem'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,7 +14,7 @@ const SatiwPage = () => {
   const [page, setPage] = useState(1)
   const { filters } = useSelector((s) => s.apartments)
   const dispatch = useDispatch()
-  const { data, isFetching, isSuccess } = useGetAllApartmentsQuery({
+  const { data, isFetching, isSuccess, refetch } = useGetAllApartmentsQuery({
     category_id: 2,
     page,
     limit: 20,
@@ -65,6 +65,11 @@ const SatiwPage = () => {
     setActiveSubcategory('all')
     dispatch(setFilters({ ...filters, category_id: 2, subcategory_id: '' }))
   }
+
+  useEffect(() => {
+    refetch()
+    return () => dispatch(setFilters({}))
+  }, [])
 
   return (
     <div className="py-4">
@@ -151,55 +156,59 @@ const SatiwPage = () => {
             </div>
           )}
           {/* PAGINATION */}
-          <div className="flex items-center gap-4">
-            <button
-              disabled={page === 1}
-              onClick={decrementPage}
-              className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              type="button"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                aria-hidden="true"
-                className="w-4 h-4"
+          {data?.data?.length ? (
+            <div className="flex items-center gap-4">
+              <button
+                disabled={page === 1}
+                onClick={decrementPage}
+                className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-                ></path>
-              </svg>
-              {t('back')}
-            </button>
-            <div className="flex items-center gap-2">{renderPageNumbers()}</div>
-            <button
-              disabled={page === Math.ceil(data?.total / 20)}
-              onClick={incrementPage}
-              className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              type="button"
-            >
-              {t('next')}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="2"
-                stroke="currentColor"
-                aria-hidden="true"
-                className="w-4 h-4"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                  ></path>
+                </svg>
+                {t('back')}
+              </button>
+              <div className="flex items-center gap-2">{renderPageNumbers()}</div>
+              <button
+                disabled={page === Math.ceil(data?.total / 20)}
+                onClick={incrementPage}
+                className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                type="button"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                ></path>
-              </svg>
-            </button>
-          </div>
+                {t('next')}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          ) : (
+            'Пусто'
+          )}
         </div>
       </Container>
     </div>
