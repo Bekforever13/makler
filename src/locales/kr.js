@@ -47,5 +47,7 @@ export const kr = {
     all: 'Ҳәммеси',
     role: 'Роль',
     homeBannerTitle: 'Ең исенимли ҳәм тастыйықланған үйлер',
+    errorFillForm: 'Өтиниш, майданды толдырың*',
+    newApartment: 'Жаңа дағаза',
   },
 }

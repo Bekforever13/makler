@@ -47,5 +47,7 @@ export const qr = {
     all: 'Hámmesi',
     role: 'Rol',
     homeBannerTitle: 'Eń isenimli hám tastıyıqlanǵan úyler',
+    errorFillForm: 'Ótinish, maydandı toldırıń*',
+    newApartment: 'Jańa daǵaza',
   },
 }

@@ -42,10 +42,7 @@ const CreatingForm = ({ setIsOpen }) => {
     formData.append('category_id', data.category_id.value)
     formData.append('subcategory_id', data.subcategory_id.value)
     formData.append('region_id', data.region_id.value)
-    formData.append(
-      'tag_ids',
-      data.tag_ids.map((el) => el.value),
-    )
+    formData.append('tag_ids', data.tag_ids.map((el) => el.value))
     formData.append('address', data.address)
     formData.append('price', data.price)
     formData.append('room_count', data.room_count)
@@ -99,7 +96,7 @@ const CreatingForm = ({ setIsOpen }) => {
     <form onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
       <div className="flex flex-col items-start gap-5 p-5 w-full text-black">
         <div className="flex items-center justify-between w-full">
-          <h1 className="font-semibold text-xl">Новое объявление</h1>
+          <h1 className="font-semibold text-xl">{t('newApartment')}</h1>
           <IconButton
             onClick={() => setIsOpen((s) => !s)}
             variant="text"
@@ -110,188 +107,222 @@ const CreatingForm = ({ setIsOpen }) => {
           </IconButton>
         </div>
         <div className="flex flex-col items-start gap-5 w-full h-[50vh] pr-4 overflow-y-scroll">
-          <label className="flex items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-            {t('category')}:
-            <Controller
-              name="category_id"
-              control={control}
-              defaultValue=""
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  placeholder={t('selectCategory')}
-                  options={categoriesOptions}
-                  className="basic-multi-select border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
-                  classNamePrefix="select"
-                />
-              )}
-            />
-          </label>
-          <label className="flex items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-            {t('subcategory')}:
-            <Controller
-              name="subcategory_id"
-              control={control}
-              defaultValue=""
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  placeholder={t('selectSubcategory')}
-                  options={subcategoriesOptions}
-                  className="basic-multi-select border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
-                  classNamePrefix="select"
-                />
-              )}
-            />
-          </label>
-          <label className="flex items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-            {t('region')}:
-            <Controller
-              name="region_id"
-              control={control}
-              defaultValue=""
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  placeholder={t('selectRegion')}
-                  options={regionsOptions}
-                  className="basic-multi-select border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
-                  classNamePrefix="select"
-                />
-              )}
-            />
-          </label>
-          <label className="flex items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-            {t('selectTags')}:
-            <Controller
-              name="tag_ids"
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  placeholder={t('selectTags')}
-                  isMulti
-                  options={tagsOptions}
-                  className="basic-multi-select border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
-                  classNamePrefix="select"
-                />
-              )}
-            />
-          </label>
-          {/* <label className="flex items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-            Напишите вручную теги:
-            <input
-              className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
-              type="text"
-              placeholder="tag names"
-              {...register('tag_names', {})}
-            />
-          </label> */}
-          <label className="flex items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-            {t('address')}:
-            <input
-              className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
-              type="text"
-              placeholder={t('address')}
-              {...register('address', { required: true })}
-            />
-          </label>
-          <label className="flex items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-            {t('price')}:
-            <div className="md:w-1/2 sm:w-full flex items-center gap-1">
-              <input
-                className="border py-1 px-2 rounded-md flex-grow"
-                type="number"
-                placeholder={t('price')}
-                {...register('price', { required: true })}
+          <label className="flex flex-col w-full border-b-[1px]">
+            <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+              {t('category')}:
+              <Controller
+                name="category_id"
+                control={control}
+                defaultValue=""
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    placeholder={t('selectCategory')}
+                    options={categoriesOptions}
+                    className="basic-multi-select py-1 px-2 rounded-md md:w-1/2 sm:w-full"
+                    classNamePrefix="select"
+                  />
+                )}
               />
-              сум
             </div>
+            {errors.category_id && <span className="text-red-500">{t('errorFillForm')}</span>}
           </label>
-          <label className="flex items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-            {t('room_count')}:
-            <input
-              className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
-              type="number"
-              placeholder={t('room_count')}
-              {...register('room_count', { required: true })}
-            />
-          </label>
-          <label className="flex items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-            {t('total_area')}:
-            <div className="md:w-1/2 sm:w-full flex items-center gap-1">
-              <input
-                className="border py-1 px-2 rounded-md flex-grow"
-                type="number"
-                placeholder={t('total_area')}
-                {...register('total_area', { required: true })}
+          <label className="flex flex-col w-full border-b-[1px]">
+            <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+              {t('subcategory')}:
+              <Controller
+                name="subcategory_id"
+                control={control}
+                defaultValue=""
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    placeholder={t('selectSubcategory')}
+                    options={subcategoriesOptions}
+                    className="basic-multi-select py-1 px-2 rounded-md md:w-1/2 sm:w-full"
+                    classNamePrefix="select"
+                  />
+                )}
               />
-              m<sup>2</sup>
             </div>
+            {errors.subcategory_id && <span className="text-red-500">{t('errorFillForm')}</span>}
           </label>
-          <label className="flex items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-            {t('floor')}:
-            <input
-              className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
-              type="number"
-              placeholder={t('floor')}
-              {...register('floor', { required: true })}
-            />
+          <label className="flex flex-col border-b-[1px] w-full">
+            <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+              {t('region')}:
+              <Controller
+                name="region_id"
+                control={control}
+                defaultValue=""
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    placeholder={t('selectRegion')}
+                    options={regionsOptions}
+                    className="basic-multi-select py-1 px-2 rounded-md md:w-1/2 sm:w-full"
+                    classNamePrefix="select"
+                  />
+                )}
+              />
+            </div>
+            {errors.region_id && <span className="text-red-500">{t('errorFillForm')}</span>}
           </label>
-          <label className="flex items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-            {t('total_floor')}:
-            <input
-              className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
-              type="number"
-              placeholder={t('total_floor')}
-              {...register('floor_home', { required: true })}
-            />
+          <label className="flex flex-col border-b-[1px] w-full">
+            <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+              {t('selectTags')}:
+              <Controller
+                name="tag_ids"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    placeholder={t('selectTags')}
+                    isMulti
+                    options={tagsOptions}
+                    className="basic-multi-select py-1 px-2 rounded-md md:w-1/2 sm:w-full"
+                    classNamePrefix="select"
+                  />
+                )}
+              />
+            </div>
+            {errors.tag_ids && <span className="text-red-500">{t('errorFillForm')}</span>}
           </label>
-          <label className="flex items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-            {t('information')}:
-            <textarea
-              className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full min-h-[120px] resize-none"
-              type="text"
-              placeholder={t('information')}
-              {...register('description', { required: true })}
-            />
+          <label className="flex flex-col border-b-[1px] w-full">
+            <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+              {t('address')}:
+              <input
+                className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
+                type="text"
+                placeholder={t('address')}
+                {...register('address', { required: true })}
+              />
+            </div>
+            {errors.address && <span className="text-red-500">{t('errorFillForm')}</span>}
           </label>
-          <label className="flex items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-            {t('coordinates')}:
-            <YMaps query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}>
-              <Map
-                style={{ width: '50%', height: '300px' }}
-                defaultState={{ center: [42.465139, 59.613292], zoom: 13 }}
-              >
-                <Placemark
-                  options={{
-                    draggable: true,
-                  }}
-                  geometry={coordinates}
-                  instanceRef={(ref) => {
-                    if (ref) {
-                      register('placemarkCoordinates', ref.geometry._coordinates)
-                      setCoordinates(ref.geometry._coordinates)
-                    }
-                  }}
+          <label className="flex flex-col border-b-[1px] w-full">
+            <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+              {t('price')}:
+              <div className="md:w-1/2 sm:w-full flex items-center gap-1">
+                <input
+                  className="border py-1 px-2 rounded-md flex-grow"
+                  type="number"
+                  placeholder={t('price')}
+                  {...register('price', { required: true })}
                 />
-              </Map>
-            </YMaps>
+                сум
+              </div>
+            </div>
+            {errors.price && <span className="text-red-500">{t('errorFillForm')}</span>}
           </label>
-          <label className="flex items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-            {t('images')}:
-            <input
-              className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
-              type="file"
-              placeholder={t('images')}
-              multiple
-              accept="image/*"
-              {...register('images', {})}
-            />
+          <label className="flex flex-col border-b-[1px] w-full">
+            <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+              {t('room_count')}:
+              <input
+                className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
+                type="number"
+                placeholder={t('room_count')}
+                {...register('room_count', { required: true })}
+              />
+            </div>
+            {errors.room_count && <span className="text-red-500">{t('errorFillForm')}</span>}
+          </label>
+          <label className="flex flex-col border-b-[1px] w-full">
+            <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+              {t('total_area')}:
+              <div className="md:w-1/2 sm:w-full flex items-center gap-1">
+                <input
+                  className="border py-1 px-2 rounded-md flex-grow"
+                  type="number"
+                  placeholder={t('total_area')}
+                  {...register('total_area', { required: true })}
+                />
+                m<sup>2</sup>
+              </div>
+            </div>
+            {errors.total_area && <span className="text-red-500">{t('errorFillForm')}</span>}
+          </label>
+          <label className="flex flex-col border-b-[1px] w-full">
+            <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+              {t('floor')}:
+              <input
+                className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
+                type="number"
+                placeholder={t('floor')}
+                {...register('floor', { required: true })}
+              />
+            </div>
+            {errors.floor && <span className="text-red-500">{t('errorFillForm')}</span>}
+          </label>
+          <label className="flex flex-col border-b-[1px] w-full">
+            <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+              {t('total_floor')}:
+              <input
+                className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
+                type="number"
+                placeholder={t('total_floor')}
+                {...register('floor_home', { required: true })}
+              />
+            </div>
+            {errors.floor_home && <span className="text-red-500">{t('errorFillForm')}</span>}
+          </label>
+          <label className="flex flex-col border-b-[1px] w-full">
+            <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+              {t('information')}:
+              <textarea
+                className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full min-h-[120px] resize-none"
+                type="text"
+                placeholder={t('information')}
+                {...register('description', { required: true })}
+              />
+            </div>
+            {errors.description && <span className="text-red-500">{t('errorFillForm')}</span>}
+          </label>
+          <label className="flex flex-col border-b-[1px] w-full">
+            <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+              {t('coordinates')}:
+              <YMaps query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}>
+                <Map
+                  style={{ width: '50%', height: '300px' }}
+                  defaultState={{ center: [42.465139, 59.613292], zoom: 13 }}
+                >
+                  <Placemark
+                    options={{
+                      draggable: true,
+                    }}
+                    geometry={coordinates}
+                    instanceRef={(ref) => {
+                      if (ref) {
+                        register('placemarkCoordinates', ref.geometry._coordinates, {
+                          required: true,
+                        })
+                        setCoordinates(ref.geometry._coordinates)
+                      }
+                    }}
+                  />
+                </Map>
+              </YMaps>
+            </div>
+            {errors.placemarkCoordinates && (
+              <span className="text-red-500">{t('errorFillForm')}</span>
+            )}
+          </label>
+          <label className="flex flex-col w-full border-b-[1px]">
+            <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+              {t('images')}:
+              <input
+                className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
+                type="file"
+                placeholder={t('images')}
+                multiple
+                accept="image/*"
+                {...register('images', { required: true })}
+              />
+            </div>
+            {errors.images && <span className="text-red-500">{t('errorFillForm')}</span>}
           </label>
         </div>
         <Button

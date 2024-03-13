@@ -46,6 +46,8 @@ export const ru = {
     houseForRent: 'Дома на аренду',
     all: 'Все',
     role: 'Роль',
+    newApartment: 'Новое объявление',
     homeBannerTitle: 'Самые достоверные и проверенные дома',
+    errorFillForm: 'Пожалуйста, заполните поле*',
   },
 }
