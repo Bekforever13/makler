@@ -76,10 +76,10 @@ const SatiwPage = () => {
       <Container>
         <div className="mb-10">
           <h1 className="text-[20px] text-gray-800 font-semibold my-3">{t('houseForSale')}</h1>
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-5 flex-wrap">
             <Button
               onClick={() => handleSelectAll()}
-              className={`normal-case rounded-[5px] px-6 text-[12px] font-semibold py-2 ${
+              className={`normal-case rounded-[5px] md:py-2 sm:px-3 sm:py-1 text-[12px] font-semibold  ${
                 activeSubcategory !== 'all' ? 'text-blue-100' : 'text-white'
               }`}
               variant="gradient"
@@ -94,7 +94,7 @@ const SatiwPage = () => {
                   {activeSubcategory !== el.name ? (
                     <Button
                       onClick={() => handleSelectSubcategory(el)}
-                      className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-[12px] font-semibold"
+                      className="normal-case rounded-[5px] md:py-2 sm:px-3 sm:py-1  text-blue-100 text-[12px] font-semibold"
                       variant="gradient"
                       color="light-blue"
                       size="sm"

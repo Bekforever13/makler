@@ -158,7 +158,7 @@ const Header = () => {
                 </Select>
               </div>
               <Button
-                className="normal-case rounded-[5px] px-6 text-[12px] font-medium sm:block md:flex w-full whitespace-nowrap"
+                className="normal-case rounded-[5px] md:py-2 sm:px-3 sm:py-1 text-[12px] font-medium sm:block md:flex w-full whitespace-nowrap"
                 color="blue"
                 variant="gradient"
                 size="sm"
@@ -169,7 +169,7 @@ const Header = () => {
               {!isAuthenticated ? (
                 <Button
                   onClick={handleOpen}
-                  className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-[12px] font-semibold"
+                  className="normal-case rounded-[5px] md:px-6 md:py-2 sm:px-3 sm:py-1 text-blue-100 text-[12px] font-semibold"
                   variant="gradient"
                   color="light-blue"
                   size="sm"
@@ -180,7 +180,7 @@ const Header = () => {
                 <div className="relative">
                   <Button
                     onClick={() => setIsOpenProfile((s) => !s)}
-                    className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-[12px] font-semibold"
+                    className="normal-case rounded-[5px] md:px-6 md:py-2 sm:px-3 sm:py-1 text-blue-100 text-[12px] font-semibold"
                     variant="gradient"
                     color="light-blue"
                     size="sm"
@@ -190,10 +190,10 @@ const Header = () => {
                   {isOpenProfile && (
                     <div className="absolute bg-cyan-600	text-black font-semibold mt-3 z-[999] p-4 gap-5 right-0 w-80 flex flex-col shadow-lg">
                       <span className="flex items-center justify-between w-full">
-                        {t('phone')}: <span>+{user.phone}</span>
+                        {t('phone')}: <span>{user?.phone ? '+' + user?.phone : 'Пусто'}</span>
                       </span>
                       <span className="flex items-center justify-between w-full">
-                        {t('role')}: <span>{user.role === 'admin' ? 'Админ' : user.role}</span>
+                        {t('role')}: <span>{user?.role === 'admin' ? 'Админ' : user?.role}</span>
                       </span>
                       <div className="md:hidden sm:block">
                         <Select

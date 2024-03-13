@@ -30,7 +30,7 @@ const ArendaPage = () => {
       pageNumbers.push(
         <button
           key={i}
-          className={`relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-full ${
+          className={`relative md:h-10 md:max-h-[40px] md:w-10 md:max-w-[40px] sm:h-5 sm:max-h-[20px] sm:w-5 sm:max-w-[20px] select-none rounded-full ${
             i === page ? 'bg-gray-900 text-white shadow-md shadow-gray-900/10' : 'text-gray-900'
           } text-center align-middle font-sans text-xs font-medium uppercase transition-all hover:${
             i !== page ? 'bg-gray-900/10' : ''
@@ -76,7 +76,7 @@ const ArendaPage = () => {
       <Container>
         <div className="mb-10">
           <h1 className="text-[20px] text-gray-800 font-semibold my-3">{t('houseForRent')}</h1>
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-5 flex-wrap">
             <Button
               onClick={() => handleSelectAll()}
               className={`normal-case rounded-[5px] px-6 text-[12px] font-semibold py-2 ${
@@ -161,7 +161,7 @@ const ArendaPage = () => {
               <button
                 disabled={page === 1}
                 onClick={decrementPage}
-                className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                className="flex items-center gap-2 md:px-6 md:py-3 sm:px-3 sm:py-1 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 type="button"
               >
                 <svg
@@ -181,11 +181,11 @@ const ArendaPage = () => {
                 </svg>
                 {t('back')}
               </button>
-              <div className="flex items-center gap-2">{renderPageNumbers()}</div>
+              <div className="flex items-center gap-2 flex-wrap">{renderPageNumbers()}</div>
               <button
                 disabled={page === Math.ceil(data?.total / 20)}
                 onClick={incrementPage}
-                className="flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                className="flex items-center gap-2 md:px-6 md:py-3 sm:px-3 sm:py-1 font-sans text-xs font-bold text-center text-gray-900 uppercase align-middle transition-all rounded-full select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 type="button"
               >
                 {t('next')}
