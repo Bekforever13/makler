@@ -34,10 +34,6 @@ const CreatingForm = ({ setIsOpen }) => {
   const [coordinates, setCoordinates] = useState([42.465139, 59.613292])
 
   const onSubmit = async (data) => {
-    console.log(data)
-    console.log(coordinates[0])
-    console.log(coordinates[1])
-
     const formData = new FormData()
     formData.append('category_id', data.category_id.value)
     formData.append('subcategory_id', data.subcategory_id.value)

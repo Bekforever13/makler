@@ -1,6 +1,6 @@
 import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps'
-import { useGetAllCoordinatesQuery } from '../store/index.api'
-import { formatPrice } from '../utils/shared'
+import { useGetAllCoordinatesQuery } from '../../store/index.api'
+import { formatPrice } from '../../utils/shared'
 import { useNavigate } from 'react-router-dom'
 
 const MapPage = () => {

@@ -49,5 +49,6 @@ export const kr = {
     homeBannerTitle: 'Ең исенимли ҳәм тастыйықланған үйлер',
     errorFillForm: 'Өтиниш, майданды толдырың*',
     newApartment: 'Жаңа дағаза',
+    share: 'Үлесиў',
   },
 }

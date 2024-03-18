@@ -49,5 +49,6 @@ export const qr = {
     homeBannerTitle: 'Eń isenimli hám tastıyıqlanǵan úyler',
     errorFillForm: 'Ótinish, maydandı toldırıń*',
     newApartment: 'Jańa daǵaza',
+    share: 'Úlesiw',
   },
 }

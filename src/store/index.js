@@ -3,10 +3,12 @@ import { api } from './index.api'
 import { setupListeners } from '@reduxjs/toolkit/query/react'
 import authReducer from './slices/auth.slice.js'
 import apartmentReducer from './slices/apartment.slice.js'
+import adminReducer from './slices/admin.slice.js'
 
 const reducers = combineReducers({
   auth: authReducer,
   apartments: apartmentReducer,
+  admin: adminReducer,
   [api.reducerPath]: api.reducer,
 })
 

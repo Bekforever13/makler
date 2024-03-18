@@ -1,15 +1,28 @@
-import { useState } from 'react'
-import Container from '../components/Container'
-import CardItem from '../components/CardItem'
-import { useGetUsersFavoritesQuery } from '../store/index.api'
+import Container from '../../components/Container'
+import { useEffect, useState } from 'react'
+import { useGetAllApartmentsQuery, useGetSubcategoriesQuery } from '../../store/index.api'
+import CardItem from '../../components/CardItem'
+import { useDispatch, useSelector } from 'react-redux'
+import { Button } from '@material-tailwind/react'
+import { setFilters } from '../../store/slices/apartment.slice'
 import { useTranslation } from 'react-i18next'
 
-const FavoritesPage = () => {
-  const [page, setPage] = useState(1)
-  const lang = localStorage.getItem('makler_lang') || 'ru'
-  const { data, isFetching, isSuccess } = useGetUsersFavoritesQuery({ lan: lang })
-  const totalPages = Math.ceil(data?.total / 20)
+const SatiwPage = () => {
   const { t } = useTranslation()
+  const lang = localStorage.getItem('makler_lang') || 'ru'
+  const [activeSubcategory, setActiveSubcategory] = useState('all')
+  const [page, setPage] = useState(1)
+  const { filters } = useSelector((s) => s.apartments)
+  const dispatch = useDispatch()
+  const { data, isFetching, isSuccess, refetch } = useGetAllApartmentsQuery({
+    category_id: 2,
+    page,
+    limit: 20,
+    lan: lang,
+    ...filters,
+  })
+  const { data: subcategories } = useGetSubcategoriesQuery({ category_id: 2, lan: lang })
+  const totalPages = Math.ceil(data?.total / 20) ?? 1
 
   const renderPageNumbers = () => {
     const pageNumbers = []
@@ -43,10 +56,67 @@ const FavoritesPage = () => {
     setPage((prev) => prev + 1)
   }
 
+  const handleSelectSubcategory = (el) => {
+    setActiveSubcategory(el.name)
+    dispatch(setFilters({ ...filters, category_id: 2, subcategory_id: el.id }))
+  }
+
+  const handleSelectAll = () => {
+    setActiveSubcategory('all')
+    dispatch(setFilters({ ...filters, category_id: 2, subcategory_id: '' }))
+  }
+
+  useEffect(() => {
+    refetch()
+    return () => dispatch(setFilters({}))
+  }, [])
+
   return (
     <div className="py-4">
       <Container>
-        <h1 className="text-[20px] text-gray-800 font-semibold my-3">{t('yourFavorites')}</h1>
+        <div className="mb-10">
+          <h1 className="text-[20px] text-gray-800 font-semibold my-3">{t('houseForSale')}</h1>
+          <div className="flex items-center gap-5 flex-wrap">
+            <Button
+              onClick={() => handleSelectAll()}
+              className={`normal-case rounded-[5px] md:py-2 sm:px-3 sm:py-1 text-[12px] font-semibold  ${
+                activeSubcategory !== 'all' ? 'text-blue-100' : 'text-white'
+              }`}
+              variant="gradient"
+              color={activeSubcategory !== 'all' ? 'light-blue' : 'blue'}
+              size="sm"
+            >
+              {t('all')}
+            </Button>
+            {subcategories?.data?.map((el) => {
+              return (
+                <div key={el.id}>
+                  {activeSubcategory !== el.name ? (
+                    <Button
+                      onClick={() => handleSelectSubcategory(el)}
+                      className="normal-case rounded-[5px] md:py-2 sm:px-3 sm:py-1  text-blue-100 text-[12px] font-semibold"
+                      variant="gradient"
+                      color="light-blue"
+                      size="sm"
+                    >
+                      {el.name}
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={() => handleSelectSubcategory(el)}
+                      className="normal-case rounded-[5px] px-6 text-[12px] font-medium sm:hidden md:flex"
+                      color="blue"
+                      variant="gradient"
+                      size="sm"
+                    >
+                      {el.name}
+                    </Button>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
         <div className="flex flex-col items-center gap-10">
           {/* loading spinner */}
           {isFetching && (
@@ -78,7 +148,7 @@ const FavoritesPage = () => {
             </div>
           )}
           {/* show data */}
-          {isSuccess && !isFetching && (
+          {isSuccess && (
             <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-col-5 gap-4">
               {data?.data?.map((el) => (
                 <CardItem key={el.id} item={el} />
@@ -145,4 +215,4 @@ const FavoritesPage = () => {
   )
 }
 
-export default FavoritesPage
+export default SatiwPage

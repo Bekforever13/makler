@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import Container from '../components/Container'
-import { useGetAllApartmentsQuery, useGetSubcategoriesQuery } from '../store/index.api'
-import CardItem from '../components/CardItem'
+import Container from '../../components/Container'
+import { useGetAllApartmentsQuery, useGetSubcategoriesQuery } from '../../store/index.api'
+import CardItem from '../../components/CardItem'
 import { Button } from '@material-tailwind/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setFilters } from '../store/slices/apartment.slice'
+import { setFilters } from '../../store/slices/apartment.slice'
 import { useTranslation } from 'react-i18next'
 
 const ArendaPage = () => {
@@ -22,7 +22,7 @@ const ArendaPage = () => {
     ...filters,
   })
   const { data: subcategories } = useGetSubcategoriesQuery({ category_id: 1, lan: lang })
-  const totalPages = Math.ceil(data?.total / 20)
+  const totalPages = Math.ceil(data?.total / 20) ?? 1
 
   const renderPageNumbers = () => {
     const pageNumbers = []

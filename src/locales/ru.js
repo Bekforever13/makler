@@ -49,5 +49,6 @@ export const ru = {
     newApartment: 'Новое объявление',
     homeBannerTitle: 'Самые достоверные и проверенные дома',
     errorFillForm: 'Пожалуйста, заполните поле*',
+    share: 'Поделиться'
   },
 }

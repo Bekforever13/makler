@@ -195,6 +195,16 @@ const Header = () => {
                       <span className="flex items-center justify-between w-full">
                         {t('role')}: <span>{user?.role === 'admin' ? 'Админ' : user?.role}</span>
                       </span>
+                      {user?.role === 'admin' && (
+                        <Button
+                          className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-[12px] font-semibold"
+                          variant="gradient"
+                          color="light-blue"
+                          size="sm"
+                        >
+                          <Link to="/admin">Админ панель</Link>
+                        </Button>
+                      )}
                       <div className="md:hidden sm:block">
                         <Select
                           value={lang}

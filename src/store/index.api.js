@@ -86,13 +86,6 @@ export const api = createApi({
       }),
       invalidatesTags: ['apartments'],
     }),
-    deleteApartment: build.mutation({
-      query: (id) => ({
-        url: `/apartment/${id}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['apartments'],
-    }),
     getAllCoordinates: build.query({
       query: () => ({
         url: '/apartments/coordinates',
@@ -130,6 +123,59 @@ export const api = createApi({
       }),
       providesTags: ['categories'],
     }),
+
+    // admin queries
+    // apartment
+    ACreateApartment: build.mutation({
+      query: (body) => ({
+        url: '/apartment_admin',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['apartments'],
+    }),
+    ADeleteApartment: build.mutation({
+      query: (id) => ({
+        url: `/apartment_moderator/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['apartments'],
+    }),
+    AEditApartment: build.mutation({
+      query: (body) => ({
+        url: `/apartment/${body.id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['apartments'],
+    }),
+    // categories
+    ACreateCategory: build.mutation({
+      query: (body) => ({
+        url: '/category',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['categories'],
+    }),
+    ADeleteCategory: build.mutation({
+      query: (id) => ({
+        url: `/category/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['categories'],
+    }),
+    AEditCategory: build.mutation({
+      query: (body) => {
+        const id = body.get('id')
+        return {
+          url: `/category/${id}?_method=put`,
+          method: 'POST',
+          body,
+        }
+      },
+      invalidatesTags: ['categories'],
+    }),
   }),
 })
 
@@ -147,5 +193,10 @@ export const {
   useGetAllTagsQuery,
   useCreateNewApartmentMutation,
   useGetAllCoordinatesQuery,
-  useDeleteApartmentMutation,
+  useACreateApartmentMutation,
+  useADeleteApartmentMutation,
+  useAEditApartmentMutation,
+  useACreateCategoryMutation,
+  useADeleteCategoryMutation,
+  useAEditCategoryMutation,
 } = api
