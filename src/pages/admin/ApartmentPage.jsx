@@ -8,16 +8,13 @@ import {
   CardFooter,
   IconButton,
   Tooltip,
-  Input,
 } from '@material-tailwind/react'
 import { IoAdd } from 'react-icons/io5'
-import { FaSearch } from 'react-icons/fa'
 import { useADeleteApartmentMutation, useGetAllApartmentsQuery } from '../../store/index.api'
 import { useState } from 'react'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import UserCreateModal from '../../components/UserCreateModal'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
 const TABLE_HEAD = ['Адрес', 'Категория', 'Цена', 'Регион', 'Комната', 'Общая площадь', 'Действия']
 
@@ -25,7 +22,6 @@ const ApartmentPage = () => {
   const [open, setOpen] = useState(false)
   const [page, setPage] = useState(1)
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const { data } = useGetAllApartmentsQuery({
     page,
     limit: 20,
@@ -51,9 +47,6 @@ const ApartmentPage = () => {
             </Typography>
           </div>
           <div className="flex w-full shrink-0 gap-2 md:w-max">
-            <div className="w-full md:w-72">
-              <Input label="Search" icon={<FaSearch size="20" />} />
-            </div>
             <Button
               onClick={() => setOpen(true)}
               className="flex items-center gap-3"

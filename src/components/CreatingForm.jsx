@@ -20,10 +20,17 @@ const CreatingForm = ({ setIsOpen }) => {
     handleSubmit,
     control,
     formState: { errors },
+    watch,
     reset,
   } = useForm()
   const { data: categoriesData, isSuccess: categoriesIsSuccess } = useGetCategoriesQuery()
-  const { data: subcategoriesData, isSuccess: subcategoriesIsSuccess } = useGetSubcategoriesQuery()
+  const {
+    data: subcategoriesData,
+    isSuccess: subcategoriesIsSuccess,
+    isFetching: subcategoryFetching,
+  } = useGetSubcategoriesQuery({
+    category_id: watch('category_id')?.value,
+  })
   const { data: regionsData, isSuccess: regionsIsSuccess } = useGetAllRegionsQuery()
   const { data: tagsData, isSuccess: tagsIsSuccess } = useGetAllTagsQuery()
   const [tagsOptions, setTagsOptions] = useState()
@@ -38,7 +45,10 @@ const CreatingForm = ({ setIsOpen }) => {
     formData.append('category_id', data.category_id.value)
     formData.append('subcategory_id', data.subcategory_id.value)
     formData.append('region_id', data.region_id.value)
-    formData.append('tag_ids', data.tag_ids.map((el) => el.value))
+    formData.append(
+      'tag_ids',
+      data.tag_ids.map((el) => el.value),
+    )
     formData.append('address', data.address)
     formData.append('price', data.price)
     formData.append('room_count', data.room_count)
@@ -80,7 +90,7 @@ const CreatingForm = ({ setIsOpen }) => {
       const mappedData = subcategoriesData?.data.map((el) => ({ value: el.id, label: el.name }))
       setSubcategoriesOptions(mappedData)
     }
-  }, [subcategoriesIsSuccess])
+  }, [subcategoriesIsSuccess, subcategoryFetching])
   useEffect(() => {
     if (categoriesData?.data) {
       const mappedData = categoriesData?.data.map((el) => ({ value: el.id, label: el.name }))
@@ -109,7 +119,6 @@ const CreatingForm = ({ setIsOpen }) => {
               <Controller
                 name="category_id"
                 control={control}
-                defaultValue=""
                 rules={{ required: true }}
                 render={({ field }) => (
                   <Select
@@ -130,11 +139,11 @@ const CreatingForm = ({ setIsOpen }) => {
               <Controller
                 name="subcategory_id"
                 control={control}
-                defaultValue=""
                 rules={{ required: true }}
                 render={({ field }) => (
                   <Select
                     {...field}
+                    isDisabled={!watch('category_id')}
                     placeholder={t('selectSubcategory')}
                     options={subcategoriesOptions}
                     className="basic-multi-select py-1 px-2 rounded-md md:w-1/2 sm:w-full"
@@ -151,7 +160,6 @@ const CreatingForm = ({ setIsOpen }) => {
               <Controller
                 name="region_id"
                 control={control}
-                defaultValue=""
                 rules={{ required: true }}
                 render={({ field }) => (
                   <Select

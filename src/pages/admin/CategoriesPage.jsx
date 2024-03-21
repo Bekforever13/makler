@@ -8,29 +8,22 @@ import {
   CardFooter,
   IconButton,
   Tooltip,
-  Input,
 } from '@material-tailwind/react'
 import { IoAdd } from 'react-icons/io5'
-import { FaSearch } from 'react-icons/fa'
-import { useADeleteCategoryMutation, useGetCategoriesQuery } from '../../store/index.api'
+import { useADeleteCategoryMutation, useAGetCategoriesQuery } from '../../store/index.api'
 import { useState } from 'react'
 import { FaRegTrashAlt } from 'react-icons/fa'
-import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import CreateCategoryModal from '../../components/CreateCategory'
+import { setCategoryToEdit } from '../../store/slices/categories.slice'
 
-const TABLE_HEAD = ['Название', '']
+const TABLE_HEAD = ['Русский', 'Қарақалпақша', 'Qaraqalpaqsha', '']
 
 const CategoriesPage = () => {
   const [open, setOpen] = useState(false)
   const [page, setPage] = useState(1)
-  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { data } = useGetCategoriesQuery({
-    page,
-    limit: 20,
-    lan: 'ru',
-  })
+  const { data } = useAGetCategoriesQuery({ page, limit: 20 })
   const [deleteCategory] = useADeleteCategoryMutation()
   const totalPages = Math.ceil(data?.total / 20) ?? 1
 
@@ -49,9 +42,6 @@ const CategoriesPage = () => {
             </Typography>
           </div>
           <div className="flex w-full shrink-0 gap-2 md:w-max">
-            <div className="w-full md:w-72">
-              <Input label="Search" icon={<FaSearch size="20" />} />
-            </div>
             <Button
               onClick={() => setOpen(true)}
               className="flex items-center gap-3"
@@ -89,19 +79,32 @@ const CategoriesPage = () => {
                 <tr key={id}>
                   <td className={classes}>
                     <Typography variant="small" color="blue-gray" className="font-normal">
-                      {name}
+                      {name.ru}
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <Tooltip content="Edit Apartment">
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {name.kr}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography variant="small" color="blue-gray" className="font-normal">
+                      {name.qr}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Tooltip content="Изменить категорию">
                       <IconButton
-                        onClick={() => navigate(`/admin/apartments/${id}`)}
+                        onClick={() => {
+                          setOpen(true)
+                          dispatch(setCategoryToEdit({ id, name }))
+                        }}
                         variant="text"
                       >
                         <FaPencil color="blue" className="h-4 w-4" />
                       </IconButton>
                     </Tooltip>
-                    <Tooltip content="Delete Apartment">
+                    <Tooltip content="Удалить категорию">
                       <IconButton onClick={() => handleDelete(id)} variant="text">
                         <FaRegTrashAlt color="red" className="h-4 w-4" />
                       </IconButton>

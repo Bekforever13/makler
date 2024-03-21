@@ -15,6 +15,8 @@ import { TbViewportWide } from 'react-icons/tb'
 import { useTranslation } from 'react-i18next'
 import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps'
 import { RWebShare } from 'react-web-share'
+import { GiLadder } from 'react-icons/gi'
+import { FaRegSquareCheck } from 'react-icons/fa6'
 
 const InfoPage = () => {
   const { isAuthenticated } = useSelector((s) => s.auth)
@@ -169,7 +171,7 @@ const InfoPage = () => {
               </div>
             </div>
             <div className="flex items-center gap-5">
-              <TbViewportWide size="36" />
+              <GiLadder size="36" />
               <div className="flex flex-col gap-3">
                 <span>{t('floor')}</span>
                 <span>
@@ -178,7 +180,7 @@ const InfoPage = () => {
               </div>
             </div>
             <div className="flex items-center gap-5">
-              <TbViewportWide size="36" />
+              <FaRegSquareCheck size="36" />
               <div className="flex flex-col gap-3">
                 <span>{t('rooms')}</span>
                 <span>{apartmentData?.data?.room_count}</span>

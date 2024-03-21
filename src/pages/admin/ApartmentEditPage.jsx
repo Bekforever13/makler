@@ -334,30 +334,39 @@ const ApartmentEditPage = () => {
               </div>
             </div>
             <div className="flex flex-col gap-10">
-              <div className="w-full h-full">
-                <YMaps query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}>
-                  <Map
-                    style={{ width: '50vw', height: '70vh' }}
-                    defaultState={{
-                      center: [data?.data?.coordinates.latitude, data?.data?.coordinates.longitude],
-                      zoom: 13,
-                    }}
-                  >
-                    <Placemark
-                      options={{ draggable: true }}
-                      geometry={coordinates}
-                      instanceRef={(ref) => {
-                        if (ref) {
-                          register('placemarkCoordinates', ref.geometry._coordinates, {
-                            required: true,
-                          })
-                          setCoordinates(ref.geometry._coordinates)
-                        }
-                      }}
-                    />
-                  </Map>
-                </YMaps>
-              </div>
+              <label className="flex flex-col w-full border-b-[1px]">
+                <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+                  Координаты:
+                  <div className="w-1/2 h-full">
+                    <YMaps query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}>
+                      <Map
+                        style={{ width: '100%', height: '70vh' }}
+                        defaultState={{
+                          center: [
+                            data?.data?.coordinates.latitude,
+                            data?.data?.coordinates.longitude,
+                          ],
+                          zoom: 13,
+                        }}
+                      >
+                        <Placemark
+                          options={{ draggable: true }}
+                          geometry={coordinates}
+                          instanceRef={(ref) => {
+                            if (ref) {
+                              register('placemarkCoordinates', ref.geometry._coordinates, {
+                                required: true,
+                              })
+                              setCoordinates(ref.geometry._coordinates)
+                            }
+                          }}
+                        />
+                      </Map>
+                    </YMaps>
+                  </div>
+                </div>
+              </label>
+
               <div className="flex items-start flex-wrap gap-5">
                 <label className="flex flex-col w-full border-b-[1px]">
                   <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">

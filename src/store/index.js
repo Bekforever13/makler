@@ -4,11 +4,19 @@ import { setupListeners } from '@reduxjs/toolkit/query/react'
 import authReducer from './slices/auth.slice.js'
 import apartmentReducer from './slices/apartment.slice.js'
 import adminReducer from './slices/admin.slice.js'
+import categoryReducer from './slices/categories.slice.js'
+import subcategoryReducer from './slices/subcategory.slice.js'
+import regionReducer from './slices/region.slice.js'
+import tagReducer from './slices/tags.slice.js'
 
 const reducers = combineReducers({
   auth: authReducer,
   apartments: apartmentReducer,
   admin: adminReducer,
+  category: categoryReducer,
+  subcategory: subcategoryReducer,
+  region: regionReducer,
+  tag: tagReducer,
   [api.reducerPath]: api.reducer,
 })
 

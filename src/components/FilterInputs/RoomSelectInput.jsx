@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 const RoomSelectInput = () => {
   const [value, setValue] = useState()
   const dispatch = useDispatch()
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const { filters } = useSelector((s) => s.apartments)
 
   const handleSelect = (val) => {
@@ -30,6 +30,10 @@ const RoomSelectInput = () => {
       <Option value="4">4 {t('rooms')}</Option>
       <Option value="5">5 {t('rooms')}</Option>
       <Option value="6">6+ {t('rooms')}</Option>
+      <Option value="7">7 {t('rooms')}</Option>
+      <Option value="8">8 {t('rooms')}</Option>
+      <Option value="9">9 {t('rooms')}</Option>
+      <Option value="11">10+ {t('rooms')}</Option>
     </Select>
   )
 }

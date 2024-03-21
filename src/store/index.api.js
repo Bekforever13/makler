@@ -124,7 +124,7 @@ export const api = createApi({
       providesTags: ['categories'],
     }),
 
-    // admin queries
+    // admin queries ===================================
     // apartment
     ACreateApartment: build.mutation({
       query: (body) => ({
@@ -150,6 +150,12 @@ export const api = createApi({
       invalidatesTags: ['apartments'],
     }),
     // categories
+    AGetCategories: build.query({
+      query: () => ({
+        url: '/category/languages',
+      }),
+      providesTags: ['categories'],
+    }),
     ACreateCategory: build.mutation({
       query: (body) => ({
         url: '/category',
@@ -167,14 +173,116 @@ export const api = createApi({
     }),
     AEditCategory: build.mutation({
       query: (body) => {
-        const id = body.get('id')
         return {
-          url: `/category/${id}?_method=put`,
-          method: 'POST',
-          body,
+          url: `/category/${body.id}`,
+          method: 'PUT',
+          body: { name: body.name },
         }
       },
       invalidatesTags: ['categories'],
+    }),
+    // subcategories
+    AGetSubcategories: build.query({
+      query: () => ({
+        url: '/subcategory/languages',
+      }),
+      providesTags: ['subcategories'],
+    }),
+    ACreateSubcategory: build.mutation({
+      query: (body) => ({
+        url: '/subcategory',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['subcategories'],
+    }),
+    ADeleteSubcategory: build.mutation({
+      query: (id) => ({
+        url: `/subcategory/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['subcategories'],
+    }),
+    AEditSubcategory: build.mutation({
+      query: (body) => {
+        console.log('rtk cons', body)
+        return {
+          url: `/subcategory/${body.id}`,
+          method: 'PUT',
+          body: {
+            category_id: body.category_id,
+            name: body.name,
+          },
+        }
+      },
+      invalidatesTags: ['subcategories'],
+    }),
+    // region
+    AGetRegions: build.query({
+      query: () => ({
+        url: '/region/languages',
+      }),
+      providesTags: ['regions'],
+    }),
+    ACreateRegion: build.mutation({
+      query: (body) => ({
+        url: '/region',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['regions'],
+    }),
+    ADeleteRegion: build.mutation({
+      query: (id) => ({
+        url: `/region/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['regions'],
+    }),
+    AEditRegion: build.mutation({
+      query: (body) => {
+        return {
+          url: `/region/${body.id}`,
+          method: 'PUT',
+          body: { name: body.name },
+        }
+      },
+      invalidatesTags: ['regions'],
+    }),
+    // tags
+    AGetTags: build.query({
+      query: () => ({
+        url: '/tag/languages',
+      }),
+      providesTags: ['tags'],
+    }),
+    ACreateTag: build.mutation({
+      query: (body) => ({
+        url: '/tag',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['tags'],
+    }),
+    ADeleteTag: build.mutation({
+      query: (id) => ({
+        url: `/tag/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['tags'],
+    }),
+    AEditTag: build.mutation({
+      query: (body) => {
+        return {
+          url: `/tag/${body.id}`,
+          method: 'PUT',
+          body: {
+            category_id: body.category_id,
+            name: body.name,
+          },
+        }
+      },
+      invalidatesTags: ['tags'],
     }),
   }),
 })
@@ -199,4 +307,17 @@ export const {
   useACreateCategoryMutation,
   useADeleteCategoryMutation,
   useAEditCategoryMutation,
+  useAGetCategoriesQuery,
+  useAGetSubcategoriesQuery,
+  useACreateSubcategoryMutation,
+  useADeleteSubcategoryMutation,
+  useAEditSubcategoryMutation,
+  useAGetRegionsQuery,
+  useACreateRegionMutation,
+  useADeleteRegionMutation,
+  useAEditRegionMutation,
+  useAGetTagsQuery,
+  useACreateTagMutation,
+  useADeleteTagMutation,
+  useAEditTagMutation,
 } = api
