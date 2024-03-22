@@ -149,6 +149,27 @@ export const api = createApi({
       }),
       invalidatesTags: ['apartments'],
     }),
+    AAddImageToApartment: build.mutation({
+      query: ({ apartment_id, images }) => {
+        const formData = new FormData()
+        for (const image of images) {
+          formData.append('images[]', image)
+        }
+        return {
+          url: `/apartment/${apartment_id}/image`,
+          method: 'POST',
+          body: formData,
+        }
+      },
+      invalidatesTags: ['apartment'],
+    }),
+    ADeleteImage: build.mutation({
+      query: (body) => ({
+        url: `/apartment/${body.apartment_id}/image/${body.image_id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['apartment'],
+    }),
     // categories
     AGetCategories: build.query({
       query: () => ({
@@ -320,4 +341,6 @@ export const {
   useACreateTagMutation,
   useADeleteTagMutation,
   useAEditTagMutation,
+  useADeleteImageMutation,
+  useAAddImageToApartmentMutation,
 } = api
