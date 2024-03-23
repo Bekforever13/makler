@@ -15,7 +15,7 @@ import { setTagToEdit } from '../../store/slices/tags.slice.js'
 import { useState } from 'react'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
-import CreateTagModal from '../../components/CreateTag.jsx'
+import CreateTagModal from '../../components/admin/CreateTag.jsx'
 
 const TABLE_HEAD = ['Русский', 'Қарақалпақша', 'Qaraqalpaqsha', '']
 

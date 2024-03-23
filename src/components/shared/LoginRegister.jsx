@@ -10,12 +10,12 @@ import {
   IconButton,
 } from '@material-tailwind/react'
 import PhoneNumberInput from './PhoneNumberInput'
-import loginIcon from '../images/image/login-icon.webp'
-import loginIcon2 from '../images/image/login-icon2.png'
+import loginIcon from '../../images/image/login-icon.webp'
+import loginIcon2 from '../../images/image/login-icon2.png'
 import VerificationInput from 'react-verification-input'
-import { useApplyCodeMutation, useSendCodeMutation } from '../store/index.api'
+import { useApplyCodeMutation, useSendCodeMutation } from '../../store/index.api'
 import { useDispatch, useSelector } from 'react-redux'
-import { setIsAuthenticated, setToken } from '../store/slices/auth.slice'
+import { setIsAuthenticated, setToken } from '../../store/slices/auth.slice'
 
 function LoginRegister({ open, handleOpen }) {
   const [smsCode, setSmsCode] = useState('')
@@ -39,7 +39,6 @@ function LoginRegister({ open, handleOpen }) {
 
   useEffect(() => {
     if (loginIsSuccess) {
-      console.log(loginData)
       dispatch(setIsAuthenticated(true))
       dispatch(setToken(loginData.data.token))
       handleOpen()
@@ -78,6 +77,7 @@ function LoginRegister({ open, handleOpen }) {
               </IconButton>
             </div>
             <Typography className="font-normal" variant="paragraph" color="gray">
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
               Kod telefon nomerin'izge jiberildi
             </Typography>
             <div>
@@ -119,6 +119,7 @@ function LoginRegister({ open, handleOpen }) {
               </IconButton>
             </div>
             <Typography className="font-normal" variant="paragraph" color="gray">
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
               Dizimnen o'tiw ushin telefon nomer kiritin'
             </Typography>
             <div className="flex justify-center items-center">
@@ -160,18 +161,6 @@ function LoginRegister({ open, handleOpen }) {
               Jiberiw
             </Button>
           )}
-          {/* <Button
-            onClick={() => (isHaveCode ? handleLogin : handleGetSms)}
-            disabled={phoneNumber.length !== 12}
-            loading={loginLoading || getCodeLoading}
-            fullWidth
-            className="items-center justify-center rounded-md float-right"
-            variant="gradient"
-            size="md"
-            color="blue"
-          >
-            {isHaveCode ? 'Kiriw' : 'Jiberiw'}
-          </Button> */}
         </CardFooter>
       </Card>
     </Dialog>

@@ -4,8 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import logo from '../../images/logo/logo.svg'
 import signBg from '../../images/image/sign-bg.jpg'
 import { Button, Typography } from '@material-tailwind/react'
-import PhoneNumberInput from '../../components/PhoneNumberInput'
-import LoginRegister from '../../components/LoginRegister'
+import PhoneNumberInput from '../../components/shared/PhoneNumberInput'
+import LoginRegister from '../../components/shared/LoginRegister'
 import { useDispatch } from 'react-redux'
 import { useCheckUserQuery } from '../../store/index.api'
 import { setIsAuthenticated, setUser } from '../../store/slices/auth.slice'
@@ -48,9 +48,11 @@ const SignUp = () => {
               </div>
             </Link>
             <Typography variant="h4" color="blue-gray" className="mt-4 text-center">
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
               Dizimnen o'tiw
             </Typography>
             <Typography className="mb-4 font-normal text-center" variant="paragraph" color="gray">
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
               Dizimnen o'tiw ushin telefon nomerin'izdi kiritin'
             </Typography>
             <Typography className="mb-1" variant="h6">
@@ -60,6 +62,7 @@ const SignUp = () => {
           </div>
           <div className="pt-0 text-end mt-3">
             <Button variant="gradient" color="blue" size="sm" className="rounded-md">
+              {/* eslint-disable-next-line react/no-unescaped-entities */}
               Dizimnen o'tiw
             </Button>
             <Typography variant="small" className="mt-4 flex justify-center">

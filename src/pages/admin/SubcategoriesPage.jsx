@@ -14,7 +14,7 @@ import { useState } from 'react'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { setSubcategoryToEdit } from '../../store/slices/subcategory.slice.js'
-import CreateSubcategoryModal from '../../components/CreateSubcategory.jsx'
+import CreateSubcategoryModal from '../../components/admin/CreateSubcategory.jsx'
 import {
   useADeleteSubcategoryMutation,
   useAGetCategoriesQuery,

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
-import uzbIcon from '../images/image/uzb.png'
-import { setPhoneNumber } from '../store/slices/auth.slice'
+import uzbIcon from '../../images/image/uzb.png'
+import { setPhoneNumber } from '../../store/slices/auth.slice'
 import { IMaskInput } from 'react-imask'
 import { useRef } from 'react'
 

@@ -1,8 +1,8 @@
 import { Option, Select } from '@material-tailwind/react'
 import { useEffect, useState } from 'react'
-import { useGetSubcategoriesQuery } from '../../store/index.api'
+import { useGetSubcategoriesQuery } from '../../../store/index.api'
 import { useDispatch, useSelector } from 'react-redux'
-import { setFilters } from '../../store/slices/apartment.slice'
+import { setFilters } from '../../../store/slices/apartment.slice'
 import { useTranslation } from 'react-i18next'
 
 const SelectInput = () => {

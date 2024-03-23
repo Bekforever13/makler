@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
-import useWindowSize from '../hooks/useWindowSize'
-import bannerImg from '../images/image/banner3.jpg'
-import Container from './Container'
+import useWindowSize from '../../hooks/useWindowSize'
+import bannerImg from '../../images/image/banner3.jpg'
+import Container from '../shared/Container'
 import FiterTabs from './FiterTabs'
 
 const HomeBanner = () => {

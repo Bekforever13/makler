@@ -14,7 +14,7 @@ import { useADeleteRegionMutation, useAGetRegionsQuery } from '../../store/index
 import { useState } from 'react'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
-import CreateRegionModal from '../../components/CreateRegion.jsx'
+import CreateRegionModal from '../../components/admin/CreateRegion.jsx'
 import { setRegionToEdit } from '../../store/slices/region.slice.js'
 
 const TABLE_HEAD = ['Русский', 'Қарақалпақша', 'Qaraqalpaqsha', '']

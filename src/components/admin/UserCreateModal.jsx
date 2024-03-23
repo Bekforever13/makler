@@ -1,5 +1,5 @@
 import { Card, Dialog } from '@material-tailwind/react'
-import CreatingForm from './CreatingForm'
+import CreatingForm from '../shared/CreatingForm'
 
 const UserCreateModal = ({ open, setIsOpen }) => {
   return (

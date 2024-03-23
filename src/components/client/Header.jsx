@@ -1,7 +1,7 @@
 import { GiHamburgerMenu } from 'react-icons/gi'
 import { useEffect, useState } from 'react'
-import Container from './Container'
-import logo from '../images/logo/logo.svg'
+import Container from '../shared/Container'
+import logo from '../../images/logo/logo.svg'
 import { Link, useLocation } from 'react-router-dom'
 import {
   Button,
@@ -12,11 +12,11 @@ import {
   Select,
   Option,
 } from '@material-tailwind/react'
-import LoginRegister from './LoginRegister'
+import LoginRegister from '../shared/LoginRegister'
 import { useDispatch, useSelector } from 'react-redux'
-import { setIsAuthenticated } from '../store/slices/auth.slice'
-import { api } from '../store/index.api'
-import UserCreateModal from './UserCreateModal'
+import { setIsAuthenticated } from '../../store/slices/auth.slice'
+import { api } from '../../store/index.api'
+import UserCreateModal from '../admin/UserCreateModal'
 import { useTranslation } from 'react-i18next'
 
 const Header = () => {

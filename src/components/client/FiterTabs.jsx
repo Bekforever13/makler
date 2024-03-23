@@ -2,10 +2,10 @@ import { Button, Input, Tab, TabPanel, Tabs, TabsBody, TabsHeader } from '@mater
 import { useState, useEffect } from 'react'
 import SelectInput from './FilterInputs/SelectInput'
 import RoomSelectInput from './FilterInputs/RoomSelectInput'
-import { useGetCategoriesQuery } from '../store/index.api'
+import { useGetCategoriesQuery } from '../../store/index.api'
 import { useDispatch, useSelector } from 'react-redux'
-import { setFilters } from '../store/slices/apartment.slice'
-import useWindowSize from '../hooks/useWindowSize'
+import { setFilters } from '../../store/slices/apartment.slice'
+import useWindowSize from '../../hooks/useWindowSize'
 import { useTranslation } from 'react-i18next'
 
 const FiterTabs = () => {

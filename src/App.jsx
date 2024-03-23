@@ -21,8 +21,15 @@ import SubcategoriesPage from './pages/admin/SubcategoriesPage'
 import TagsPage from './pages/admin/TagsPage'
 import RegionsPage from './pages/admin/RegionPage'
 import ApartmentEditPage from './pages/admin/ApartmentEditPage'
+import ModeratorLayout from './layouts/ModeratorLayout'
+import ModeratorHome from './pages/moderator/ModeratorHome'
+import { useCheckUserQuery } from './store/index.api'
+import { useEffect, useState } from 'react'
+import ModeratorApartmentInfo from './pages/moderator/ModeratorApartmentInfo'
 
 const App = () => {
+  const [mounted, setMounted] = useState(false)
+  const { data } = useCheckUserQuery()
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -35,19 +42,35 @@ const App = () => {
           <Route path="/info/:id" element={<InfoPage />} />
         </Route>
         <Route path="/login" element={<SignUp />} />
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route path="/admin" element={<Dashboard />} />
-          <Route path="/admin/apartments" element={<ApartmentPage />} />
-          <Route path="/admin/apartments/:id" element={<ApartmentEditPage />} />
-          <Route path="/admin/categories" element={<CategoriesPage />} />
-          <Route path="/admin/subcategories" element={<SubcategoriesPage />} />
-          <Route path="/admin/tags" element={<TagsPage />} />
-          <Route path="/admin/regions" element={<RegionsPage />} />
-        </Route>
+        {data?.data?.role === 'admin' && (
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="/admin" element={<Dashboard />} />
+            <Route path="/admin/apartments" element={<ApartmentPage />} />
+            <Route path="/admin/apartments/:id" element={<ApartmentEditPage />} />
+            <Route path="/admin/categories" element={<CategoriesPage />} />
+            <Route path="/admin/subcategories" element={<SubcategoriesPage />} />
+            <Route path="/admin/tags" element={<TagsPage />} />
+            <Route path="/admin/regions" element={<RegionsPage />} />
+          </Route>
+        )}
+        
+        {/* change role from admin to moderator below */}
+        {data?.data?.role === 'admin' && (
+          <Route path="/moderator" element={<ModeratorLayout />}>
+            <Route path="/moderator" element={<ModeratorHome />} />
+            <Route path="/moderator/apartments/:id" element={<ModeratorApartmentInfo />} />
+          </Route>
+        )}
         <Route path="*" element={<NotFound />} />
       </>,
     ),
   )
+
+  useEffect(() => setMounted(true), [])
+
+  if (!mounted) {
+    return <h1>Loading...</h1>
+  }
   return <RouterProvider router={router} />
 }
 

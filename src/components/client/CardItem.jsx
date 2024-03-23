@@ -4,9 +4,9 @@ import { AiFillHeart } from 'react-icons/ai'
 import { AiOutlineHeart } from 'react-icons/ai'
 import { BsHouseDoor } from 'react-icons/bs'
 import { Card, CardBody, CardHeader, IconButton, Typography } from '@material-tailwind/react'
-import { formatPrice } from '../utils/shared'
+import { formatPrice } from '../../utils/shared'
 import { useNavigate } from 'react-router-dom/dist'
-import { useAddToFavoriteMutation } from '../store/index.api'
+import { useAddToFavoriteMutation } from '../../store/index.api'
 import { useTranslation } from 'react-i18next'
 
 const CardItem = ({ item }) => {

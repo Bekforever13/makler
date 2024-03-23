@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import Container from '../../components/Container'
-import CardItem from '../../components/CardItem'
+import Container from '../../components/shared/Container'
+import CardItem from '../../components/client/CardItem'
 import { useGetAllApartmentsQuery } from '../../store/index.api'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'

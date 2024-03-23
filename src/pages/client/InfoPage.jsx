@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { useAddToFavoriteMutation, useGetOneApartmentsQuery } from '../../store/index.api'
-import Container from '../../components/Container'
+import Container from '../../components/shared/Container'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { formatPhone, formatPrice } from '../../utils/shared'
 import { FreeMode, Navigation, Thumbs } from 'swiper/modules'

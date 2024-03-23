@@ -1,31 +1,43 @@
 import { Card, Dialog } from '@material-tailwind/react'
-import { useACreateCategoryMutation, useAEditCategoryMutation } from '../store/index.api'
+import { useACreateTagMutation, useAEditTagMutation } from '../../store/index.api.js'
 import { Button, IconButton } from '@material-tailwind/react'
 import { CgClose } from 'react-icons/cg'
 import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCategoryToEdit } from '../store/slices/categories.slice'
+import { setTagToEdit } from '../../store/slices/tags.slice.js'
 
-const CreateCategoryModal = ({ open, setIsOpen }) => {
+const CreateTagModal = ({ open, setIsOpen }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm()
-  const { categoryToEdit } = useSelector((s) => s.category)
   const dispatch = useDispatch()
+  const { tagToEdit } = useSelector((s) => s.tag)
+  const [createTag, { isLoading, isSuccess }] = useACreateTagMutation()
 
-  const [createCategory, { isLoading, isSuccess }] = useACreateCategoryMutation()
-  const [editCategory, { isSuccess: EditSuccess, isLoading: EditLoading }] =
-    useAEditCategoryMutation()
+  const [editTag, { isSuccess: EditSuccess, isLoading: EditLoading }] = useAEditTagMutation()
 
   const onSubmit = (data) => {
-    if (categoryToEdit) {
-      editCategory({ id: categoryToEdit.id, name: data })
+    if (tagToEdit) {
+      editTag({
+        id: tagToEdit.id,
+        name: {
+          ru: data.ru,
+          kr: data.kr,
+          qr: data.qr,
+        },
+      })
     } else {
-      createCategory({ name: data })
+      createTag({
+        name: {
+          ru: data.ru,
+          kr: data.kr,
+          qr: data.qr,
+        },
+      })
     }
   }
 
@@ -37,15 +49,19 @@ const CreateCategoryModal = ({ open, setIsOpen }) => {
         kr: '',
       })
       setIsOpen(false)
-      dispatch(setCategoryToEdit(null))
+      dispatch(setTagToEdit(null))
     }
   }, [isSuccess, EditSuccess])
 
   useEffect(() => {
-    if (categoryToEdit) {
-      reset(categoryToEdit.name)
+    if (tagToEdit) {
+      reset({
+        ru: tagToEdit.name.ru,
+        qr: tagToEdit.name.qr,
+        kr: tagToEdit.name.kr,
+      })
     }
-  }, [categoryToEdit])
+  }, [tagToEdit])
 
   return (
     <Dialog open={open} className="w-full shadow-none" size="lg">
@@ -53,7 +69,7 @@ const CreateCategoryModal = ({ open, setIsOpen }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col items-start gap-5 p-5 w-full text-black">
             <div className="flex items-center justify-between w-full">
-              <h1 className="font-semibold text-xl">Новая категория</h1>
+              <h1 className="font-semibold text-xl">Новый тег</h1>
               <IconButton
                 onClick={() => setIsOpen((s) => !s)}
                 variant="text"
@@ -63,14 +79,14 @@ const CreateCategoryModal = ({ open, setIsOpen }) => {
                 <CgClose />
               </IconButton>
             </div>
-            <div className="flex flex-col items-start gap-5 w-full pr-4 overflow-y-scroll">
+            <div className="flex flex-col items-start gap-5 pb-5 w-full pr-4 overflow-y-scroll">
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
                   Русский:
                   <input
                     className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
                     type="text"
-                    placeholder="Категория"
+                    placeholder="Название"
                     {...register('ru', { required: true })}
                   />
                 </div>
@@ -82,7 +98,7 @@ const CreateCategoryModal = ({ open, setIsOpen }) => {
                   <input
                     className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
                     type="text"
-                    placeholder="Категория"
+                    placeholder="Название"
                     {...register('kr', { required: true })}
                   />
                 </div>
@@ -94,7 +110,7 @@ const CreateCategoryModal = ({ open, setIsOpen }) => {
                   <input
                     className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
                     type="text"
-                    placeholder="Категория"
+                    placeholder="Название"
                     {...register('qr', { required: true })}
                   />
                 </div>
@@ -146,4 +162,4 @@ const CreateCategoryModal = ({ open, setIsOpen }) => {
   )
 }
 
-export default CreateCategoryModal
+export default CreateTagModal

@@ -9,23 +9,9 @@ export const api = createApi({
       token && headers.set('Authorization', `Bearer ${token}`)
       return headers
     },
-    // prepareParams: (params, api, { getState }) => {
-    //   const lang = getState().lang // Assuming you have a slice called "lang"
-    //   params.lan = lang
-    //   return params
-    // },
   }),
   refetchOnFocus: false,
-  tagTypes: [
-    'auth',
-    'apartments',
-    'subcategories',
-    'categories',
-    'favorites',
-    'apartment',
-    'regions',
-    'tags',
-  ],
+  tagTypes: ['auth', 'apartments', 'subcategories', 'categories', 'favorites', 'regions', 'tags'],
   endpoints: (build) => ({
     // authorization queries =================================================================
     checkUser: build.query({
@@ -62,7 +48,7 @@ export const api = createApi({
         url: `/apartment/${id}`,
         params: { lan: lang },
       }),
-      providesTags: ['apartment'],
+      providesTags: ['apartments'],
     }),
     getUsersFavorites: build.query({
       query: (body) => ({
@@ -76,7 +62,7 @@ export const api = createApi({
         url: `/favoriteapartment/${id}`,
         method: 'PUT',
       }),
-      invalidatesTags: ['apartments', 'favorites', 'apartment'],
+      invalidatesTags: ['apartments', 'favorites', 'apartments'],
     }),
     createNewApartment: build.mutation({
       query: (body) => ({
@@ -161,14 +147,14 @@ export const api = createApi({
           body: formData,
         }
       },
-      invalidatesTags: ['apartment'],
+      invalidatesTags: ['apartments'],
     }),
     ADeleteImage: build.mutation({
       query: (body) => ({
         url: `/apartment/${body.apartment_id}/image/${body.image_id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['apartment'],
+      invalidatesTags: ['apartments'],
     }),
     // categories
     AGetCategories: build.query({
@@ -225,17 +211,14 @@ export const api = createApi({
       invalidatesTags: ['subcategories'],
     }),
     AEditSubcategory: build.mutation({
-      query: (body) => {
-        console.log('rtk cons', body)
-        return {
-          url: `/subcategory/${body.id}`,
-          method: 'PUT',
-          body: {
-            category_id: body.category_id,
-            name: body.name,
-          },
-        }
-      },
+      query: (body) => ({
+        url: `/subcategory/${body.id}`,
+        method: 'PUT',
+        body: {
+          category_id: body.category_id,
+          name: body.name,
+        },
+      }),
       invalidatesTags: ['subcategories'],
     }),
     // region
@@ -305,6 +288,32 @@ export const api = createApi({
       },
       invalidatesTags: ['tags'],
     }),
+
+    // moderator queries ===============================================================================
+    // apartment
+    MGetApartments: build.query({
+      query: (params) => ({
+        url: '/apartment/moderator',
+        params,
+      }),
+      providesTags: ['apartments'],
+    }),
+    MGetOneApartment: build.query({
+      query: (id) => ({
+        url: `/apartment/${id}/moderator`,
+      }),
+      providesTags: ['apartments'],
+    }),
+    MEditApartmentStatus: build.mutation({
+      query: (body) => {
+        return {
+          url: `/apartment/status/${body.id}`,
+          method: 'PUT',
+          body: { status: body.status },
+        }
+      },
+      invalidatesTags: ['apartments'],
+    }),
   }),
 })
 
@@ -343,4 +352,7 @@ export const {
   useAEditTagMutation,
   useADeleteImageMutation,
   useAAddImageToApartmentMutation,
+  useMGetApartmentsQuery,
+  useMGetOneApartmentQuery,
+  useMEditApartmentStatusMutation,
 } = api

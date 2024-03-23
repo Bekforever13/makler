@@ -1,37 +1,29 @@
 import { Card, Dialog } from '@material-tailwind/react'
-import {
-  useACreateSubcategoryMutation,
-  useAEditSubcategoryMutation,
-  useGetCategoriesQuery,
-} from '../store/index.api'
+import { useACreateRegionMutation, useAEditRegionMutation } from '../../store/index.api.js'
 import { Button, IconButton } from '@material-tailwind/react'
 import { CgClose } from 'react-icons/cg'
-import { Controller, useForm } from 'react-hook-form'
-import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Select from 'react-select'
-import { setCategoryToEdit } from '../store/slices/categories.slice'
+import { setCategoryToEdit } from '../../store/slices/categories.slice.js'
 
-const CreateSubcategoryModal = ({ open, setIsOpen }) => {
+const CreateRegionModal = ({ open, setIsOpen }) => {
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
     reset,
   } = useForm()
   const dispatch = useDispatch()
-  const [categoriesOptions, setCategoriesOptions] = useState()
-  const { subcategoryToEdit } = useSelector((s) => s.subcategory)
-  const [createSubcategory, { isLoading, isSuccess }] = useACreateSubcategoryMutation()
-  const { data: categoriesData, isSuccess: categoriesIsSuccess } = useGetCategoriesQuery({ lan: 'ru' })
-  const [editSubcategory, { isSuccess: EditSuccess, isLoading: EditLoading }] = useAEditSubcategoryMutation()
+  const { regionToEdit } = useSelector((s) => s.region)
+  const [createRegion, { isLoading, isSuccess }] = useACreateRegionMutation()
+
+  const [editRegion, { isSuccess: EditSuccess, isLoading: EditLoading }] = useAEditRegionMutation()
 
   const onSubmit = (data) => {
-    if (subcategoryToEdit) {
-      editSubcategory({
-        id: subcategoryToEdit.id,
-        category_id: data.category_id.value,
+    if (regionToEdit) {
+      editRegion({
+        id: regionToEdit.id,
         name: {
           ru: data.ru,
           kr: data.kr,
@@ -39,8 +31,7 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
         },
       })
     } else {
-      createSubcategory({
-        category_id: data.category_id.value,
+      createRegion({
         name: {
           ru: data.ru,
           kr: data.kr,
@@ -63,22 +54,14 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
   }, [isSuccess, EditSuccess])
 
   useEffect(() => {
-    if (subcategoryToEdit) {
+    if (regionToEdit) {
       reset({
-        category_id: categoriesOptions.find((el) => el.value === subcategoryToEdit.category_id),
-        ru: subcategoryToEdit.name.ru,
-        qr: subcategoryToEdit.name.qr,
-        kr: subcategoryToEdit.name.kr,
+        ru: regionToEdit.name.ru,
+        qr: regionToEdit.name.qr,
+        kr: regionToEdit.name.kr,
       })
     }
-  }, [subcategoryToEdit])
-
-  useEffect(() => {
-    if (categoriesData?.data) {
-      const mappedData = categoriesData?.data.map((el) => ({ value: el.id, label: el.name }))
-      setCategoriesOptions(mappedData)
-    }
-  }, [categoriesIsSuccess])
+  }, [regionToEdit])
 
   return (
     <Dialog open={open} className="w-full shadow-none" size="lg">
@@ -86,7 +69,7 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col items-start gap-5 p-5 w-full text-black">
             <div className="flex items-center justify-between w-full">
-              <h1 className="font-semibold text-xl">Новая подкатегория</h1>
+              <h1 className="font-semibold text-xl">Новый регион</h1>
               <IconButton
                 onClick={() => setIsOpen((s) => !s)}
                 variant="text"
@@ -99,31 +82,11 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
             <div className="flex flex-col items-start gap-5 pb-5 w-full pr-4 overflow-y-scroll">
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-                  Категория:
-                  <Controller
-                    name="category_id"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <Select
-                        {...field}
-                        placeholder="Выберите категорию"
-                        options={categoriesOptions}
-                        className="basic-multi-select py-1 px-2 rounded-md md:w-1/2 sm:w-full"
-                        classNamePrefix="select"
-                      />
-                    )}
-                  />
-                </div>
-                {errors.ru && <span className="text-red-500">Пожалуйста, заполните поле</span>}
-              </label>
-              <label className="flex flex-col border-b-[1px] w-full">
-                <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
                   Русский:
                   <input
                     className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
                     type="text"
-                    placeholder="Подкатегория"
+                    placeholder="Название"
                     {...register('ru', { required: true })}
                   />
                 </div>
@@ -135,7 +98,7 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
                   <input
                     className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
                     type="text"
-                    placeholder="Подкатегория"
+                    placeholder="Название"
                     {...register('kr', { required: true })}
                   />
                 </div>
@@ -147,7 +110,7 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
                   <input
                     className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
                     type="text"
-                    placeholder="Подкатегория"
+                    placeholder="Название"
                     {...register('qr', { required: true })}
                   />
                 </div>
@@ -199,4 +162,4 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
   )
 }
 
-export default CreateSubcategoryModal
+export default CreateRegionModal

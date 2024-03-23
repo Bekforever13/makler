@@ -1,6 +1,13 @@
 import { Link } from 'react-router-dom'
+import { useCheckUserQuery } from '../store/index.api'
 
 const NotFound = () => {
+  const { isSuccess } = useCheckUserQuery()
+
+  if (!isSuccess) {
+    return <h1>Loading...</h1>
+  }
+
   return (
     <div className="flex items-center justify-center w-screen h-screen flex-col gap-10">
       <h1 className="text-5xl font-bold">404</h1>

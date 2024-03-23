@@ -1,4 +1,3 @@
-import { FaPencil } from 'react-icons/fa6'
 import {
   Card,
   CardHeader,
@@ -6,33 +5,40 @@ import {
   Button,
   CardBody,
   CardFooter,
-  IconButton,
-  Tooltip,
 } from '@material-tailwind/react'
-import { IoAdd } from 'react-icons/io5'
-import { useADeleteApartmentMutation, useGetAllApartmentsQuery } from '../../store/index.api'
+import { useMGetApartmentsQuery } from '../../store/index.api'
 import { useState } from 'react'
-import { FaRegTrashAlt } from 'react-icons/fa'
-import UserCreateModal from '../../components/admin/UserCreateModal'
 import { useNavigate } from 'react-router-dom'
+import { FaRegEye } from 'react-icons/fa'
+import { formatPrice } from '../../utils/shared'
 
-const TABLE_HEAD = ['Адрес', 'Категория', 'Цена', 'Регион', 'Комната', 'Общая площадь', 'Действия']
+const TABLE_HEAD = [
+  'Адрес',
+  'Категория',
+  'Статус',
+  'Цена',
+  'Регион',
+  'Комната',
+  'Общая площадь',
+  'Действия',
+]
 
-const ApartmentPage = () => {
-  const [open, setOpen] = useState(false)
+const ModeratorHome = () => {
   const [page, setPage] = useState(1)
+  const [active, setActive] = useState('all')
+  const [confirmed, setConfirmed] = useState(1)
+  const [waiting, setWaiting] = useState(1)
+  const [canceled, setCanceled] = useState(1)
   const navigate = useNavigate()
-  const { data } = useGetAllApartmentsQuery({
+  const { data } = useMGetApartmentsQuery({
     page,
     limit: 20,
-    lan: 'ru',
+    confirmed: confirmed,
+    waiting: waiting,
+    canceled: canceled,
   })
-  const [deleteApartment] = useADeleteApartmentMutation()
-  const totalPages = Math.ceil(data?.total / 20) ?? 1
 
-  const handleDelete = (id) => {
-    deleteApartment(id)
-  }
+  const totalPages = Math.ceil(data?.total / 20) ?? 1
 
   return (
     <Card className="h-full w-full">
@@ -48,12 +54,60 @@ const ApartmentPage = () => {
           </div>
           <div className="flex w-full shrink-0 gap-2 md:w-max">
             <Button
-              onClick={() => setOpen(true)}
-              className="flex items-center gap-3"
-              color="blue"
+              className={active === 'all' ? 'text-white' : 'text-blue-100'}
+              variant="gradient"
+              color={active === 'all' ? 'blue' : 'light-blue'}
               size="sm"
+              onClick={() => {
+                setActive('all')
+                setConfirmed(1)
+                setWaiting(1)
+                setCanceled(1)
+              }}
             >
-              <IoAdd size="20" /> Добавить
+              Все
+            </Button>
+            <Button
+              className={active === 'confirmed' ? 'text-white' : 'text-blue-100'}
+              variant="gradient"
+              color={active === 'confirmed' ? 'blue' : 'light-blue'}
+              size="sm"
+              onClick={() => {
+                setActive('confirmed')
+                setConfirmed(1)
+                setWaiting(0)
+                setCanceled(0)
+              }}
+            >
+              Подтвержденные
+            </Button>
+            <Button
+              className={active === 'cancelled' ? 'text-white' : 'text-blue-100'}
+              variant="gradient"
+              color={active === 'cancelled' ? 'blue' : 'light-blue'}
+              size="sm"
+              onClick={() => {
+                setActive('cancelled')
+                setConfirmed(0)
+                setWaiting(0)
+                setCanceled(1)
+              }}
+            >
+              Отклоненные
+            </Button>
+            <Button
+              className={active === 'waiting' ? 'text-white' : 'text-blue-100'}
+              variant="gradient"
+              color={active === 'waiting' ? 'blue' : 'light-blue'}
+              size="sm"
+              onClick={() => {
+                setActive('waiting')
+                setConfirmed(0)
+                setWaiting(1)
+                setCanceled(0)
+              }}
+            >
+              Ожидающие
             </Button>
           </div>
         </div>
@@ -77,7 +131,7 @@ const ApartmentPage = () => {
           </thead>
           <tbody>
             {data?.data?.map(
-              ({ id, address, category, region, price, room_count, total_area }, index) => {
+              ({ id, address, status, category, region, price, room_count, total_area }, index) => {
                 const isLast = index === data?.data?.length - 1
                 const classes = isLast ? 'px-4 py-3' : 'px-4 py-3 border-b border-blue-gray-50'
 
@@ -94,8 +148,27 @@ const ApartmentPage = () => {
                       </Typography>
                     </td>
                     <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className={`font-normal py-2 px-4 rounded-lg text-center text-white ${
+                          status === 'confirmed'
+                            ? 'bg-green-300'
+                            : status === 'canceled'
+                            ? 'bg-red-300'
+                            : 'bg-yellow-300 text-black'
+                        }`}
+                      >
+                        {status === 'confirmed'
+                          ? 'Подтверждён'
+                          : status === 'canceled'
+                          ? 'Отклонён'
+                          : 'В ожидании'}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
                       <Typography variant="small" color="blue-gray" className="font-normal">
-                        {price}
+                        {formatPrice(price) + " сум"}
                       </Typography>
                     </td>
                     <td className={classes}>
@@ -130,19 +203,14 @@ const ApartmentPage = () => {
                       </div>
                     </td>
                     <td className={classes}>
-                      <Tooltip content="Edit Apartment">
-                        <IconButton
-                          onClick={() => navigate(`/admin/apartments/${id}`)}
-                          variant="text"
-                        >
-                          <FaPencil color="blue" className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip content="Delete Apartment">
-                        <IconButton onClick={() => handleDelete(id)} variant="text">
-                          <FaRegTrashAlt color="red" className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
+                      <Button
+                        onClick={() => navigate(`/moderator/apartments/${id}`)}
+                        variant="text"
+                        className="flex items-center gap-3 w-full"
+                      >
+                        <FaRegEye color="blue" size="18" />
+                        Смотреть
+                      </Button>
                     </td>
                   </tr>
                 )
@@ -172,9 +240,8 @@ const ApartmentPage = () => {
           Вперёд
         </Button>
       </CardFooter>
-      <UserCreateModal open={open} setIsOpen={setOpen} />
     </Card>
   )
 }
 
-export default ApartmentPage
+export default ModeratorHome

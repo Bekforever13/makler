@@ -77,6 +77,7 @@ const AsideMenu = () => {
           </li>
         </Link>
       </ul>
+      <div className="mt-auto text-center text-blue-100 italic text-2xl">Админ</div>
     </div>
   )
 }
