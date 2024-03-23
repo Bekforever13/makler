@@ -5,8 +5,8 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_BASE_URL,
     prepareHeaders: (headers) => {
-      const token = localStorage.getItem('makler_token')
-      token && headers.set('Authorization', `Bearer ${token}`)
+      headers.set('Authorization', `Bearer ${localStorage.getItem('makler_token')}`)
+      headers.set('Accept', 'application/json')
       return headers
     },
   }),
@@ -15,9 +15,7 @@ export const api = createApi({
   endpoints: (build) => ({
     // authorization queries =================================================================
     checkUser: build.query({
-      query: () => ({
-        url: '/check',
-      }),
+      query: () => ({ url: '/check' }),
       providesTags: ['auth'],
     }),
     applyCode: build.mutation({
@@ -26,7 +24,6 @@ export const api = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['auth', 'apartments', 'favorites'],
     }),
     sendCode: build.mutation({
       query: (body) => ({

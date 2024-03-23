@@ -20,7 +20,7 @@ const ModeratorMenu = () => {
           </li>
         </Link>
       </ul>
-      <div className='mt-auto text-center text-blue-100 italic text-2xl'>Модератор</div>
+      <div className="mt-auto text-center text-blue-100 italic text-2xl">Модератор</div>
     </div>
   )
 }

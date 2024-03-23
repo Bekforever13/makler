@@ -79,7 +79,7 @@ const SatiwPage = () => {
           <div className="flex items-center gap-5 flex-wrap">
             <Button
               onClick={() => handleSelectAll()}
-              className={`normal-case rounded-[5px] md:py-2 sm:px-3 sm:py-1 text-[12px] font-semibold  ${
+              className={`normal-case rounded-[5px] md:py-2 sm:px-3 sm:py-1 text-xs font-semibold  ${
                 activeSubcategory !== 'all' ? 'text-blue-100' : 'text-white'
               }`}
               variant="gradient"
@@ -94,7 +94,7 @@ const SatiwPage = () => {
                   {activeSubcategory !== el.name ? (
                     <Button
                       onClick={() => handleSelectSubcategory(el)}
-                      className="normal-case rounded-[5px] md:py-2 sm:px-3 sm:py-1  text-blue-100 text-[12px] font-semibold"
+                      className="normal-case rounded-[5px] md:py-2 sm:px-3 sm:py-1  text-blue-100 text-xs font-semibold"
                       variant="gradient"
                       color="light-blue"
                       size="sm"
@@ -104,7 +104,7 @@ const SatiwPage = () => {
                   ) : (
                     <Button
                       onClick={() => handleSelectSubcategory(el)}
-                      className="normal-case rounded-[5px] px-6 text-[12px] font-medium sm:hidden md:flex"
+                      className="normal-case rounded-[5px] px-6 text-xs font-medium sm:hidden md:flex"
                       color="blue"
                       variant="gradient"
                       size="sm"

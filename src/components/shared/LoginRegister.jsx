@@ -13,7 +13,7 @@ import PhoneNumberInput from './PhoneNumberInput'
 import loginIcon from '../../images/image/login-icon.webp'
 import loginIcon2 from '../../images/image/login-icon2.png'
 import VerificationInput from 'react-verification-input'
-import { useApplyCodeMutation, useSendCodeMutation } from '../../store/index.api'
+import { useApplyCodeMutation, useCheckUserQuery, useSendCodeMutation } from '../../store/index.api'
 import { useDispatch, useSelector } from 'react-redux'
 import { setIsAuthenticated, setToken } from '../../store/slices/auth.slice'
 
@@ -21,6 +21,7 @@ function LoginRegister({ open, handleOpen }) {
   const [smsCode, setSmsCode] = useState('')
   const [isHaveCode, setIsHaveCode] = useState(false)
   const { phoneNumber } = useSelector((s) => s.auth)
+  const { refetch } = useCheckUserQuery()
   const dispatch = useDispatch()
   const [
     login,
@@ -39,8 +40,10 @@ function LoginRegister({ open, handleOpen }) {
 
   useEffect(() => {
     if (loginIsSuccess) {
-      dispatch(setIsAuthenticated(true))
+      localStorage.setItem('makler_token', loginData.data.token)
       dispatch(setToken(loginData.data.token))
+      dispatch(setIsAuthenticated(true))
+      refetch()
       handleOpen()
     }
     if (loginError) {

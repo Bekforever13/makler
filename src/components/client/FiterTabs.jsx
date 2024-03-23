@@ -80,7 +80,7 @@ const FiterTabs = () => {
             <Tab
               key={value}
               value={value}
-              className={`text-[12px] font-semibold ${
+              className={`text-xs font-semibold ${
                 activeTab === value ? 'text-gray-900' : 'text-white'
               }`}
               onClick={() => {

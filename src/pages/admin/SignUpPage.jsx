@@ -5,25 +5,55 @@ import logo from '../../images/logo/logo.svg'
 import signBg from '../../images/image/sign-bg.jpg'
 import { Button, Typography } from '@material-tailwind/react'
 import PhoneNumberInput from '../../components/shared/PhoneNumberInput'
-import LoginRegister from '../../components/shared/LoginRegister'
-import { useDispatch } from 'react-redux'
-import { useCheckUserQuery } from '../../store/index.api'
-import { setIsAuthenticated, setUser } from '../../store/slices/auth.slice'
+import { useDispatch, useSelector } from 'react-redux'
+import { useApplyCodeMutation, useSendCodeMutation } from '../../store/index.api'
+import { setIsAuthenticated, setToken, setUser } from '../../store/slices/auth.slice'
+import VerificationInput from 'react-verification-input'
 
 const SignUp = () => {
-  const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen((cur) => !cur)
   const navigate = useNavigate()
-  const { data, isSuccess } = useCheckUserQuery()
+  const [smsCode, setSmsCode] = useState('')
+  const [isHaveCode, setIsHaveCode] = useState(false)
   const dispatch = useDispatch()
+  const { user } = useSelector((s) => s.auth)
+  const { phoneNumber } = useSelector((s) => s.auth)
+  const [
+    login,
+    { data: loginData, isSuccess: loginIsSuccess, isLoading: loginLoading, isError: loginError },
+  ] = useApplyCodeMutation()
+  const [getSms, { isSuccess: getSmsIsSuccess, isLoading: getCodeLoading }] = useSendCodeMutation()
+
+  const handleGetSms = () => getSms({ phone: phoneNumber })
+  const handleLogin = () => login({ phone: phoneNumber, code: smsCode })
 
   useEffect(() => {
-    if (isSuccess) {
-      dispatch(setIsAuthenticated(true))
-      dispatch(setUser(data?.data))
-      navigate('/admin')
+    if (user?.role) {
+      user?.role === 'admin' && navigate('/admin')
+      user?.role === 'moderator' && navigate('/moderator')
     }
-  }, [isSuccess])
+  }, [user])
+
+  useEffect(() => {
+    if (loginData?.data) {
+      dispatch(setIsAuthenticated(true))
+      dispatch(setToken(loginData.data.token))
+      dispatch(setUser(loginData.data.user))
+      loginData.data.user.role === 'admin' && navigate('/admin')
+      loginData.data.user.role === 'moderator' && navigate('/moderator')
+    }
+  }, [loginIsSuccess])
+
+  useEffect(() => {
+    if (loginError) {
+      setSmsCode('')
+    }
+  }, [loginError])
+
+  useEffect(() => {
+    if (getSmsIsSuccess) {
+      setIsHaveCode(true)
+    }
+  }, [getSmsIsSuccess])
 
   return (
     <div className="flex justify-between gap-2 p-[1%] mx-auto h-[100vh]">
@@ -47,40 +77,74 @@ const SignUp = () => {
                 <span>Bas betke qaytiw</span>
               </div>
             </Link>
-            <Typography variant="h4" color="blue-gray" className="mt-4 text-center">
-              {/* eslint-disable-next-line react/no-unescaped-entities */}
-              Dizimnen o'tiw
-            </Typography>
-            <Typography className="mb-4 font-normal text-center" variant="paragraph" color="gray">
-              {/* eslint-disable-next-line react/no-unescaped-entities */}
-              Dizimnen o'tiw ushin telefon nomerin'izdi kiritin'
-            </Typography>
-            <Typography className="mb-1" variant="h6">
-              Telefon nomer
-            </Typography>
-            <PhoneNumberInput />
+            {isHaveCode ? (
+              <>
+                <Typography variant="h4" color="blue-gray" className="mt-4 text-center">
+                  {/* eslint-disable-next-line react/no-unescaped-entities */}
+                  SMS Kod
+                </Typography>
+                <Typography
+                  className="mb-4 font-normal text-center"
+                  variant="paragraph"
+                  color="gray"
+                >
+                  {/* eslint-disable-next-line react/no-unescaped-entities */}
+                  Dizimnen o'tiw ushin telefon nomerin'izge jiberilgen sms kodti kiritin'
+                </Typography>
+                <div className="px-[5%] flex justify-center items-center">
+                  <VerificationInput
+                    length={5}
+                    value={smsCode}
+                    onChange={(value) => setSmsCode(value)}
+                    classNames={{
+                      container: 'container',
+                      character: 'character',
+                      characterInactive: 'character--inactive',
+                      characterSelected: 'character--selected',
+                      characterFilled: 'character--filled',
+                    }}
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                <Typography variant="h4" color="blue-gray" className="mt-4 text-center">
+                  {/* eslint-disable-next-line react/no-unescaped-entities */}
+                  Dizimnen o'tiw
+                </Typography>
+                <Typography
+                  className="mb-4 font-normal text-center"
+                  variant="paragraph"
+                  color="gray"
+                >
+                  {/* eslint-disable-next-line react/no-unescaped-entities */}
+                  Dizimnen o'tiw ushin telefon nomerin'izdi kiritin'
+                </Typography>
+                <Typography className="mb-1" variant="h6">
+                  Telefon nomer
+                </Typography>
+                <PhoneNumberInput />
+                <span className="text-red-600 font-medium text-sm">
+                  {loginError && 'Kod qate! Qaytadan urinip korin'}
+                </span>
+              </>
+            )}
           </div>
           <div className="pt-0 text-end mt-3">
-            <Button variant="gradient" color="blue" size="sm" className="rounded-md">
+            <Button
+              variant="gradient"
+              color="blue"
+              size="sm"
+              className="rounded-md"
+              loading={loginLoading || getCodeLoading}
+              onClick={isHaveCode ? handleLogin : handleGetSms}
+            >
               {/* eslint-disable-next-line react/no-unescaped-entities */}
               Dizimnen o'tiw
             </Button>
-            <Typography variant="small" className="mt-4 flex justify-center">
-              Mende dizimnen otken nomer bar?
-              <Typography
-                as="a"
-                variant="small"
-                color="blue-gray"
-                className="ml-1 font-bold cursor-pointer"
-                onClick={() => handleOpen()}
-              >
-                Kiriw
-              </Typography>
-            </Typography>
           </div>
         </div>
       </div>
-      <LoginRegister open={open} handleOpen={handleOpen} />
     </div>
   )
 }

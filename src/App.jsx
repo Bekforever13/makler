@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -23,13 +24,32 @@ import RegionsPage from './pages/admin/RegionPage'
 import ApartmentEditPage from './pages/admin/ApartmentEditPage'
 import ModeratorLayout from './layouts/ModeratorLayout'
 import ModeratorHome from './pages/moderator/ModeratorHome'
-import { useCheckUserQuery } from './store/index.api'
-import { useEffect, useState } from 'react'
 import ModeratorApartmentInfo from './pages/moderator/ModeratorApartmentInfo'
+import { useCheckUserQuery } from './store/index.api'
+import { useDispatch, useSelector } from 'react-redux'
+import { setIsAuthenticated, setUser } from './store/slices/auth.slice'
 
 const App = () => {
   const [mounted, setMounted] = useState(false)
-  const { data } = useCheckUserQuery()
+  const { data, isSuccess } = useCheckUserQuery()
+  const { user } = useSelector((s) => s.auth)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setIsAuthenticated(true))
+      dispatch(setUser(data?.data))
+    }
+  }, [isSuccess])
+
+  if (!mounted) {
+    return <h1>Loading...</h1>
+  }
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
@@ -42,7 +62,7 @@ const App = () => {
           <Route path="/info/:id" element={<InfoPage />} />
         </Route>
         <Route path="/login" element={<SignUp />} />
-        {data?.data?.role === 'admin' && (
+        {user?.role === 'admin' && (
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="/admin" element={<Dashboard />} />
             <Route path="/admin/apartments" element={<ApartmentPage />} />
@@ -53,9 +73,7 @@ const App = () => {
             <Route path="/admin/regions" element={<RegionsPage />} />
           </Route>
         )}
-        
-        {/* change role from admin to moderator below */}
-        {data?.data?.role === 'admin' && (
+        {user?.role === 'moderator' && (
           <Route path="/moderator" element={<ModeratorLayout />}>
             <Route path="/moderator" element={<ModeratorHome />} />
             <Route path="/moderator/apartments/:id" element={<ModeratorApartmentInfo />} />
@@ -66,11 +84,6 @@ const App = () => {
     ),
   )
 
-  useEffect(() => setMounted(true), [])
-
-  if (!mounted) {
-    return <h1>Loading...</h1>
-  }
   return <RouterProvider router={router} />
 }
 

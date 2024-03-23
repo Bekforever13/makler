@@ -79,7 +79,7 @@ const ArendaPage = () => {
           <div className="flex items-center gap-5 flex-wrap">
             <Button
               onClick={() => handleSelectAll()}
-              className={`normal-case rounded-[5px] px-6 text-[12px] font-semibold py-2 ${
+              className={`normal-case rounded-[5px] px-6 text-xs font-semibold py-2 ${
                 activeSubcategory !== 'all' ? 'text-blue-100' : 'text-white'
               }`}
               variant="gradient"
@@ -94,7 +94,7 @@ const ArendaPage = () => {
                   {activeSubcategory !== el.name ? (
                     <Button
                       onClick={() => handleSelectSubcategory(el)}
-                      className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-[12px] font-semibold"
+                      className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-xs font-semibold"
                       variant="gradient"
                       color="light-blue"
                       size="sm"
@@ -104,7 +104,7 @@ const ArendaPage = () => {
                   ) : (
                     <Button
                       onClick={() => handleSelectSubcategory(el)}
-                      className="normal-case rounded-[5px] px-6 text-[12px] font-medium sm:hidden md:flex"
+                      className="normal-case rounded-[5px] px-6 text-xs font-medium sm:hidden md:flex"
                       color="blue"
                       variant="gradient"
                       size="sm"

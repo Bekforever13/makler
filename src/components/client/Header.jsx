@@ -124,7 +124,7 @@ const Header = () => {
                     size="sm"
                     color="light-blue"
                     variant="text"
-                    className="rounded-md text-gray-800 text-[12px] flex items-center justify-center gap-1"
+                    className="rounded-md text-gray-800 text-xs flex items-center justify-center gap-1"
                   >
                     <GiHamburgerMenu />
                     Menu
@@ -158,7 +158,7 @@ const Header = () => {
                 </Select>
               </div>
               <Button
-                className="normal-case rounded-[5px] md:py-2 sm:px-3 sm:py-1 text-[12px] font-medium sm:block md:flex w-full whitespace-nowrap"
+                className="normal-case rounded-[5px] md:py-2 sm:px-3 sm:py-1 text-xs font-medium sm:block md:flex w-fit whitespace-nowrap"
                 color="blue"
                 variant="gradient"
                 size="sm"
@@ -169,7 +169,7 @@ const Header = () => {
               {!isAuthenticated ? (
                 <Button
                   onClick={handleOpen}
-                  className="normal-case rounded-[5px] md:px-6 md:py-2 sm:px-3 sm:py-1 text-blue-100 text-[12px] font-semibold"
+                  className="normal-case w-fit rounded-[5px] md:px-6 md:py-2 sm:px-3 sm:py-1 text-blue-100 text-xs font-semibold "
                   variant="gradient"
                   color="light-blue"
                   size="sm"
@@ -180,7 +180,7 @@ const Header = () => {
                 <div className="relative">
                   <Button
                     onClick={() => setIsOpenProfile((s) => !s)}
-                    className="normal-case rounded-[5px] md:px-6 md:py-2 sm:px-3 sm:py-1 text-blue-100 text-[12px] font-semibold"
+                    className="normal-case rounded-[5px] md:px-6 md:py-2 sm:px-3 sm:py-1 text-blue-100 text-xs font-semibold"
                     variant="gradient"
                     color="light-blue"
                     size="sm"
@@ -197,7 +197,7 @@ const Header = () => {
                       </span>
                       {user?.role === 'admin' && (
                         <Button
-                          className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-[12px] font-semibold"
+                          className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-xs font-semibold"
                           variant="gradient"
                           color="light-blue"
                           size="sm"
@@ -224,7 +224,7 @@ const Header = () => {
                       </div>
                       <Button
                         onClick={handleLogout}
-                        className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-[12px] font-semibold"
+                        className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-xs font-semibold"
                         variant="gradient"
                         color="light-blue"
                         size="sm"

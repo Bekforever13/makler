@@ -74,7 +74,7 @@ const InfoPage = () => {
             }}
           >
             <Button
-              className="normal-case flex items-center gap-3 rounded-[5px] px-6 py-2 text-white text-[12px] font-semibold"
+              className="normal-case flex items-center gap-3 rounded-[5px] px-6 py-2 text-white text-xs font-semibold"
               variant="gradient"
               color="blue"
               size="sm"
@@ -83,7 +83,7 @@ const InfoPage = () => {
             </Button>
           </RWebShare>
           <Button
-            className="normal-case flex items-center gap-3 rounded-[5px] px-6 py-2 text-blue-100 text-[12px] font-semibold"
+            className="normal-case flex items-center gap-3 rounded-[5px] px-6 py-2 text-blue-100 text-xs font-semibold"
             variant="gradient"
             color="light-blue"
             size="sm"
