@@ -8,7 +8,7 @@ const HomeLayout = () => {
   const { pathname } = useLocation()
 
   return (
-    <div className="bg-naqis bg-[length:50px_410px] bg-fixed min-h-[100vh] flex flex-col justify-between">
+    <div className="home_layout min-h-[100vh] flex flex-col justify-between">
       <Header />
       <div className="flex-1">
         {pathname === '/' && <HomeBanner />}
