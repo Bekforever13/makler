@@ -45,6 +45,7 @@ export default withMT({
       backgroundImage: {
         'naqis1': "url('./src/images/logo/naqis1.svg')",
         'naqis2': "url('./src/images/logo/naqis2.svg')",
+        'naqis': "url('./naqis2.svg')",
       }
     },
   },
