@@ -1,38 +1,53 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Container from '../../components/shared/Container'
 import CardItem from '../../components/client/CardItem'
 import { useGetAllApartmentsQuery } from '../../store/index.api'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import { Option, Select } from '@material-tailwind/react'
 
 const HomePage = () => {
   const [page, setPage] = useState(1)
+  const [sort, setSort] = useState('')
+  const [apartments, setApartments] = useState(null)
   const { filters } = useSelector((s) => s.apartments)
   const { t } = useTranslation()
   const lang = localStorage.getItem('makler_lang') || 'ru'
 
-  const { data, isFetching, isSuccess } = useGetAllApartmentsQuery({
+  const { data, isLoading, isSuccess } = useGetAllApartmentsQuery({
     ...filters,
     page,
     limit: 20,
     lan: lang,
+    price: sort !== '' && sort,
   })
   const totalPages = Math.ceil(data?.total / 20)
 
-  const decrementPage = () => {
-    setPage((prev) => prev - 1)
-  }
-  const incrementPage = () => {
-    setPage((prev) => prev + 1)
-  }
+  const decrementPage = () => setPage((prev) => prev - 1)
+  const incrementPage = () => setPage((prev) => prev + 1)
+
+  useEffect(() => {
+    if (data) {
+      setApartments(data.data)
+    }
+  }, [data, sort])
 
   return (
     <div className="py-4">
       <Container>
-        <h1 className="text-[20px] text-gray-800 font-semibold my-3">{t('hero_title')}</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-[20px] text-gray-800 font-semibold my-3">{t('hero_title')}</h1>
+          <div>
+            <Select value={sort} label={'Сортировка'} onChange={(e) => setSort(e)}>
+              <Option value="">По умолчанию</Option>
+              <Option value="asc">Самые дешёвые</Option>
+              <Option value="desc">Самые дорогие</Option>
+            </Select>
+          </div>
+        </div>
         <div className="flex flex-col items-center gap-10">
           {/* loading spinner */}
-          {isFetching && (
+          {isLoading && (
             <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
               <svg
                 className="text-gray-300 animate-spin"
@@ -61,9 +76,9 @@ const HomePage = () => {
             </div>
           )}
           {/* show data */}
-          {isSuccess && !isFetching && (
+          {isSuccess && !isLoading && (
             <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-col-5 gap-4">
-              {data?.data?.map((el) => (
+              {apartments?.map((el) => (
                 <CardItem key={el.id} item={el} />
               ))}
             </div>

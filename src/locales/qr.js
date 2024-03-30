@@ -50,5 +50,7 @@ export const qr = {
     errorFillForm: 'Ótinish, maydandı toldırıń*',
     newApartment: 'Jańa daǵaza',
     share: 'Úlesiw',
+    enterNumber: 'Telefon nomerin kiritiń',
+    more: 'Tolıq maǵlıwmatlar',
   },
 }

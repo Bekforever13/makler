@@ -1,9 +1,13 @@
-import { MdLocationPin } from 'react-icons/md'
 import { AiFillHeart } from 'react-icons/ai'
-// import { AiTwotoneHeart } from "react-icons/ai";
 import { AiOutlineHeart } from 'react-icons/ai'
-import { BsHouseDoor } from 'react-icons/bs'
-import { Card, CardBody, CardHeader, IconButton, Typography } from '@material-tailwind/react'
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  IconButton,
+  Typography,
+} from '@material-tailwind/react'
 import { formatPrice } from '../../utils/shared'
 import { useNavigate } from 'react-router-dom/dist'
 import { useAddToFavoriteMutation } from '../../store/index.api'
@@ -47,28 +51,25 @@ const CardItem = ({ item }) => {
         </IconButton>
       </CardHeader>
       <CardBody onClick={handleClick} className="p-3">
-        <Typography variant="h6" color="blue-gray" className="font-[Montserrat] text-[18px]">
-          {formatPrice(item.price)} {t('sum')}
+        <Typography variant="h6" color="blue-gray" className="font-[Montserrat] text-sm">
+          {item.address}
         </Typography>
-        <div className="mt-1">
-          <div className="text-gray-600 text-[15px] font-medium flex items-center gap-3">
-            <BsHouseDoor size="22" />
-            <div className="flex items-start flex-col">
-              <span>
-                {t('rooms')}: {item.room_count}
-              </span>
-              <span>
-                {t('total_area')}: {item.total_area}м<sup>2</sup>
-              </span>
-              <span>
-                {t('category')}: {item.category.name}
-              </span>
-            </div>
+        <div className="text-gray-600 text-sm font-medium flex flex-col gap-1">
+          <span>
+            {t('rooms')}: {item.room_count} · {t('total_area')}: {item.total_area}м<sup>2</sup>
+          </span>
+          <span>
+            {t('category')}: {item.category.name}
+          </span>
+          <span>{item.region.name}</span>
+          <div className="flex items-center justify-between">
+            <b>
+              {formatPrice(item.price)} {t('sum')}
+            </b>
+            <Button size="sm" color="blue">
+              {t('more')}
+            </Button>
           </div>
-          <Typography color="gray" className="text-[15px] font-medium flex items-center gap-3">
-            <MdLocationPin size="22" className="text-red-500 mt-[3px]" />
-            <span>{item.region.name}</span>
-          </Typography>
         </div>
       </CardBody>
     </Card>

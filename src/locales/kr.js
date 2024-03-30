@@ -50,5 +50,7 @@ export const kr = {
     errorFillForm: 'Өтиниш, майданды толдырың*',
     newApartment: 'Жаңа дағаза',
     share: 'Үлесиў',
+    enterNumber: 'Телефон номерин киритиң',
+    more: 'Толық мағлыўматлар',
   },
 }

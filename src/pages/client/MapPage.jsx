@@ -10,7 +10,7 @@ const MapPage = () => {
   return (
     <YMaps query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}>
       <Map
-        style={{ width: '90vw', height: '75vh', margin: '0 auto' }}
+        style={{ width: '90vw', height: '75vh', margin: '50px auto 0' }}
         defaultState={{ center: [42.465139, 59.613292], zoom: 13 }}
       >
         {data?.data?.map((item) => {

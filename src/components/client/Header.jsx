@@ -14,7 +14,7 @@ import {
 } from '@material-tailwind/react'
 import LoginRegister from '../shared/LoginRegister'
 import { useDispatch, useSelector } from 'react-redux'
-import { setIsAuthenticated } from '../../store/slices/auth.slice'
+import { setAuthModal, setIsAuthenticated } from '../../store/slices/auth.slice'
 import { api } from '../../store/index.api'
 import UserCreateModal from '../admin/UserCreateModal'
 import { useTranslation } from 'react-i18next'
@@ -22,7 +22,6 @@ import { useTranslation } from 'react-i18next'
 const Header = () => {
   const { t, i18n } = useTranslation()
   const localLang = localStorage.getItem('makler_lang')
-  const [open, setOpen] = useState(false)
   const [lang, setLang] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isOpenProfile, setIsOpenProfile] = useState(false)
@@ -30,7 +29,7 @@ const Header = () => {
   const { isAuthenticated, user } = useSelector((s) => s.auth)
   const dispatch = useDispatch()
 
-  const handleOpen = () => setOpen((cur) => !cur)
+  const handleOpen = () => dispatch(setAuthModal(true))
   const handleLogout = () => {
     localStorage.removeItem('makler_token')
     dispatch(setIsAuthenticated(false))
@@ -205,6 +204,16 @@ const Header = () => {
                           <Link to="/admin">Админ панель</Link>
                         </Button>
                       )}
+                      {user?.role === 'moderator' && (
+                        <Button
+                          className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-xs font-semibold"
+                          variant="gradient"
+                          color="light-blue"
+                          size="sm"
+                        >
+                          <Link to="/moderator">Модератор панель</Link>
+                        </Button>
+                      )}
                       <div className="md:hidden sm:block">
                         <Select
                           value={lang}
@@ -239,7 +248,7 @@ const Header = () => {
           </div>
         </header>
       </Container>
-      <LoginRegister open={open} handleOpen={handleOpen} />
+      <LoginRegister />
       <UserCreateModal open={isModalOpen} setIsOpen={setIsModalOpen} />
     </div>
   )

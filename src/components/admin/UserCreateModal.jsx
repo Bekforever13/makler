@@ -3,7 +3,12 @@ import CreatingForm from '../shared/CreatingForm'
 
 const UserCreateModal = ({ open, setIsOpen }) => {
   return (
-    <Dialog open={open} className="w-full shadow-none" size="lg">
+    <Dialog
+      handler={() => setIsOpen((s) => !s)}
+      open={open}
+      className="w-full shadow-none"
+      size="lg"
+    >
       <Card className="w-full rounded-md">
         <CreatingForm setIsOpen={setIsOpen} />
       </Card>

@@ -5,6 +5,7 @@ const initialState = {
   token: '',
   phoneNumber: '',
   user: null,
+  authModal: false,
 }
 
 const AuthSlice = createSlice({
@@ -30,6 +31,9 @@ const AuthSlice = createSlice({
     setUser(state, { payload }) {
       state.user = payload
     },
+    setAuthModal(state, { payload }) {
+      state.authModal = payload
+    },
   },
 })
 export const {
@@ -39,6 +43,7 @@ export const {
   setToken,
   setPhoneNumber,
   setUser,
+  setAuthModal,
 } = AuthSlice.actions
 
 export default AuthSlice.reducer

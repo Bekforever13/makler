@@ -15,12 +15,12 @@ import loginIcon2 from '../../images/image/login-icon2.png'
 import VerificationInput from 'react-verification-input'
 import { useApplyCodeMutation, useCheckUserQuery, useSendCodeMutation } from '../../store/index.api'
 import { useDispatch, useSelector } from 'react-redux'
-import { setIsAuthenticated, setToken } from '../../store/slices/auth.slice'
+import { setAuthModal, setIsAuthenticated, setToken } from '../../store/slices/auth.slice'
 
-function LoginRegister({ open, handleOpen }) {
+function LoginRegister() {
   const [smsCode, setSmsCode] = useState('')
   const [isHaveCode, setIsHaveCode] = useState(false)
-  const { phoneNumber } = useSelector((s) => s.auth)
+  const { phoneNumber, authModal } = useSelector((s) => s.auth)
   const { refetch } = useCheckUserQuery()
   const dispatch = useDispatch()
   const [
@@ -35,6 +35,7 @@ function LoginRegister({ open, handleOpen }) {
     setSmsCode('')
   }
 
+  const handleAuthModal = () => dispatch(setAuthModal(!authModal))
   const handleGetSms = () => getSms({ phone: phoneNumber })
   const handleLogin = () => login({ phone: phoneNumber, code: smsCode })
 
@@ -44,7 +45,7 @@ function LoginRegister({ open, handleOpen }) {
       dispatch(setToken(loginData.data.token))
       dispatch(setIsAuthenticated(true))
       refetch()
-      handleOpen()
+      handleAuthModal()
     }
     if (loginError) {
       setSmsCode('')
@@ -55,7 +56,12 @@ function LoginRegister({ open, handleOpen }) {
   }, [loginIsSuccess, loginError, getSmsIsSuccess])
 
   return (
-    <Dialog size="xs" open={open} className="bg-transparent shadow-none">
+    <Dialog
+      size="xs"
+      open={authModal}
+      handler={() => dispatch(setAuthModal(!authModal))}
+      className="bg-transparent shadow-none"
+    >
       <Card className="mx-auto w-full max-w-[25rem] rounded-md">
         {isHaveCode ? (
           <CardBody
@@ -71,7 +77,7 @@ function LoginRegister({ open, handleOpen }) {
                 Kiriw
               </Typography>
               <IconButton
-                onClick={() => (handleOpen(), handleClear())}
+                onClick={() => (handleAuthModal, handleClear())}
                 variant="text"
                 size="sm"
                 className="text-[20px] flex justify-center items-center"
@@ -113,7 +119,7 @@ function LoginRegister({ open, handleOpen }) {
                 Kiriw
               </Typography>
               <IconButton
-                onClick={() => handleOpen()}
+                onClick={handleAuthModal}
                 variant="text"
                 size="sm"
                 className="text-[20px] flex justify-center items-center"

@@ -71,7 +71,7 @@ const ModeratorApartmentInfo = () => {
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
                   Теги:
-                  <span>{data?.data?.tags.map((el) => el + ', ')}</span>
+                  <span>{data?.data?.tags.map((el) => el.name + ', ')}</span>
                 </div>
               </label>
               <label className="flex flex-col border-b-[1px] w-full">

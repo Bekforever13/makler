@@ -7,26 +7,34 @@ import { FreeMode, Navigation, Thumbs } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@material-tailwind/react'
 import { MdFavorite, MdFavoriteBorder } from 'react-icons/md'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { TbViewportWide } from 'react-icons/tb'
 import { useTranslation } from 'react-i18next'
 import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps'
 import { RWebShare } from 'react-web-share'
 import { GiLadder } from 'react-icons/gi'
 import { FaRegSquareCheck } from 'react-icons/fa6'
+import { setAuthModal } from '../../store/slices/auth.slice'
 
 const InfoPage = () => {
-  const { isAuthenticated } = useSelector((s) => s.auth)
+  const { isAuthenticated, authModal } = useSelector((s) => s.auth)
   const { id } = useParams()
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
   const lang = localStorage.getItem('makler_lang') || 'ru'
-  const { data: apartmentData, isFetching } = useGetOneApartmentsQuery({ id, lang })
+  const { data: apartmentData, isFetching, refetch } = useGetOneApartmentsQuery({ id, lang })
   const [addToFavorite] = useAddToFavoriteMutation()
   const { t } = useTranslation()
+  const dispatch = useDispatch()
   const fullURL = window.location.href
+
+  useEffect(() => {
+    if (!authModal) {
+      refetch()
+    }
+  }, [authModal])
 
   if (!apartmentData) {
     return (
@@ -219,7 +227,13 @@ const InfoPage = () => {
             </li>
             <li className="flex items-center justify-between border-b-[1px]">
               <b>{t('phone')}: </b>{' '}
-              {isAuthenticated ? formatPhone(`+${apartmentData?.data?.phone}`) : t('loginToSee')}
+              {isAuthenticated ? (
+                formatPhone(`+${apartmentData?.data?.phone}`)
+              ) : (
+                <Button onClick={() => dispatch(setAuthModal(true))} color="blue">
+                  {t('loginToSee')}
+                </Button>
+              )}
             </li>
             <li className="mt-10">
               <YMaps query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}>
