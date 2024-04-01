@@ -29,7 +29,7 @@ const RoomSelectInput = () => {
       <Option value="3">3 {t('rooms')}</Option>
       <Option value="4">4 {t('rooms')}</Option>
       <Option value="5">5 {t('rooms')}</Option>
-      <Option value="6">6+ {t('rooms')}</Option>
+      <Option value="6">6 {t('rooms')}</Option>
       <Option value="7">7 {t('rooms')}</Option>
       <Option value="8">8 {t('rooms')}</Option>
       <Option value="9">9 {t('rooms')}</Option>

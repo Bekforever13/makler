@@ -1,4 +1,12 @@
-import { Button, Input, Tab, TabPanel, Tabs, TabsBody, TabsHeader } from '@material-tailwind/react'
+import {
+  Button,
+  Input,
+  Tab,
+  TabPanel,
+  Tabs,
+  TabsBody,
+  TabsHeader,
+} from '@material-tailwind/react'
 import { useState, useEffect } from 'react'
 import SelectInput from './FilterInputs/SelectInput'
 import RoomSelectInput from './FilterInputs/RoomSelectInput'
@@ -73,7 +81,8 @@ const FiterTabs = () => {
         <TabsHeader
           className="w-[50%] p-0 bg-black rounded-none rounded-t-md z-10"
           indicatorProps={{
-            className: 'shadow-none rounded-none rounded-t-md bg-gray-100 h-[27px]',
+            className:
+              'shadow-none rounded-none rounded-t-md bg-gray-100 h-[27px]',
           }}
         >
           {categories?.map(({ label, value }) => (
@@ -105,7 +114,9 @@ const FiterTabs = () => {
                   <RoomSelectInput />
                   <Input
                     onChange={(e) => {
-                      dispatch(setFilters({ ...filters, from_price: e.target.value }))
+                      dispatch(
+                        setFilters({ ...filters, from_price: e.target.value }),
+                      )
                       setPriceFrom(e.target.value)
                     }}
                     value={priceFrom}
@@ -114,7 +125,9 @@ const FiterTabs = () => {
                   />
                   <Input
                     onChange={(e) => {
-                      dispatch(setFilters({ ...filters, to_price: e.target.value }))
+                      dispatch(
+                        setFilters({ ...filters, to_price: e.target.value }),
+                      )
                       setPriceTo(e.target.value)
                     }}
                     value={priceTo}
@@ -128,15 +141,12 @@ const FiterTabs = () => {
         </TabsBody>
       </Tabs>
       <div className="flex justify-end gap-2 items-center mt-4">
-        {/* <Button size="sm" variant="gradient" color="white" className="rounded-sm">
-          Kartadan koriw
-        </Button> */}
         <Button
           onClick={handleClearFilters}
           size="sm"
           variant="gradient"
           color="blue"
-          className="rounded-sm"
+          className="rounded-lg"
         >
           {t('clearFilters')}
         </Button>

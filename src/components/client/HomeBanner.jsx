@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import useWindowSize from '../../hooks/useWindowSize'
-import bannerImg from '../../images/image/banner3.jpg'
+import bannerImg from '../../images/image/nukus6.jpg'
 import Container from '../shared/Container'
 import FiterTabs from './FiterTabs'
 
@@ -12,7 +12,7 @@ const HomeBanner = () => {
     <div className="w-full relative">
       <img
         src={bannerImg}
-        className={`object-cover brightness-75 min-w-full ${
+        className={`object-cover object-center brightness-75 min-w-full ${
           width < 1000 ? 'h-[500px]' : 'h-[360px]'
         }`}
         alt="bg image"

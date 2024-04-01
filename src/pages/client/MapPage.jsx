@@ -2,6 +2,7 @@ import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps'
 import { useGetAllCoordinatesQuery } from '../../store/index.api'
 import { formatPrice } from '../../utils/shared'
 import { useNavigate } from 'react-router-dom'
+import icon from '../../images/image/location.png'
 
 const MapPage = () => {
   const navigate = useNavigate()
@@ -17,10 +18,16 @@ const MapPage = () => {
           return (
             <Placemark
               key={item.id}
-              options={{ draggable: false }}
+              options={{
+                draggable: false,
+                iconLayout: 'default#image',
+                iconImageHref: icon,
+                iconImageSize: [35, 35],
+              }}
               modules={['geoObject.addon.balloon', 'geoObject.addon.hint']}
               geometry={
-                item?.coordinates?.latitude !== null && item?.coordinates?.longitude !== null
+                item?.coordinates?.latitude !== null &&
+                item?.coordinates?.longitude !== null
                   ? [item?.coordinates?.latitude, item?.coordinates?.longitude]
                   : [25.117531, 55.134291]
               }

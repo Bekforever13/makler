@@ -51,12 +51,17 @@ const CardItem = ({ item }) => {
         </IconButton>
       </CardHeader>
       <CardBody onClick={handleClick} className="p-3">
-        <Typography variant="h6" color="blue-gray" className="font-[Montserrat] text-sm">
+        <Typography
+          variant="h6"
+          color="blue-gray"
+          className="font-[Montserrat] text-sm"
+        >
           {item.address}
         </Typography>
         <div className="text-gray-600 text-sm font-medium flex flex-col gap-1">
           <span>
-            {t('rooms')}: {item.room_count} · {t('total_area')}: {item.total_area}м<sup>2</sup>
+            {t('rooms')}: {item.room_count} · {t('total_area')}:{' '}
+            {item.total_area}м<sup>2</sup>
           </span>
           <span>
             {t('category')}: {item.category.name}
