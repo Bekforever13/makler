@@ -150,9 +150,13 @@ const Header = () => {
             </div>
             <div className="flex items-center gap-2">
               <div className="md:block sm:hidden">
-                <Select value={lang} label={t('language')} onChange={(e) => handleSelectLang(e)}>
+                <Select
+                  value={lang}
+                  label={t('language')}
+                  onChange={(e) => handleSelectLang(e)}
+                >
                   <Option value="qr">Qaraqalpaqsha</Option>
-                  <Option value="kr">Каракалпакша</Option>
+                  <Option value="kr">Қарақалпақша</Option>
                   <Option value="ru">Русский</Option>
                 </Select>
               </div>
@@ -189,10 +193,16 @@ const Header = () => {
                   {isOpenProfile && (
                     <div className="absolute bg-cyan-600	text-black font-semibold mt-3 z-[999] p-4 gap-5 right-0 w-80 flex flex-col shadow-lg">
                       <span className="flex items-center justify-between w-full">
-                        {t('phone')}: <span>{user?.phone ? '+' + user?.phone : 'Пусто'}</span>
+                        {t('phone')}:{' '}
+                        <span>
+                          {user?.phone ? '+' + user?.phone : t('empty')}
+                        </span>
                       </span>
                       <span className="flex items-center justify-between w-full">
-                        {t('role')}: <span>{user?.role === 'admin' ? 'Админ' : user?.role}</span>
+                        {t('role')}:{' '}
+                        <span>
+                          {user?.role === 'admin' ? 'Админ' : user?.role}
+                        </span>
                       </span>
                       {user?.role === 'admin' && (
                         <Button
@@ -220,13 +230,22 @@ const Header = () => {
                           label={t('language')}
                           onChange={(e) => handleSelectLang(e)}
                         >
-                          <Option style={{ fontWeight: 700, color: '#000' }} value="qr">
+                          <Option
+                            style={{ fontWeight: 700, color: '#000' }}
+                            value="qr"
+                          >
                             Qaraqalpaqsha
                           </Option>
-                          <Option style={{ fontWeight: 700, color: '#000' }} value="kr">
-                            Каракалпакша
+                          <Option
+                            style={{ fontWeight: 700, color: '#000' }}
+                            value="kr"
+                          >
+                            Қарақалпақша
                           </Option>
-                          <Option style={{ fontWeight: 700, color: '#000' }} value="ru">
+                          <Option
+                            style={{ fontWeight: 700, color: '#000' }}
+                            value="ru"
+                          >
                             Русский
                           </Option>
                         </Select>

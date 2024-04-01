@@ -1,5 +1,8 @@
 import { Card, Dialog } from '@material-tailwind/react'
-import { useACreateTagMutation, useAEditTagMutation } from '../../store/index.api.js'
+import {
+  useACreateTagMutation,
+  useAEditTagMutation,
+} from '../../store/index.api.js'
 import { Button, IconButton } from '@material-tailwind/react'
 import { CgClose } from 'react-icons/cg'
 import { useForm } from 'react-hook-form'
@@ -18,7 +21,8 @@ const CreateTagModal = ({ open, setIsOpen }) => {
   const { tagToEdit } = useSelector((s) => s.tag)
   const [createTag, { isLoading, isSuccess }] = useACreateTagMutation()
 
-  const [editTag, { isSuccess: EditSuccess, isLoading: EditLoading }] = useAEditTagMutation()
+  const [editTag, { isSuccess: EditSuccess, isLoading: EditLoading }] =
+    useAEditTagMutation()
 
   const onSubmit = (data) => {
     if (tagToEdit) {
@@ -90,11 +94,15 @@ const CreateTagModal = ({ open, setIsOpen }) => {
                     {...register('ru', { required: true })}
                   />
                 </div>
-                {errors.ru && <span className="text-red-500">Пожалуйста, заполните поле</span>}
+                {errors.ru && (
+                  <span className="text-red-500">
+                    Пожалуйста, заполните поле
+                  </span>
+                )}
               </label>
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-                  Каракалпакша :
+                  Қарақалпақша :
                   <input
                     className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
                     type="text"
@@ -102,7 +110,11 @@ const CreateTagModal = ({ open, setIsOpen }) => {
                     {...register('kr', { required: true })}
                   />
                 </div>
-                {errors.kr && <span className="text-red-500">Пожалуйста, заполните поле</span>}
+                {errors.kr && (
+                  <span className="text-red-500">
+                    Пожалуйста, заполните поле
+                  </span>
+                )}
               </label>
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
@@ -114,7 +126,11 @@ const CreateTagModal = ({ open, setIsOpen }) => {
                     {...register('qr', { required: true })}
                   />
                 </div>
-                {errors.qr && <span className="text-red-500">Пожалуйста, заполните поле</span>}
+                {errors.qr && (
+                  <span className="text-red-500">
+                    Пожалуйста, заполните поле
+                  </span>
+                )}
               </label>
             </div>
             <Button

@@ -17,6 +17,7 @@ import {
   useGetSubcategoriesQuery,
 } from '../../store/index.api'
 import Select from 'react-select'
+import icon from '../../images/image/location.png'
 
 const ApartmentEditPage = () => {
   const { id } = useParams()
@@ -30,9 +31,12 @@ const ApartmentEditPage = () => {
   } = useForm()
   const { data, isSuccess } = useGetOneApartmentsQuery({ id })
   const [coordinates, setCoordinates] = useState([42.465139, 59.613292])
-  const { data: categoriesData, isSuccess: categoriesIsSuccess } = useGetCategoriesQuery()
-  const { data: subcategoriesData, isSuccess: subcategoriesIsSuccess } = useGetSubcategoriesQuery()
-  const { data: regionsData, isSuccess: regionsIsSuccess } = useGetAllRegionsQuery()
+  const { data: categoriesData, isSuccess: categoriesIsSuccess } =
+    useGetCategoriesQuery()
+  const { data: subcategoriesData, isSuccess: subcategoriesIsSuccess } =
+    useGetSubcategoriesQuery()
+  const { data: regionsData, isSuccess: regionsIsSuccess } =
+    useGetAllRegionsQuery()
   const { data: tagsData, isSuccess: tagsIsSuccess } = useGetAllTagsQuery()
   const [tagsOptions, setTagsOptions] = useState()
   const [regionsOptions, setRegionsOptions] = useState()
@@ -46,12 +50,21 @@ const ApartmentEditPage = () => {
     if (data?.data) {
       reset({
         ...data?.data,
-        category_id: { label: data.data.category.name, value: data.data.category.id },
-        subcategory_id: { label: data.data.subcategory.name, value: data.data.subcategory.id },
+        category_id: {
+          label: data.data.category.name,
+          value: data.data.category.id,
+        },
+        subcategory_id: {
+          label: data.data.subcategory.name,
+          value: data.data.subcategory.id,
+        },
         region_id: { label: data.data.region.name, value: data.data.region.id },
         tag_ids: data.data.tags.map((el) => ({ label: el.name, value: el.id })),
       })
-      setCoordinates([data?.data?.coordinates.latitude, data?.data?.coordinates.longitude])
+      setCoordinates([
+        data?.data?.coordinates.latitude,
+        data?.data?.coordinates.longitude,
+      ])
     }
   }, [isSuccess])
 
@@ -76,25 +89,37 @@ const ApartmentEditPage = () => {
 
   useEffect(() => {
     if (tagsData?.data) {
-      const mappedData = tagsData?.data.map((el) => ({ value: el.id, label: el.name }))
+      const mappedData = tagsData?.data.map((el) => ({
+        value: el.id,
+        label: el.name,
+      }))
       setTagsOptions(mappedData)
     }
   }, [tagsIsSuccess])
   useEffect(() => {
     if (regionsData?.data) {
-      const mappedData = regionsData?.data.map((el) => ({ value: el.id, label: el.name }))
+      const mappedData = regionsData?.data.map((el) => ({
+        value: el.id,
+        label: el.name,
+      }))
       setRegionsOptions(mappedData)
     }
   }, [regionsIsSuccess])
   useEffect(() => {
     if (subcategoriesData?.data) {
-      const mappedData = subcategoriesData?.data.map((el) => ({ value: el.id, label: el.name }))
+      const mappedData = subcategoriesData?.data.map((el) => ({
+        value: el.id,
+        label: el.name,
+      }))
       setSubcategoriesOptions(mappedData)
     }
   }, [subcategoriesIsSuccess])
   useEffect(() => {
     if (categoriesData?.data) {
-      const mappedData = categoriesData?.data.map((el) => ({ value: el.id, label: el.name }))
+      const mappedData = categoriesData?.data.map((el) => ({
+        value: el.id,
+        label: el.name,
+      }))
       setCategoriesOptions(mappedData)
     }
   }, [categoriesIsSuccess])
@@ -139,7 +164,9 @@ const ApartmentEditPage = () => {
                     />
                   </div>
                   {errors.category_id && (
-                    <span className="text-red-500">Пожалуйста, заполните поле</span>
+                    <span className="text-red-500">
+                      Пожалуйста, заполните поле
+                    </span>
                   )}
                 </label>
                 <label className="flex flex-col w-full border-b-[1px]">
@@ -162,7 +189,9 @@ const ApartmentEditPage = () => {
                     />
                   </div>
                   {errors.subcategory_id && (
-                    <span className="text-red-500">Пожалуйста, заполните поле</span>
+                    <span className="text-red-500">
+                      Пожалуйста, заполните поле
+                    </span>
                   )}
                 </label>
                 <label className="flex flex-col border-b-[1px] w-full">
@@ -185,7 +214,9 @@ const ApartmentEditPage = () => {
                     />
                   </div>
                   {errors.region_id && (
-                    <span className="text-red-500">Пожалуйста, заполните поле</span>
+                    <span className="text-red-500">
+                      Пожалуйста, заполните поле
+                    </span>
                   )}
                 </label>
                 <label className="flex flex-col border-b-[1px] w-full">
@@ -208,7 +239,9 @@ const ApartmentEditPage = () => {
                     />
                   </div>
                   {errors.tag_ids && (
-                    <span className="text-red-500">Пожалуйста, заполните поле</span>
+                    <span className="text-red-500">
+                      Пожалуйста, заполните поле
+                    </span>
                   )}
                 </label>
                 <label className="flex flex-col border-b-[1px] w-full">
@@ -222,7 +255,9 @@ const ApartmentEditPage = () => {
                     />
                   </div>
                   {errors.address && (
-                    <span className="text-red-500">Пожалуйста, заполните поле</span>
+                    <span className="text-red-500">
+                      Пожалуйста, заполните поле
+                    </span>
                   )}
                 </label>
                 <label className="flex flex-col border-b-[1px] w-full">
@@ -238,7 +273,11 @@ const ApartmentEditPage = () => {
                       сум
                     </div>
                   </div>
-                  {errors.price && <span className="text-red-500">Пожалуйста, заполните поле</span>}
+                  {errors.price && (
+                    <span className="text-red-500">
+                      Пожалуйста, заполните поле
+                    </span>
+                  )}
                 </label>
                 <label className="flex flex-col border-b-[1px] w-full">
                   <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
@@ -251,7 +290,9 @@ const ApartmentEditPage = () => {
                     />
                   </div>
                   {errors.room_count && (
-                    <span className="text-red-500">Пожалуйста, заполните поле</span>
+                    <span className="text-red-500">
+                      Пожалуйста, заполните поле
+                    </span>
                   )}
                 </label>
                 <label className="flex flex-col border-b-[1px] w-full">
@@ -268,7 +309,9 @@ const ApartmentEditPage = () => {
                     </div>
                   </div>
                   {errors.total_area && (
-                    <span className="text-red-500">Пожалуйста, заполните поле</span>
+                    <span className="text-red-500">
+                      Пожалуйста, заполните поле
+                    </span>
                   )}
                 </label>
                 <label className="flex flex-col border-b-[1px] w-full">
@@ -281,7 +324,11 @@ const ApartmentEditPage = () => {
                       {...register('floor', { required: true })}
                     />
                   </div>
-                  {errors.floor && <span className="text-red-500">Пожалуйста, заполните поле</span>}
+                  {errors.floor && (
+                    <span className="text-red-500">
+                      Пожалуйста, заполните поле
+                    </span>
+                  )}
                 </label>
                 <label className="flex flex-col border-b-[1px] w-full">
                   <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
@@ -294,7 +341,9 @@ const ApartmentEditPage = () => {
                     />
                   </div>
                   {errors.floor_home && (
-                    <span className="text-red-500">Пожалуйста, заполните поле</span>
+                    <span className="text-red-500">
+                      Пожалуйста, заполните поле
+                    </span>
                   )}
                 </label>
                 <label className="flex flex-col border-b-[1px] w-full">
@@ -308,7 +357,9 @@ const ApartmentEditPage = () => {
                     />
                   </div>
                   {errors.description && (
-                    <span className="text-red-500">Пожалуйста, заполните поле</span>
+                    <span className="text-red-500">
+                      Пожалуйста, заполните поле
+                    </span>
                   )}
                 </label>
               </div>
@@ -318,7 +369,9 @@ const ApartmentEditPage = () => {
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
                   Координаты:
                   <div className="w-1/2 h-full">
-                    <YMaps query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}>
+                    <YMaps
+                      query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}
+                    >
                       <Map
                         style={{ width: '100%', height: '70vh' }}
                         defaultState={{
@@ -330,13 +383,22 @@ const ApartmentEditPage = () => {
                         }}
                       >
                         <Placemark
-                          options={{ draggable: true }}
+                          options={{
+                            draggable: true,
+                            iconLayout: 'default#image',
+                            iconImageHref: icon,
+                            iconImageSize: [35, 35],
+                          }}
                           geometry={coordinates}
                           instanceRef={(ref) => {
                             if (ref) {
-                              register('placemarkCoordinates', ref.geometry._coordinates, {
-                                required: true,
-                              })
+                              register(
+                                'placemarkCoordinates',
+                                ref.geometry._coordinates,
+                                {
+                                  required: true,
+                                },
+                              )
                               setCoordinates(ref.geometry._coordinates)
                             }
                           }}
@@ -398,7 +460,9 @@ const ApartmentEditPage = () => {
                   <div key={el.id} className="w-[250px]">
                     <img src={el.url} alt={el.url} className="max-w-[250px]" />
                     <Button
-                      onClick={() => deleteImage({ image_id: el.id, apartment_id: id })}
+                      onClick={() =>
+                        deleteImage({ image_id: el.id, apartment_id: id })
+                      }
                       type="button"
                       color="red"
                       size="sm"
@@ -410,7 +474,12 @@ const ApartmentEditPage = () => {
                 ))}
               </div>
             </div>
-            <Button type="submit" color="blue" size="sm" className="flex items-center gap-3 w-fit">
+            <Button
+              type="submit"
+              color="blue"
+              size="sm"
+              className="flex items-center gap-3 w-fit"
+            >
               <FaSave size="18" />
               <span>Сохранить</span>
             </Button>

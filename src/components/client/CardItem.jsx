@@ -12,18 +12,26 @@ import { formatPrice } from '../../utils/shared'
 import { useNavigate } from 'react-router-dom/dist'
 import { useAddToFavoriteMutation } from '../../store/index.api'
 import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
 
 const CardItem = ({ item }) => {
   const { t } = useTranslation()
+  const { isAuthenticated } = useSelector((s) => s.auth)
   const navigate = useNavigate()
   const [addToFavorite] = useAddToFavoriteMutation()
 
   const handleClick = () => navigate(`/info/${item.id}`)
 
-  const handleClickFavorite = (id) => addToFavorite(id)
+  const handleClickFavorite = (id) => {
+    if (isAuthenticated) {
+      addToFavorite(id)
+    } else {
+      
+    }
+  }
 
   return (
-    <Card className="max-w-[24rem] overflow-hidden rounded-md border-[1px] cursor-pointer group">
+    <Card className="max-w-[24rem] overflow-hidden rounded-md border-[1px] group">
       <CardHeader
         floated={false}
         shadow={false}
@@ -31,7 +39,6 @@ const CardItem = ({ item }) => {
         className="m-0 rounded-none min-h-[250px]"
       >
         <img
-          onClick={handleClick}
           src={item?.images?.url}
           alt="image"
           className="h-full w-full object-cover group-hover:scale-105 transition duration-300 ease-linear brightness-90"
@@ -50,7 +57,7 @@ const CardItem = ({ item }) => {
           )}
         </IconButton>
       </CardHeader>
-      <CardBody onClick={handleClick} className="p-3">
+      <CardBody className="p-3">
         <Typography
           variant="h6"
           color="blue-gray"
@@ -71,7 +78,7 @@ const CardItem = ({ item }) => {
             <b>
               {formatPrice(item.price)} {t('sum')}
             </b>
-            <Button size="sm" color="blue">
+            <Button onClick={handleClick} size="sm" color="blue">
               {t('more')}
             </Button>
           </div>

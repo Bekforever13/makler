@@ -2,7 +2,11 @@ import { Button, Card, CardBody, CardHeader } from '@material-tailwind/react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps'
-import { useMEditApartmentStatusMutation, useMGetOneApartmentQuery } from '../../store/index.api'
+import {
+  useMEditApartmentStatusMutation,
+  useMGetOneApartmentQuery,
+} from '../../store/index.api'
+import icon from '../../images/image/location.png'
 
 const ModeratorApartmentInfo = () => {
   const { id } = useParams()
@@ -28,19 +32,49 @@ const ModeratorApartmentInfo = () => {
             <span>Назад</span>
           </Button>
           <div className="flex items-center gap-5">
-            <Button className="text-white" variant="gradient" color="blue" size="sm" onClick={() => handleClickAction(0)}>
+            <Button
+              className="text-white"
+              variant="gradient"
+              color="blue"
+              size="sm"
+              onClick={() => handleClickAction(0)}
+            >
               Отмена
             </Button>
-            <Button className="text-white" variant="gradient" color="green" size="sm" onClick={() => handleClickAction(1)}>
+            <Button
+              className="text-white"
+              variant="gradient"
+              color="green"
+              size="sm"
+              onClick={() => handleClickAction(1)}
+            >
               Продано
             </Button>
-            <Button className="text-black" variant="gradient" color="yellow" size="sm" onClick={() => handleClickAction('waiting')}>
+            <Button
+              className="text-black"
+              variant="gradient"
+              color="yellow"
+              size="sm"
+              onClick={() => handleClickAction('waiting')}
+            >
               Ожидание
             </Button>
-            <Button className="text-white" variant="gradient" color="red" size="sm" onClick={() => handleClickAction('canceled')}>
+            <Button
+              className="text-white"
+              variant="gradient"
+              color="red"
+              size="sm"
+              onClick={() => handleClickAction('canceled')}
+            >
               Отклонить
             </Button>
-            <Button className="text-white" variant="gradient" color="green" size="sm" onClick={() => handleClickAction('confirmed')}>
+            <Button
+              className="text-white"
+              variant="gradient"
+              color="green"
+              size="sm"
+              onClick={() => handleClickAction('confirmed')}
+            >
               Подтвердить
             </Button>
           </div>
@@ -148,7 +182,9 @@ const ModeratorApartmentInfo = () => {
               <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
                 Координаты:
                 <div className="w-1/2 h-full">
-                  <YMaps query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}>
+                  <YMaps
+                    query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}
+                  >
                     <Map
                       style={{ width: '100%', height: '50vh' }}
                       defaultState={{
@@ -160,7 +196,12 @@ const ModeratorApartmentInfo = () => {
                       }}
                     >
                       <Placemark
-                        options={{ draggable: false }}
+                        options={{
+                          draggable: false,
+                          iconLayout: 'default#image',
+                          iconImageHref: icon,
+                          iconImageSize: [35, 35],
+                        }}
                         geometry={[
                           data?.data?.coordinates.latitude,
                           data?.data?.coordinates.longitude,

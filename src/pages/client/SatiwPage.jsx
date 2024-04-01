@@ -1,6 +1,9 @@
 import Container from '../../components/shared/Container'
 import { useEffect, useState } from 'react'
-import { useGetAllApartmentsQuery, useGetSubcategoriesQuery } from '../../store/index.api'
+import {
+  useGetAllApartmentsQuery,
+  useGetSubcategoriesQuery,
+} from '../../store/index.api'
 import CardItem from '../../components/client/CardItem'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button } from '@material-tailwind/react'
@@ -21,33 +24,11 @@ const SatiwPage = () => {
     lan: lang,
     ...filters,
   })
-  const { data: subcategories } = useGetSubcategoriesQuery({ category_id: 2, lan: lang })
+  const { data: subcategories } = useGetSubcategoriesQuery({
+    category_id: 2,
+    lan: lang,
+  })
   const totalPages = Math.ceil(data?.total / 20) ?? 1
-
-  const renderPageNumbers = () => {
-    const pageNumbers = []
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(
-        <button
-          key={i}
-          className={`relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-full ${
-            i === page ? 'bg-gray-900 text-white shadow-md shadow-gray-900/10' : 'text-gray-900'
-          } text-center align-middle font-sans text-xs font-medium uppercase transition-all hover:${
-            i !== page ? 'bg-gray-900/10' : ''
-          } active:${
-            i !== page ? 'bg-gray-900/20' : ''
-          } disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none`}
-          type="button"
-          onClick={() => setPage(i)}
-        >
-          <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-            {i}
-          </span>
-        </button>,
-      )
-    }
-    return pageNumbers
-  }
 
   const decrementPage = () => {
     setPage((prev) => prev - 1)
@@ -75,7 +56,9 @@ const SatiwPage = () => {
     <div className="py-4">
       <Container>
         <div className="mb-10">
-          <h1 className="text-[20px] text-gray-800 font-semibold my-3">{t('houseForSale')}</h1>
+          <h1 className="text-[20px] text-gray-800 font-semibold my-3">
+            {t('houseForSale')}
+          </h1>
           <div className="flex items-center gap-5 flex-wrap">
             <Button
               onClick={() => handleSelectAll()}
@@ -181,7 +164,9 @@ const SatiwPage = () => {
                 </svg>
                 {t('back')}
               </button>
-              <div className="flex items-center gap-2">{renderPageNumbers()}</div>
+              <div className="flex items-center gap-2">
+                {page + ' / ' + totalPages}
+              </div>
               <button
                 disabled={page === Math.ceil(data?.total / 20)}
                 onClick={incrementPage}
@@ -207,7 +192,7 @@ const SatiwPage = () => {
               </button>
             </div>
           ) : (
-            'Пусто'
+            <>{t('empty')}</>
           )}
         </div>
       </Container>

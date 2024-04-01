@@ -36,13 +36,13 @@ const FiterTabs = () => {
   }
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess ?? data) {
       const mappedData = data?.data?.map((el) => {
         return { label: el.name, value: el.id }
       })
       setCategories(mappedData)
     }
-  }, [isSuccess])
+  }, [data])
 
   if (!isSuccess) {
     return (

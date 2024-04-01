@@ -23,9 +23,12 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
   const dispatch = useDispatch()
   const [categoriesOptions, setCategoriesOptions] = useState()
   const { subcategoryToEdit } = useSelector((s) => s.subcategory)
-  const [createSubcategory, { isLoading, isSuccess }] = useACreateSubcategoryMutation()
-  const { data: categoriesData, isSuccess: categoriesIsSuccess } = useGetCategoriesQuery({ lan: 'ru' })
-  const [editSubcategory, { isSuccess: EditSuccess, isLoading: EditLoading }] = useAEditSubcategoryMutation()
+  const [createSubcategory, { isLoading, isSuccess }] =
+    useACreateSubcategoryMutation()
+  const { data: categoriesData, isSuccess: categoriesIsSuccess } =
+    useGetCategoriesQuery({ lan: 'ru' })
+  const [editSubcategory, { isSuccess: EditSuccess, isLoading: EditLoading }] =
+    useAEditSubcategoryMutation()
 
   const onSubmit = (data) => {
     if (subcategoryToEdit) {
@@ -65,7 +68,9 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
   useEffect(() => {
     if (subcategoryToEdit) {
       reset({
-        category_id: categoriesOptions.find((el) => el.value === subcategoryToEdit.category_id),
+        category_id: categoriesOptions.find(
+          (el) => el.value === subcategoryToEdit.category_id,
+        ),
         ru: subcategoryToEdit.name.ru,
         qr: subcategoryToEdit.name.qr,
         kr: subcategoryToEdit.name.kr,
@@ -75,7 +80,10 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
 
   useEffect(() => {
     if (categoriesData?.data) {
-      const mappedData = categoriesData?.data.map((el) => ({ value: el.id, label: el.name }))
+      const mappedData = categoriesData?.data.map((el) => ({
+        value: el.id,
+        label: el.name,
+      }))
       setCategoriesOptions(mappedData)
     }
   }, [categoriesIsSuccess])
@@ -115,7 +123,11 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
                     )}
                   />
                 </div>
-                {errors.ru && <span className="text-red-500">Пожалуйста, заполните поле</span>}
+                {errors.ru && (
+                  <span className="text-red-500">
+                    Пожалуйста, заполните поле
+                  </span>
+                )}
               </label>
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
@@ -127,11 +139,15 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
                     {...register('ru', { required: true })}
                   />
                 </div>
-                {errors.ru && <span className="text-red-500">Пожалуйста, заполните поле</span>}
+                {errors.ru && (
+                  <span className="text-red-500">
+                    Пожалуйста, заполните поле
+                  </span>
+                )}
               </label>
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-                  Каракалпакша :
+                  Қарақалпақша :
                   <input
                     className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full"
                     type="text"
@@ -139,7 +155,11 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
                     {...register('kr', { required: true })}
                   />
                 </div>
-                {errors.kr && <span className="text-red-500">Пожалуйста, заполните поле</span>}
+                {errors.kr && (
+                  <span className="text-red-500">
+                    Пожалуйста, заполните поле
+                  </span>
+                )}
               </label>
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
@@ -151,7 +171,11 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
                     {...register('qr', { required: true })}
                   />
                 </div>
-                {errors.qr && <span className="text-red-500">Пожалуйста, заполните поле</span>}
+                {errors.qr && (
+                  <span className="text-red-500">
+                    Пожалуйста, заполните поле
+                  </span>
+                )}
               </label>
             </div>
             <Button

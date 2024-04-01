@@ -35,13 +35,19 @@ const HomePage = () => {
   return (
     <div className="py-4">
       <Container>
-        <div className="flex items-center justify-between">
-          <h1 className="text-[20px] text-gray-800 font-semibold my-3">{t('hero_title')}</h1>
+        <div className="flex items-center justify-between bg-white">
+          <h1 className="text-[20px] text-gray-800 font-semibold my-3">
+            {t('hero_title')}
+          </h1>
           <div>
-            <Select value={sort} label={'Сортировка'} onChange={(e) => setSort(e)}>
-              <Option value="">По умолчанию</Option>
-              <Option value="asc">Самые дешёвые</Option>
-              <Option value="desc">Самые дорогие</Option>
+            <Select
+              value={sort}
+              label={t('sort')}
+              onChange={(e) => setSort(e)}
+            >
+              <Option value="">{t('default')}</Option>
+              <Option value="asc">{t('cheap')}</Option>
+              <Option value="desc">{t("expensive")}</Option>
             </Select>
           </div>
         </div>
@@ -109,7 +115,9 @@ const HomePage = () => {
                 </svg>
                 {t('back')}
               </button>
-              <div className="flex items-center gap-2">{page + '/' + totalPages}</div>
+              <div className="flex items-center gap-2">
+                {page + ' / ' + totalPages}
+              </div>
               <button
                 disabled={page === Math.ceil(data?.total / 20)}
                 onClick={incrementPage}
@@ -135,7 +143,7 @@ const HomePage = () => {
               </button>
             </div>
           ) : (
-            'Пусто'
+            <>{t('empty')}</>
           )}
         </div>
       </Container>

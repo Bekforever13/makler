@@ -13,6 +13,7 @@ import Select from 'react-select'
 import { useTranslation } from 'react-i18next'
 import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps'
 import { useSelector } from 'react-redux'
+import icon from '../../images/image/location.png'
 
 const CreatingForm = ({ setIsOpen }) => {
   const { t } = useTranslation()
@@ -25,7 +26,8 @@ const CreatingForm = ({ setIsOpen }) => {
     reset,
   } = useForm()
   const { isAuthenticated } = useSelector((s) => s.auth)
-  const { data: categoriesData, isSuccess: categoriesIsSuccess } = useGetCategoriesQuery()
+  const { data: categoriesData, isSuccess: categoriesIsSuccess } =
+    useGetCategoriesQuery()
   const {
     data: subcategoriesData,
     isSuccess: subcategoriesIsSuccess,
@@ -33,13 +35,15 @@ const CreatingForm = ({ setIsOpen }) => {
   } = useGetSubcategoriesQuery({
     category_id: watch('category_id')?.value,
   })
-  const { data: regionsData, isSuccess: regionsIsSuccess } = useGetAllRegionsQuery()
+  const { data: regionsData, isSuccess: regionsIsSuccess } =
+    useGetAllRegionsQuery()
   const { data: tagsData, isSuccess: tagsIsSuccess } = useGetAllTagsQuery()
   const [tagsOptions, setTagsOptions] = useState()
   const [regionsOptions, setRegionsOptions] = useState()
   const [subcategoriesOptions, setSubcategoriesOptions] = useState()
   const [categoriesOptions, setCategoriesOptions] = useState()
-  const [createApartment, { isSuccess, isLoading }] = useCreateNewApartmentMutation()
+  const [createApartment, { isSuccess, isLoading }] =
+    useCreateNewApartmentMutation()
   const [coordinates, setCoordinates] = useState([42.465139, 59.613292])
 
   const onSubmit = async (data) => {
@@ -58,8 +62,14 @@ const CreatingForm = ({ setIsOpen }) => {
     formData.append('floor', data.floor)
     formData.append('floor_home', data.floor_home)
     formData.append('description', data.description)
-    formData.append('latitude', data.placemarkCoordinates?.[0] || coordinates[0])
-    formData.append('longitude', data.placemarkCoordinates?.[1] || coordinates[1])
+    formData.append(
+      'latitude',
+      data.placemarkCoordinates?.[0] || coordinates[0],
+    )
+    formData.append(
+      'longitude',
+      data.placemarkCoordinates?.[1] || coordinates[1],
+    )
 
     for (const image of data.images) {
       formData.append('images[]', image)
@@ -77,25 +87,37 @@ const CreatingForm = ({ setIsOpen }) => {
 
   useEffect(() => {
     if (tagsData?.data) {
-      const mappedData = tagsData?.data.map((el) => ({ value: el.id, label: el.name }))
+      const mappedData = tagsData?.data.map((el) => ({
+        value: el.id,
+        label: el.name,
+      }))
       setTagsOptions(mappedData)
     }
   }, [tagsIsSuccess])
   useEffect(() => {
     if (regionsData?.data) {
-      const mappedData = regionsData?.data.map((el) => ({ value: el.id, label: el.name }))
+      const mappedData = regionsData?.data.map((el) => ({
+        value: el.id,
+        label: el.name,
+      }))
       setRegionsOptions(mappedData)
     }
   }, [regionsIsSuccess])
   useEffect(() => {
     if (subcategoriesData?.data) {
-      const mappedData = subcategoriesData?.data.map((el) => ({ value: el.id, label: el.name }))
+      const mappedData = subcategoriesData?.data.map((el) => ({
+        value: el.id,
+        label: el.name,
+      }))
       setSubcategoriesOptions(mappedData)
     }
   }, [subcategoriesIsSuccess, subcategoryFetching])
   useEffect(() => {
     if (categoriesData?.data) {
-      const mappedData = categoriesData?.data.map((el) => ({ value: el.id, label: el.name }))
+      const mappedData = categoriesData?.data.map((el) => ({
+        value: el.id,
+        label: el.name,
+      }))
       setCategoriesOptions(mappedData)
     }
   }, [categoriesIsSuccess])
@@ -135,7 +157,9 @@ const CreatingForm = ({ setIsOpen }) => {
                     )}
                   />
                 </div>
-                {errors.category_id && <span className="text-red-500">{t('errorFillForm')}</span>}
+                {errors.category_id && (
+                  <span className="text-red-500">{t('errorFillForm')}</span>
+                )}
               </label>
               <label className="flex flex-col w-full border-b-[1px]">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
@@ -178,7 +202,9 @@ const CreatingForm = ({ setIsOpen }) => {
                     )}
                   />
                 </div>
-                {errors.region_id && <span className="text-red-500">{t('errorFillForm')}</span>}
+                {errors.region_id && (
+                  <span className="text-red-500">{t('errorFillForm')}</span>
+                )}
               </label>
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
@@ -199,7 +225,9 @@ const CreatingForm = ({ setIsOpen }) => {
                     )}
                   />
                 </div>
-                {errors.tag_ids && <span className="text-red-500">{t('errorFillForm')}</span>}
+                {errors.tag_ids && (
+                  <span className="text-red-500">{t('errorFillForm')}</span>
+                )}
               </label>
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
@@ -211,7 +239,9 @@ const CreatingForm = ({ setIsOpen }) => {
                     {...register('address', { required: true })}
                   />
                 </div>
-                {errors.address && <span className="text-red-500">{t('errorFillForm')}</span>}
+                {errors.address && (
+                  <span className="text-red-500">{t('errorFillForm')}</span>
+                )}
               </label>
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
@@ -226,7 +256,9 @@ const CreatingForm = ({ setIsOpen }) => {
                     сум
                   </div>
                 </div>
-                {errors.price && <span className="text-red-500">{t('errorFillForm')}</span>}
+                {errors.price && (
+                  <span className="text-red-500">{t('errorFillForm')}</span>
+                )}
               </label>
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
@@ -238,7 +270,9 @@ const CreatingForm = ({ setIsOpen }) => {
                     {...register('room_count', { required: true })}
                   />
                 </div>
-                {errors.room_count && <span className="text-red-500">{t('errorFillForm')}</span>}
+                {errors.room_count && (
+                  <span className="text-red-500">{t('errorFillForm')}</span>
+                )}
               </label>
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
@@ -253,7 +287,9 @@ const CreatingForm = ({ setIsOpen }) => {
                     m<sup>2</sup>
                   </div>
                 </div>
-                {errors.total_area && <span className="text-red-500">{t('errorFillForm')}</span>}
+                {errors.total_area && (
+                  <span className="text-red-500">{t('errorFillForm')}</span>
+                )}
               </label>
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
@@ -265,7 +301,9 @@ const CreatingForm = ({ setIsOpen }) => {
                     {...register('floor', { required: true })}
                   />
                 </div>
-                {errors.floor && <span className="text-red-500">{t('errorFillForm')}</span>}
+                {errors.floor && (
+                  <span className="text-red-500">{t('errorFillForm')}</span>
+                )}
               </label>
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
@@ -277,7 +315,9 @@ const CreatingForm = ({ setIsOpen }) => {
                     {...register('floor_home', { required: true })}
                   />
                 </div>
-                {errors.floor_home && <span className="text-red-500">{t('errorFillForm')}</span>}
+                {errors.floor_home && (
+                  <span className="text-red-500">{t('errorFillForm')}</span>
+                )}
               </label>
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
@@ -289,26 +329,40 @@ const CreatingForm = ({ setIsOpen }) => {
                     {...register('description', { required: true })}
                   />
                 </div>
-                {errors.description && <span className="text-red-500">{t('errorFillForm')}</span>}
+                {errors.description && (
+                  <span className="text-red-500">{t('errorFillForm')}</span>
+                )}
               </label>
               <label className="flex flex-col border-b-[1px] w-full">
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
                   {t('coordinates')}:
-                  <YMaps query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}>
+                  <YMaps
+                    query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}
+                  >
                     <Map
                       style={{ width: '50%', height: '300px' }}
-                      defaultState={{ center: [42.465139, 59.613292], zoom: 13 }}
+                      defaultState={{
+                        center: [42.465139, 59.613292],
+                        zoom: 13,
+                      }}
                     >
                       <Placemark
                         options={{
                           draggable: true,
+                          iconLayout: 'default#image',
+                          iconImageHref: icon,
+                          iconImageSize: [35, 35],
                         }}
                         geometry={coordinates}
                         instanceRef={(ref) => {
                           if (ref) {
-                            register('placemarkCoordinates', ref.geometry._coordinates, {
-                              required: true,
-                            })
+                            register(
+                              'placemarkCoordinates',
+                              ref.geometry._coordinates,
+                              {
+                                required: true,
+                              },
+                            )
                             setCoordinates(ref.geometry._coordinates)
                           }
                         }}
@@ -332,7 +386,9 @@ const CreatingForm = ({ setIsOpen }) => {
                     {...register('images', { required: true })}
                   />
                 </div>
-                {errors.images && <span className="text-red-500">{t('errorFillForm')}</span>}
+                {errors.images && (
+                  <span className="text-red-500">{t('errorFillForm')}</span>
+                )}
               </label>
             </div>
             <Button

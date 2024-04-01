@@ -1,5 +1,8 @@
 import { useParams } from 'react-router-dom'
-import { useAddToFavoriteMutation, useGetOneApartmentsQuery } from '../../store/index.api'
+import {
+  useAddToFavoriteMutation,
+  useGetOneApartmentsQuery,
+} from '../../store/index.api'
 import Container from '../../components/shared/Container'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { formatPhone, formatPrice } from '../../utils/shared'
@@ -18,13 +21,18 @@ import { RWebShare } from 'react-web-share'
 import { GiLadder } from 'react-icons/gi'
 import { FaRegSquareCheck } from 'react-icons/fa6'
 import { setAuthModal } from '../../store/slices/auth.slice'
+import icon from '../../images/image/location.png'
 
 const InfoPage = () => {
   const { isAuthenticated, authModal } = useSelector((s) => s.auth)
   const { id } = useParams()
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
   const lang = localStorage.getItem('makler_lang') || 'ru'
-  const { data: apartmentData, isFetching, refetch } = useGetOneApartmentsQuery({ id, lang })
+  const {
+    data: apartmentData,
+    isFetching,
+    refetch,
+  } = useGetOneApartmentsQuery({ id, lang })
   const [addToFavorite] = useAddToFavoriteMutation()
   const { t } = useTranslation()
   const dispatch = useDispatch()
@@ -72,7 +80,9 @@ const InfoPage = () => {
   return (
     <Container>
       <div className="flex items-center justify-between mt-10 flex-wrap gap-5">
-        <h1 className="text-center text-3xl font-semibold">{t('information')}</h1>
+        <h1 className="text-center text-3xl font-semibold">
+          {t('information')}
+        </h1>
         <div className="flex items-center gap-5">
           <RWebShare
             data={{
@@ -128,7 +138,9 @@ const InfoPage = () => {
             ) : (
               <MdFavoriteBorder size={22} />
             )}
-            {apartmentData?.data?.favorite === 1 ? t('removeFromFavorite') : t('addToFavorite')}
+            {apartmentData?.data?.favorite === 1
+              ? t('removeFromFavorite')
+              : t('addToFavorite')}
           </Button>
         </div>
       </div>
@@ -183,7 +195,8 @@ const InfoPage = () => {
               <div className="flex flex-col gap-3">
                 <span>{t('floor')}</span>
                 <span>
-                  {apartmentData?.data?.floor} / {apartmentData?.data?.floor_home}
+                  {apartmentData?.data?.floor} /{' '}
+                  {apartmentData?.data?.floor_home}
                 </span>
               </div>
             </div>
@@ -206,7 +219,8 @@ const InfoPage = () => {
               <b>{t('category')}: </b> {apartmentData?.data?.category?.name}
             </li>
             <li className="flex items-center justify-between border-b-[1px]">
-              <b>{t('subcategory')}: </b> {apartmentData?.data?.subcategory?.name}
+              <b>{t('subcategory')}: </b>{' '}
+              {apartmentData?.data?.subcategory?.name}
             </li>
             <li className="flex items-center justify-between border-b-[1px]">
               <b>{t('tags')}: </b>{' '}
@@ -230,7 +244,10 @@ const InfoPage = () => {
               {isAuthenticated ? (
                 formatPhone(`+${apartmentData?.data?.phone}`)
               ) : (
-                <Button onClick={() => dispatch(setAuthModal(true))} color="blue">
+                <Button
+                  onClick={() => dispatch(setAuthModal(true))}
+                  color="blue"
+                >
                   {t('loginToSee')}
                 </Button>
               )}
@@ -248,6 +265,12 @@ const InfoPage = () => {
                   }}
                 >
                   <Placemark
+                    options={{
+                      draggable: false,
+                      iconLayout: 'default#image',
+                      iconImageHref: icon,
+                      iconImageSize: [35, 35],
+                    }}
                     geometry={[
                       apartmentData?.data?.coordinates?.latitude,
                       apartmentData?.data?.coordinates?.longitude,

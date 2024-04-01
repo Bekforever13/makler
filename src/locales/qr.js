@@ -52,5 +52,10 @@ export const qr = {
     share: 'Úlesiw',
     enterNumber: 'Telefon nomerin kiritiń',
     more: 'Tolıq maǵlıwmatlar',
+    empty: 'Házirshe bos',
+    sort: 'Tańlaw usılı',
+    cheap: 'Eń arzan bahalar',
+    expensive: 'Eń qımbatları',
+    default: 'Ulgi esaplanǵan ',
   },
 }

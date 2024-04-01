@@ -7,7 +7,9 @@ import { useTranslation } from 'react-i18next'
 const FavoritesPage = () => {
   const [page, setPage] = useState(1)
   const lang = localStorage.getItem('makler_lang') || 'ru'
-  const { data, isFetching, isSuccess } = useGetUsersFavoritesQuery({ lan: lang })
+  const { data, isFetching, isSuccess } = useGetUsersFavoritesQuery({
+    lan: lang,
+  })
   const totalPages = Math.ceil(data?.total / 20) ?? 1
   const { t } = useTranslation()
 
@@ -18,7 +20,9 @@ const FavoritesPage = () => {
         <button
           key={i}
           className={`relative h-10 max-h-[40px] w-10 max-w-[40px] select-none rounded-full ${
-            i === page ? 'bg-gray-900 text-white shadow-md shadow-gray-900/10' : 'text-gray-900'
+            i === page
+              ? 'bg-gray-900 text-white shadow-md shadow-gray-900/10'
+              : 'text-gray-900'
           } text-center align-middle font-sans text-xs font-medium uppercase transition-all hover:${
             i !== page ? 'bg-gray-900/10' : ''
           } active:${
@@ -46,7 +50,9 @@ const FavoritesPage = () => {
   return (
     <div className="py-4">
       <Container>
-        <h1 className="text-[20px] text-gray-800 font-semibold my-3">{t('yourFavorites')}</h1>
+        <h1 className="text-[20px] text-gray-800 font-semibold my-3">
+          {t('yourFavorites')}
+        </h1>
         <div className="flex flex-col items-center gap-10">
           {/* loading spinner */}
           {isFetching && (
@@ -111,7 +117,9 @@ const FavoritesPage = () => {
                 </svg>
                 {t('back')}
               </button>
-              <div className="flex items-center gap-2">{renderPageNumbers()}</div>
+              <div className="flex items-center gap-2">
+                {renderPageNumbers()}
+              </div>
               <button
                 disabled={page === Math.ceil(data?.total / 20)}
                 onClick={incrementPage}
@@ -137,7 +145,7 @@ const FavoritesPage = () => {
               </button>
             </div>
           ) : (
-            'Пусто'
+            <>{t('empty')}</>
           )}
         </div>
       </Container>
