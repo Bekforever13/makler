@@ -26,12 +26,11 @@ const CardItem = ({ item }) => {
     if (isAuthenticated) {
       addToFavorite(id)
     } else {
-      
     }
   }
 
   return (
-    <Card className="max-w-[24rem] overflow-hidden rounded-md border-[1px] group">
+    <Card className="max-w-[24rem] animate-fade-up overflow-hidden rounded-md border-[1px] group">
       <CardHeader
         floated={false}
         shadow={false}
@@ -57,7 +56,7 @@ const CardItem = ({ item }) => {
           )}
         </IconButton>
       </CardHeader>
-      <CardBody className="p-3">
+      <CardBody className="p-3 flex flex-col justify-between h-full">
         <Typography
           variant="h6"
           color="blue-gray"
@@ -67,11 +66,11 @@ const CardItem = ({ item }) => {
         </Typography>
         <div className="text-gray-600 text-sm font-medium flex flex-col gap-1">
           <span>
-            {t('rooms')}: {item.room_count} · {t('total_area')}:{' '}
-            {item.total_area}м<sup>2</sup>
+            {t('rooms')}: <b>{item.room_count}</b> · {t('total_area')}:{' '}
+            <b>{item.total_area}м<sup>2</sup></b>
           </span>
           <span>
-            {t('category')}: {item.category.name}
+            {t('category')}: <b>{item.category.name}</b>
           </span>
           <span>{item.region.name}</span>
           <div className="flex items-center justify-between">

@@ -54,7 +54,7 @@ const ModeratorHome = () => {
           </div>
           <div className="flex w-full shrink-0 gap-2 md:w-max">
             <Button
-              className={active === 'all' ? 'text-white' : 'text-blue-100'}
+              className={active === 'all' ? 'text-white' : 'text-gray-900'}
               variant="gradient"
               color={active === 'all' ? 'blue' : 'light-blue'}
               size="sm"
@@ -68,7 +68,7 @@ const ModeratorHome = () => {
               Все
             </Button>
             <Button
-              className={active === 'confirmed' ? 'text-white' : 'text-blue-100'}
+              className={active === 'confirmed' ? 'text-white' : 'text-gray-900'}
               variant="gradient"
               color={active === 'confirmed' ? 'blue' : 'light-blue'}
               size="sm"
@@ -82,7 +82,7 @@ const ModeratorHome = () => {
               Подтвержденные
             </Button>
             <Button
-              className={active === 'cancelled' ? 'text-white' : 'text-blue-100'}
+              className={active === 'cancelled' ? 'text-white' : 'text-gray-900'}
               variant="gradient"
               color={active === 'cancelled' ? 'blue' : 'light-blue'}
               size="sm"
@@ -96,7 +96,7 @@ const ModeratorHome = () => {
               Отклоненные
             </Button>
             <Button
-              className={active === 'waiting' ? 'text-white' : 'text-blue-100'}
+              className={active === 'waiting' ? 'text-white' : 'text-gray-900'}
               variant="gradient"
               color={active === 'waiting' ? 'blue' : 'light-blue'}
               size="sm"

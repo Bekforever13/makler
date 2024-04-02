@@ -9,16 +9,17 @@ export default withMT({
   ],
   theme: {
     colors: {
+      
       blue: {
-        100: '#000dff',
-        200: '#000ced',
-        300: '#000bdb',
-        400: '#0009c9',
-        500: '#0008b8',
-        600: '#0007a6',
-        700: '#000696',
-        800: '#000585',
-        900: '#000475',
+        100: '#EBF8FF',
+        200: '#BEE3F8',
+        300: '#90CDF4',
+        400: '#63B3ED',
+        500: '#4299E1',
+        600: '#3182CE',
+        700: '#2B6CB0',
+        800: '#2C5282',
+        900: '#2A4365',
       },
       'light-blue': {
         100: '#f0f0ff',
@@ -41,7 +42,17 @@ export default withMT({
     fontFamily: {
       sans: ['Montserrat', 'sans-serif'],
     },
-    extend: {},
+    extend: {
+      keyframes: {
+        fadeUp: {
+          '0%': { opacity: 0, transform: 'translate3d(0, 100%, 0)' },
+          '100%': { opacity: 1, transform: 'translate3d(0, 0, 0)' },
+        },
+      },
+      animation: {
+        'fade-up': 'fadeUp 0.5s ease-in',
+      },
+    },
   },
   plugins: [],
 })

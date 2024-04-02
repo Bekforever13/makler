@@ -10,7 +10,7 @@ const AsideMenu = () => {
   const { pathname } = useLocation()
   return (
     <div className="fixed left-0 w-[200px] h-screen bg-blue-gray-50 flex flex-col gap-10 py-5">
-      <h2 className="font-bold text-blue-100 italic text-center text-3xl">
+      <h2 className="font-bold text-black italic text-center text-3xl">
         <Link to="/">MAKLER</Link>
       </h2>
       <ul className="flex flex-col font-semibold">

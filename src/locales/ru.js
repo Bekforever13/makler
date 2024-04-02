@@ -57,5 +57,8 @@ export const ru = {
     cheap: 'Самые дешёвые',
     expensive: 'Самые дорогие',
     default: 'По умолчанию',
+    select: 'Выберите',
+    menu: 'Меню',
+    page: 'Страница',
   },
 }

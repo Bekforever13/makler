@@ -49,14 +49,14 @@ const Header = () => {
   }, [])
 
   return (
-    <div className="w-full shadow-md bg-white sticky top-0 z-20">
+    <div className="w-full shadow-md bg-white sticky top-0 py-5  z-20">
       <Container>
         <header className="flex justify-between items-center gap-1 h-[60px]">
           {/* LOGO */}
           <Link to={'/'}>
             <div className="flex justify-end items-end gap-[2px] cursor-pointer">
-              <img src={logo} className="max-h-[25px] max-w-[25px]" />
-              <span className="text-[15px] font-bold text-blue-100 uppercase italic min-w-max">
+              <img src={logo} className="max-h-[35px] max-w-[35px]" />
+              <span className="text-xl font-bold text-blue-700 uppercase italic min-w-max">
                 Makler
               </span>
             </div>
@@ -66,47 +66,57 @@ const Header = () => {
             <li
               className={
                 pathname === '/'
-                  ? 'text-blue-100 text-sm'
-                  : 'text-gray-900 text-sm hover:text-blue-100'
+                  ? 'text-blue-700'
+                  : 'text-gray-900 hover:text-blue-700'
               }
             >
-              <Link to={'/'}>{t('home')}</Link>
+              <Link className="text-base" to={'/'}>
+                {t('home')}
+              </Link>
             </li>
             <li
               className={
                 pathname === '/map'
-                  ? 'text-blue-100 text-sm'
-                  : 'text-gray-900 text-sm hover:text-blue-100'
+                  ? 'text-blue-700'
+                  : 'text-gray-900 hover:text-blue-700'
               }
             >
-              <Link to={'/map'}>{t('map')}</Link>
+              <Link className="text-base" to={'/map'}>
+                {t('map')}
+              </Link>
             </li>
             <li
               className={
                 pathname === '/rent'
-                  ? 'text-blue-100 text-sm'
-                  : 'text-gray-900 text-sm hover:text-blue-100'
+                  ? 'text-blue-700'
+                  : 'text-gray-900 hover:text-blue-700'
               }
             >
-              <Link to={'/rent'}>{t('Аренда')}</Link>
+              <Link className="text-base" to={'/rent'}>
+                {t('rent')}
+              </Link>
             </li>
             <li
               className={
                 pathname === '/sale'
-                  ? 'text-blue-100 text-sm'
-                  : 'text-gray-900 text-sm hover:text-blue-100'
+                  ? 'text-blue-700'
+                  : 'text-gray-900 hover:text-blue-700'
               }
             >
-              <Link to={'/sale'}>{t('sale')}</Link>
+              <Link className="text-base" to={'/sale'}>
+                {t('sale')}
+              </Link>
             </li>
             <li
               className={
                 pathname === '/favorites'
-                  ? 'text-blue-100 text-sm'
-                  : 'text-gray-900 text-sm hover:text-blue-100'
+                  ? 'text-blue-700'
+                  : 'text-gray-900 hover:text-blue-700'
               }
             >
-              <Link to={'/favorites'}>{t('favorites')}</Link>
+              <Link className="text-base" to={'/favorites'}>
+                {t('favorites')}
+              </Link>
             </li>
           </ul>
           {/* BUTTONS */}
@@ -121,29 +131,28 @@ const Header = () => {
                 <MenuHandler>
                   <Button
                     size="sm"
-                    color="light-blue"
                     variant="text"
-                    className="rounded-md text-gray-800 text-xs flex items-center justify-center gap-1"
+                    className="rounded-md text-gray-800 text-base flex items-center justify-center gap-1"
                   >
                     <GiHamburgerMenu />
-                    Menu
+                    {t('menu')}
                   </Button>
                 </MenuHandler>
                 <MenuList className="p-2">
                   <Link to={'/'}>
-                    <MenuItem>Bas bet</MenuItem>
+                    <MenuItem>{t('home')}</MenuItem>
                   </Link>
                   <Link to={'/map'}>
-                    <MenuItem>Karta</MenuItem>
+                    <MenuItem>{t('map')}</MenuItem>
                   </Link>
                   <Link to={'/rent'}>
-                    <MenuItem>Ijara</MenuItem>
+                    <MenuItem>{t('rent')}</MenuItem>
                   </Link>
                   <Link to={'/sale'}>
-                    <MenuItem>Satiw</MenuItem>
+                    <MenuItem>{t('sale')}</MenuItem>
                   </Link>
                   <Link to={'/favorites'}>
-                    <MenuItem>Saylandilar</MenuItem>
+                    <MenuItem>{t('favorites')}</MenuItem>
                   </Link>
                 </MenuList>
               </Menu>
@@ -161,7 +170,7 @@ const Header = () => {
                 </Select>
               </div>
               <Button
-                className="normal-case rounded-[5px] md:py-2 sm:px-3 sm:py-1 text-xs font-medium sm:block md:flex w-fit whitespace-nowrap"
+                className="normal-case rounded-[5px] md:py-2 sm:px-3 sm:py-1 text-base font-medium sm:block md:flex w-fit whitespace-nowrap"
                 color="blue"
                 variant="gradient"
                 size="sm"
@@ -172,7 +181,7 @@ const Header = () => {
               {!isAuthenticated ? (
                 <Button
                   onClick={handleOpen}
-                  className="normal-case w-fit rounded-[5px] md:px-6 md:py-2 sm:px-3 sm:py-1 text-blue-100 text-xs font-semibold "
+                  className="normal-case w-fit rounded-[5px] md:px-6 md:py-2 sm:px-3 sm:py-1 text-gray-900 text-base font-semibold "
                   variant="gradient"
                   color="light-blue"
                   size="sm"
@@ -183,7 +192,7 @@ const Header = () => {
                 <div className="relative">
                   <Button
                     onClick={() => setIsOpenProfile((s) => !s)}
-                    className="normal-case rounded-[5px] md:px-6 md:py-2 sm:px-3 sm:py-1 text-blue-100 text-xs font-semibold"
+                    className="normal-case rounded-[5px] md:px-6 md:py-2 sm:px-3 sm:py-1 text-gray-900 text-base font-semibold"
                     variant="gradient"
                     color="light-blue"
                     size="sm"
@@ -206,7 +215,7 @@ const Header = () => {
                       </span>
                       {user?.role === 'admin' && (
                         <Button
-                          className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-xs font-semibold"
+                          className="normal-case rounded-[5px] px-6 py-2 text-gray-900 text-xs font-semibold"
                           variant="gradient"
                           color="light-blue"
                           size="sm"
@@ -216,7 +225,7 @@ const Header = () => {
                       )}
                       {user?.role === 'moderator' && (
                         <Button
-                          className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-xs font-semibold"
+                          className="normal-case rounded-[5px] px-6 py-2 text-gray-900 text-xs font-semibold"
                           variant="gradient"
                           color="light-blue"
                           size="sm"
@@ -252,7 +261,7 @@ const Header = () => {
                       </div>
                       <Button
                         onClick={handleLogout}
-                        className="normal-case rounded-[5px] px-6 py-2 text-blue-100 text-xs font-semibold"
+                        className="normal-case rounded-[5px] px-6 py-2 text-gray-900 text-xs font-semibold"
                         variant="gradient"
                         color="light-blue"
                         size="sm"

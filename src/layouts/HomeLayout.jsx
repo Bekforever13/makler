@@ -14,10 +14,8 @@ const HomeLayout = () => {
         {pathname === '/' && <HomeBanner />}
         <Outlet />
       </div>
-      <div>
-        <Footer />
-        <IconFooter />
-      </div>
+      <Footer />
+      <IconFooter />
     </div>
   )
 }
