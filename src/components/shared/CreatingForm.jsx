@@ -37,6 +37,8 @@ const CreatingForm = ({ setIsOpen }) => {
   } = useGetSubcategoriesQuery({
     category_id: watch('category_id')?.value,
   })
+  const [createApartment, { isSuccess, isLoading }] =
+    useCreateNewApartmentMutation()
   const { data: categoriesData, isSuccess: categoriesIsSuccess } =
     useGetCategoriesQuery()
   const { data: regionsData, isSuccess: regionsIsSuccess } =
@@ -51,18 +53,15 @@ const CreatingForm = ({ setIsOpen }) => {
   const inputRef = useRef(null)
   const [subcategoriesOptions, setSubcategoriesOptions] = useState()
   const [categoriesOptions, setCategoriesOptions] = useState()
-  const [createApartment, { isSuccess, isLoading }] =
-    useCreateNewApartmentMutation()
 
   const onSubmit = async (data) => {
     const formData = new FormData()
     formData.append('category_id', data.category_id.value)
     formData.append('subcategory_id', data.subcategory_id.value)
     formData.append('region_id', data.region_id.value)
-    formData.append(
-      'tag_ids',
-      selectedTags.map((el) => el.value),
-    )
+    for (const tag of selectedTags) {
+      formData.append('tag_ids[]', tag.value)
+    }
     formData.append('address', data.address)
     formData.append('price', data.price)
     formData.append('room_count', data.room_count)
@@ -70,17 +69,11 @@ const CreatingForm = ({ setIsOpen }) => {
     formData.append('floor', data.floor)
     formData.append('floor_home', data.floor_home)
     formData.append('description', data.description)
-    // formData.append(
-    //   'latitude',
-    //   data.placemarkCoordinates?.[0] || coordinates[0],
-    // )
-    // formData.append(
-    //   'longitude',
-    //   data.placemarkCoordinates?.[1] || coordinates[1],
-    // )
+    formData.append('latitude', 0)
+    formData.append('longitude', 0)
 
     for (const image of files) {
-      formData.append('images[]', image)
+      formData.append('images[]', image.file)
     }
 
     await createApartment(formData)
@@ -278,7 +271,7 @@ const CreatingForm = ({ setIsOpen }) => {
                   className="border py-1 px-2 rounded-md flex-grow"
                   type="number"
                   placeholder={t('total_area')}
-                  {...register('total_area')}
+                  {...register('total_area', { required: true })}
                 />
                 m<sup>2</sup>
               </div>
@@ -365,7 +358,7 @@ const CreatingForm = ({ setIsOpen }) => {
                 className="border py-1 px-2 rounded-md md:w-1/2 sm:w-full min-h-[120px] resize-none"
                 type="text"
                 placeholder={t('information')}
-                {...register('description', { maxLength: 255 })}
+                {...register('description', { maxLength: 255, required: true })}
               />
             </div>
             {errors.description && (
