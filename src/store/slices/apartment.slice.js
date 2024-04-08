@@ -8,6 +8,7 @@ const initialState = {
     from_price: 0,
     to_price: 0,
     room_count: 0,
+    region_id: 0,
   },
 }
 

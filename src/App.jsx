@@ -42,7 +42,7 @@ const App = () => {
   useEffect(() => {
     if (isSuccess) {
       dispatch(setIsAuthenticated(true))
-      dispatch(setUser(data?.data))
+      dispatch(setUser(data?.data.user))
     }
   }, [isSuccess])
 
@@ -66,9 +66,15 @@ const App = () => {
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="/admin" element={<Dashboard />} />
             <Route path="/admin/apartments" element={<ApartmentPage />} />
-            <Route path="/admin/apartments/:id" element={<ApartmentEditPage />} />
+            <Route
+              path="/admin/apartments/:id"
+              element={<ApartmentEditPage />}
+            />
             <Route path="/admin/categories" element={<CategoriesPage />} />
-            <Route path="/admin/subcategories" element={<SubcategoriesPage />} />
+            <Route
+              path="/admin/subcategories"
+              element={<SubcategoriesPage />}
+            />
             <Route path="/admin/tags" element={<TagsPage />} />
             <Route path="/admin/regions" element={<RegionsPage />} />
           </Route>
@@ -76,7 +82,10 @@ const App = () => {
         {user?.role === 'moderator' && (
           <Route path="/moderator" element={<ModeratorLayout />}>
             <Route path="/moderator" element={<ModeratorHome />} />
-            <Route path="/moderator/apartments/:id" element={<ModeratorApartmentInfo />} />
+            <Route
+              path="/moderator/apartments/:id"
+              element={<ModeratorApartmentInfo />}
+            />
           </Route>
         )}
         <Route path="*" element={<NotFound />} />

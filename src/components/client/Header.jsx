@@ -210,16 +210,16 @@ const Header = () => {
                       <span className="flex items-center justify-between w-full">
                         {t('phone')}:{' '}
                         <span>
-                          {user?.user.phone ? '+' + user?.user.phone : t('empty')}
+                          {user?.phone ? '+' + user?.phone : t('empty')}
                         </span>
                       </span>
                       <span className="flex items-center justify-between w-full">
                         {t('role')}:{' '}
                         <span>
-                          {user?.user.role === 'admin' ? 'Админ' : user?.user.role}
+                          {user?.role === 'admin' ? 'Админ' : user?.role}
                         </span>
                       </span>
-                      {user?.user.role === 'admin' && (
+                      {user?.role === 'admin' && (
                         <Button
                           className="normal-case rounded-[5px] px-6 py-2 text-gray-900 text-xs font-semibold"
                           variant="gradient"
@@ -229,7 +229,7 @@ const Header = () => {
                           <Link to="/admin">Админ панель</Link>
                         </Button>
                       )}
-                      {user?.user.role === 'moderator' && (
+                      {user?.role === 'moderator' && (
                         <Button
                           className="normal-case rounded-[5px] px-6 py-2 text-gray-900 text-xs font-semibold"
                           variant="gradient"
