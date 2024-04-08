@@ -33,7 +33,7 @@ export const qr = {
     images: 'Suwretler',
     send: 'Jiberiw',
     yourFavorites: 'Sizdiń saylandılarińiz',
-    information: 'Maǵlıwmatlar',
+    information: 'Qosımsha maǵlıwmatlar',
     address: 'Mánzil',
     subcategory: 'Tómengi taypa',
     tags: 'Tegler',

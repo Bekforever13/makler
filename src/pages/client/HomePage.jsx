@@ -55,14 +55,19 @@ const HomePage = () => {
           {t('hero_title')}
         </h1>
         <div>
-          <Select value={sort} label={t('sort')} onChange={(e) => setSort(e)}>
+          <Select
+            style={{ background: 'white', fontWeight: 500 }}
+            value={sort}
+            label={t('sort')}
+            onChange={(e) => setSort(e)}
+          >
             <Option value="">{t('select')}</Option>
             <Option value="asc">{t('cheap')}</Option>
             <Option value="desc">{t('expensive')}</Option>
           </Select>
         </div>
       </div>
-      <div className="flex flex-col items-center bg-white px-5">
+      <div className="flex flex-col items-center  px-5">
         {/* loading spinner */}
         {isLoading && (
           <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
@@ -71,7 +76,7 @@ const HomePage = () => {
         )}
         {/* show data */}
         {totalPages > 0 ? (
-          <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-col-5 gap-4 bg-white px-5">
+          <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-col-5 gap-4  px-5">
             {apartments?.map((el) => (
               <CardItem key={el.id} item={el} />
             ))}
@@ -84,6 +89,7 @@ const HomePage = () => {
           <div className="flex items-center gap-8 p-10">
             <IconButton
               size="sm"
+              style={{ background: 'white', fontWeight: 500 }}
               variant="outlined"
               onClick={decrementPage}
               disabled={page === 1}
@@ -96,6 +102,7 @@ const HomePage = () => {
             </Typography>
             <IconButton
               size="sm"
+              style={{ background: 'white', fontWeight: 500 }}
               variant="outlined"
               onClick={incrementPage}
               disabled={page === totalPages}

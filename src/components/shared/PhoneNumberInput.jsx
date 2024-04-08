@@ -7,8 +7,8 @@ import { useTranslation } from 'react-i18next'
 
 const PhoneNumberInput = () => {
   const ref = useRef(null)
-  const { t } = useTranslation()
   const inputRef = useRef(null)
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const { phoneNumber } = useSelector((s) => s.auth)
 

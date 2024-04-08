@@ -174,7 +174,13 @@ const Header = () => {
                 color="blue"
                 variant="gradient"
                 size="sm"
-                onClick={() => setIsModalOpen((p) => !p)}
+                onClick={() => {
+                  if (isAuthenticated) {
+                    setIsModalOpen((p) => !p)
+                  } else {
+                    handleOpen()
+                  }
+                }}
               >
                 {t('createNewApartment')}
               </Button>
@@ -204,16 +210,16 @@ const Header = () => {
                       <span className="flex items-center justify-between w-full">
                         {t('phone')}:{' '}
                         <span>
-                          {user?.phone ? '+' + user?.phone : t('empty')}
+                          {user?.user.phone ? '+' + user?.user.phone : t('empty')}
                         </span>
                       </span>
                       <span className="flex items-center justify-between w-full">
                         {t('role')}:{' '}
                         <span>
-                          {user?.role === 'admin' ? 'Админ' : user?.role}
+                          {user?.user.role === 'admin' ? 'Админ' : user?.user.role}
                         </span>
                       </span>
-                      {user?.role === 'admin' && (
+                      {user?.user.role === 'admin' && (
                         <Button
                           className="normal-case rounded-[5px] px-6 py-2 text-gray-900 text-xs font-semibold"
                           variant="gradient"
@@ -223,7 +229,7 @@ const Header = () => {
                           <Link to="/admin">Админ панель</Link>
                         </Button>
                       )}
-                      {user?.role === 'moderator' && (
+                      {user?.user.role === 'moderator' && (
                         <Button
                           className="normal-case rounded-[5px] px-6 py-2 text-gray-900 text-xs font-semibold"
                           variant="gradient"

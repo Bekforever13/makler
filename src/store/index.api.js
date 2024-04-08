@@ -5,13 +5,24 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_BASE_URL,
     prepareHeaders: (headers) => {
-      headers.set('Authorization', `Bearer ${localStorage.getItem('makler_token')}`)
+      headers.set(
+        'Authorization',
+        `Bearer ${localStorage.getItem('makler_token')}`,
+      )
       headers.set('Accept', 'application/json')
       return headers
     },
   }),
   refetchOnFocus: false,
-  tagTypes: ['auth', 'apartments', 'subcategories', 'categories', 'favorites', 'regions', 'tags'],
+  tagTypes: [
+    'auth',
+    'apartments',
+    'subcategories',
+    'categories',
+    'favorites',
+    'regions',
+    'tags',
+  ],
   endpoints: (build) => ({
     // authorization queries =================================================================
     checkUser: build.query({
@@ -63,7 +74,7 @@ export const api = createApi({
     }),
     createNewApartment: build.mutation({
       query: (body) => ({
-        url: '/apartment1',
+        url: '/apartment',
         method: 'POST',
         body,
       }),

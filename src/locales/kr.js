@@ -28,7 +28,7 @@ export const kr = {
     region: 'Регион',
     floor: 'Қабат',
     yourFavorites: 'Сиздиң сайландылариңиз',
-    information: 'Мағлыўматлар',
+    information: 'Қосымша мағлыўматлар',
     address: 'Мәнзил',
     language: 'Тил',
     subcategory: 'Төменги тайпа',

@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { FaSave } from 'react-icons/fa'
 import { Controller, useForm } from 'react-hook-form'
-import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps'
 import { useEffect, useState } from 'react'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import {
@@ -370,42 +369,39 @@ const ApartmentEditPage = () => {
                 <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
                   Координаты:
                   <div className="w-1/2 h-full">
-                    <YMaps
-                      query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}
+                    {/* карта */}
+                    {/* <Map
+                      style={{ width: '100%', height: '70vh' }}
+                      defaultState={{
+                        center: [
+                          data?.data?.coordinates.latitude,
+                          data?.data?.coordinates.longitude,
+                        ],
+                        zoom: 13,
+                      }}
                     >
-                      <Map
-                        style={{ width: '100%', height: '70vh' }}
-                        defaultState={{
-                          center: [
-                            data?.data?.coordinates.latitude,
-                            data?.data?.coordinates.longitude,
-                          ],
-                          zoom: 13,
+                      <Placemark
+                        options={{
+                          draggable: true,
+                          iconLayout: 'default#image',
+                          iconImageHref: icon,
+                          iconImageSize: [35, 35],
                         }}
-                      >
-                        <Placemark
-                          options={{
-                            draggable: true,
-                            iconLayout: 'default#image',
-                            iconImageHref: icon,
-                            iconImageSize: [35, 35],
-                          }}
-                          geometry={coordinates}
-                          instanceRef={(ref) => {
-                            if (ref) {
-                              register(
-                                'placemarkCoordinates',
-                                ref.geometry._coordinates,
-                                {
-                                  required: true,
-                                },
-                              )
-                              setCoordinates(ref.geometry._coordinates)
-                            }
-                          }}
-                        />
-                      </Map>
-                    </YMaps>
+                        geometry={coordinates}
+                        instanceRef={(ref) => {
+                          if (ref) {
+                            register(
+                              'placemarkCoordinates',
+                              ref.geometry._coordinates,
+                              {
+                                required: true,
+                              },
+                            )
+                            setCoordinates(ref.geometry._coordinates)
+                          }
+                        }}
+                      />
+                    </Map> */}
                   </div>
                 </div>
               </label>

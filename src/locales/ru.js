@@ -33,7 +33,7 @@ export const ru = {
     images: 'Изображения',
     send: 'Отправить',
     yourFavorites: 'Ваши избранные',
-    information: 'Информация',
+    information: 'Дополнительная информация',
     address: 'Адрес',
     subcategory: 'Подкатегория',
     tags: 'Теги',

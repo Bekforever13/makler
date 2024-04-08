@@ -16,7 +16,6 @@ import { MdFavorite, MdFavoriteBorder } from 'react-icons/md'
 import { useDispatch, useSelector } from 'react-redux'
 import { TbViewportWide } from 'react-icons/tb'
 import { useTranslation } from 'react-i18next'
-import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps'
 import { RWebShare } from 'react-web-share'
 import { GiLadder } from 'react-icons/gi'
 import { FaRegSquareCheck } from 'react-icons/fa6'
@@ -206,31 +205,31 @@ const InfoPage = () => {
               )}
             </li>
             <li className="mt-10">
-              <YMaps query={{ apikey: '17de01a8-8e68-4ee2-af08-82eed92f99ec' }}>
-                <Map
-                  style={{ width: '100%', height: '500px' }}
-                  defaultState={{
-                    center: [
-                      apartmentData?.data?.coordinates?.latitude,
-                      apartmentData?.data?.coordinates?.longitude,
-                    ],
-                    zoom: 13,
+              {/* карта */}
+
+              {/* <Map
+                style={{ width: '100%', height: '500px' }}
+                defaultState={{
+                  center: [
+                    apartmentData?.data?.coordinates?.latitude,
+                    apartmentData?.data?.coordinates?.longitude,
+                  ],
+                  zoom: 13,
+                }}
+              >
+                <Placemark
+                  options={{
+                    draggable: false,
+                    iconLayout: 'default#image',
+                    iconImageHref: icon,
+                    iconImageSize: [35, 35],
                   }}
-                >
-                  <Placemark
-                    options={{
-                      draggable: false,
-                      iconLayout: 'default#image',
-                      iconImageHref: icon,
-                      iconImageSize: [35, 35],
-                    }}
-                    geometry={[
-                      apartmentData?.data?.coordinates?.latitude,
-                      apartmentData?.data?.coordinates?.longitude,
-                    ]}
-                  />
-                </Map>
-              </YMaps>
+                  geometry={[
+                    apartmentData?.data?.coordinates?.latitude,
+                    apartmentData?.data?.coordinates?.longitude,
+                  ]}
+                />
+              </Map> */}
             </li>
           </ul>
         </div>
