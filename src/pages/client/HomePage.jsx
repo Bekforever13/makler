@@ -48,7 +48,7 @@ const HomePage = () => {
   return (
     <Container>
       <div
-        className="flex items-center justify-between p-10 flex-wrap"
+        className="flex items-center justify-between py-10 flex-wrap"
         id="heading-home"
       >
         <h1 className="text-[20px] text-gray-800 font-semibold my-3">
@@ -67,7 +67,7 @@ const HomePage = () => {
           </Select>
         </div>
       </div>
-      <div className="flex flex-col items-center  px-5">
+      <div className="flex flex-col items-center">
         {/* loading spinner */}
         {isLoading && (
           <div className="grid min-h-[140px] w-full place-items-center overflow-x-scroll rounded-lg p-6 lg:overflow-visible">
@@ -76,7 +76,7 @@ const HomePage = () => {
         )}
         {/* show data */}
         {totalPages > 0 ? (
-          <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-col-5 gap-4  px-5">
+          <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-col-5 gap-4">
             {apartments?.map((el) => (
               <CardItem key={el.id} item={el} />
             ))}

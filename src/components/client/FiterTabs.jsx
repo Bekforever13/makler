@@ -16,7 +16,7 @@ import { setFilters } from '../../store/slices/apartment.slice'
 import useWindowSize from '../../hooks/useWindowSize'
 import { useTranslation } from 'react-i18next'
 import { AiOutlineLoading } from 'react-icons/ai'
-import RegionSelect from './FilterInputs/RegionSelect'
+import RegionsSelect from './FilterInputs/RegionsSelect'
 
 const FiterTabs = () => {
   const lang = localStorage.getItem('makler_lang') || 'ru'
@@ -87,7 +87,7 @@ const FiterTabs = () => {
                     width < 1000 && 'flex-wrap'
                   }`}
                 >
-                  <RegionSelect />
+                  <RegionsSelect />
                   <SelectInput />
                   <RoomSelectInput />
                   <Input

@@ -1,14 +1,13 @@
 import Container from '../shared/Container'
 import { FaInstagram, FaPhone } from 'react-icons/fa'
 import { FaTelegram } from 'react-icons/fa6'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Footer = () => {
-  const navigate = useNavigate()
   return (
     <div className="bg-white border-t-2 border-solid shadow-md md:h-[100px] sm:h-[150px]">
       <Container>
-        <div className="flex items-center justify-between p-10">
+        <div className="flex items-center justify-between py-10">
           <span className="text-gray-500">
             Makler Nukus. Все права защищены. 2024г
           </span>
