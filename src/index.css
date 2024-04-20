@@ -75,9 +75,9 @@
 
 .swiper-button-prev:after,
 .swiper-button-next:after {
-  font-size: 18px;
+  font-size: 40px;
   background-color: #333;
-  padding: 10px;
+  padding: 16px;
 }
 
 /* #heading-home {

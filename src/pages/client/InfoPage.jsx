@@ -20,8 +20,8 @@ import { RWebShare } from 'react-web-share'
 import { GiLadder } from 'react-icons/gi'
 import { FaRegSquareCheck } from 'react-icons/fa6'
 import { setAuthModal } from '../../store/slices/auth.slice'
-import icon from '../../images/image/location.png'
 import { AiOutlineLoading } from 'react-icons/ai'
+import { IoMdShare } from 'react-icons/io'
 
 const InfoPage = () => {
   const { isAuthenticated, authModal } = useSelector((s) => s.auth)
@@ -56,7 +56,7 @@ const InfoPage = () => {
 
   return (
     <Container>
-      <div className="flex items-center justify-between mt-10 flex-wrap gap-5">
+      <div className="flex items-center justify-between mt-10 flex-wrap gap-5 bg-white">
         <h1 className="text-center text-3xl font-semibold">
           {t('information')}
         </h1>
@@ -74,6 +74,7 @@ const InfoPage = () => {
               color="blue"
               size="sm"
             >
+              <IoMdShare size={22} />
               {t('share')}
             </Button>
           </RWebShare>
@@ -96,7 +97,7 @@ const InfoPage = () => {
           </Button>
         </div>
       </div>
-      <div className="flex flex-col gap-20 py-20">
+      <div className="flex flex-col gap-20 py-20 bg-white">
         <div>
           <Swiper
             modules={[Navigation, Thumbs, FreeMode]}

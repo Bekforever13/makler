@@ -68,8 +68,24 @@ const CreateTagModal = ({ open, setIsOpen }) => {
     }
   }, [tagToEdit])
 
+  useEffect(() => {
+    if (!open) {
+      reset({
+        ru: '',
+        qr: '',
+        kr: '',
+      })
+      dispatch(setTagToEdit(null))
+    }
+  }, [open])
+
   return (
-    <Dialog open={open} className="w-full shadow-none" size="lg">
+    <Dialog
+      open={open}
+      handler={() => setIsOpen(false)}
+      className="w-full shadow-none"
+      size="lg"
+    >
       <Card className="w-full rounded-md">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col items-start gap-5 p-5 w-full text-black">

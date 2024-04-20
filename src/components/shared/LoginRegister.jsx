@@ -36,8 +36,8 @@ function LoginRegister() {
   }
 
   const handleAuthModal = () => dispatch(setAuthModal(!authModal))
-  const handleGetSms = () => getSms({ phone: phoneNumber })
-  const handleLogin = () => login({ phone: phoneNumber, code: smsCode })
+  const handleGetSms = () => getSms({ phone: `998${phoneNumber}` })
+  const handleLogin = () => login({ phone: `998${phoneNumber}`, code: smsCode })
 
   useEffect(() => {
     if (loginIsSuccess) {
@@ -159,7 +159,7 @@ function LoginRegister() {
           ) : (
             <Button
               onClick={handleGetSms}
-              disabled={phoneNumber.length !== 12}
+              disabled={phoneNumber.length !== 9}
               loading={getCodeLoading}
               fullWidth
               className="items-center justify-center rounded-md float-right"

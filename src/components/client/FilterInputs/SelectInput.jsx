@@ -2,7 +2,7 @@ import { Option, Select } from '@material-tailwind/react'
 import { useEffect, useState } from 'react'
 import { useGetSubcategoriesQuery } from '../../../store/index.api'
 import { useDispatch, useSelector } from 'react-redux'
-import { setFilters } from '../../../store/slices/apartment.slice'
+import { setFilters, setHomePage } from '../../../store/slices/apartment.slice'
 import { useTranslation } from 'react-i18next'
 import { AiOutlineLoading } from 'react-icons/ai'
 
@@ -20,6 +20,7 @@ const SelectInput = () => {
   const handleSelect = (e) => {
     setCategoryId(e)
     dispatch(setFilters({ ...filters, subcategory_id: e }))
+    dispatch(setHomePage(1))
   }
 
   useEffect(() => {

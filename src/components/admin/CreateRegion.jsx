@@ -8,7 +8,7 @@ import { CgClose } from 'react-icons/cg'
 import { useForm } from 'react-hook-form'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCategoryToEdit } from '../../store/slices/categories.slice.js'
+import { setRegionToEdit } from '../../store/slices/region.slice.js'
 import { AiOutlineLoading } from 'react-icons/ai'
 
 const CreateRegionModal = ({ open, setIsOpen }) => {
@@ -54,9 +54,20 @@ const CreateRegionModal = ({ open, setIsOpen }) => {
         kr: '',
       })
       setIsOpen(false)
-      dispatch(setCategoryToEdit(null))
+      dispatch(setRegionToEdit(null))
     }
   }, [isSuccess, EditSuccess])
+
+  useEffect(() => {
+    if (!open) {
+      reset({
+        ru: '',
+        qr: '',
+        kr: '',
+      })
+      dispatch(setRegionToEdit(null))
+    }
+  }, [open])
 
   useEffect(() => {
     if (regionToEdit) {
@@ -69,7 +80,12 @@ const CreateRegionModal = ({ open, setIsOpen }) => {
   }, [regionToEdit])
 
   return (
-    <Dialog open={open} className="w-full shadow-none" size="lg">
+    <Dialog
+      open={open}
+      handler={() => setIsOpen(false)}
+      className="w-full shadow-none"
+      size="lg"
+    >
       <Card className="w-full rounded-md">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col items-start gap-5 p-5 w-full text-black">

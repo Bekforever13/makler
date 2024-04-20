@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   apartments: [],
@@ -10,20 +10,25 @@ const initialState = {
     room_count: 0,
     region_id: 0,
   },
-}
+  homePage: 1,
+};
 
 const ApartmentSlice = createSlice({
-  name: 'ApartmentSlice',
+  name: "ApartmentSlice",
   initialState,
   reducers: {
     setApartments(state, { payload }) {
-      state.apartments = payload
+      state.apartments = payload;
     },
     setFilters(state, { payload }) {
-      state.filters = payload
+      state.filters = payload;
+    },
+    setHomePage(state, { payload }) {
+      state.homePage = payload;
     },
   },
-})
-export const { setApartments, setFilters, setIsSearch } = ApartmentSlice.actions
+});
+export const { setApartments, setFilters, setIsSearch, setHomePage } =
+  ApartmentSlice.actions;
 
-export default ApartmentSlice.reducer
+export default ApartmentSlice.reducer;

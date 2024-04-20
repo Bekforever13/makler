@@ -1,41 +1,45 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isAuthenticated: false,
-  token: '',
-  phoneNumber: '',
+  token: "",
+  phoneNumber: "",
   user: null,
   authModal: false,
-}
+  profileModal: false,
+};
 
 const AuthSlice = createSlice({
-  name: 'AuthSlice',
+  name: "AuthSlice",
   initialState,
   reducers: {
     setIsAuthenticated(state, { payload }) {
-      state.isAuthenticated = payload
+      state.isAuthenticated = payload;
     },
     setToken(state, { payload }) {
-      localStorage.setItem('makler_token', `${payload}`)
-      state.token = payload
+      localStorage.setItem("makler_token", `${payload}`);
+      state.token = payload;
     },
     setCurrentUserRole(state, { payload }) {
-      state.currentUserRole = payload
+      state.currentUserRole = payload;
     },
     removeToken(state) {
-      state.token = ''
+      state.token = "";
     },
     setPhoneNumber(state, { payload }) {
-      state.phoneNumber = payload
+      state.phoneNumber = payload;
     },
     setUser(state, { payload }) {
-      state.user = payload
+      state.user = payload;
     },
     setAuthModal(state, { payload }) {
-      state.authModal = payload
+      state.authModal = payload;
+    },
+    setProfileModal(state, { payload }) {
+      state.profileModal = payload;
     },
   },
-})
+});
 export const {
   removeToken,
   setCurrentUserRole,
@@ -44,6 +48,7 @@ export const {
   setPhoneNumber,
   setUser,
   setAuthModal,
-} = AuthSlice.actions
+  setProfileModal,
+} = AuthSlice.actions;
 
-export default AuthSlice.reducer
+export default AuthSlice.reducer;

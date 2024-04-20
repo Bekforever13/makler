@@ -10,13 +10,24 @@ import {
   Tooltip,
 } from '@material-tailwind/react'
 import { IoAdd } from 'react-icons/io5'
-import { useADeleteApartmentMutation, useGetAllApartmentsQuery } from '../../store/index.api'
+import {
+  useADeleteApartmentMutation,
+  useGetAllApartmentsQuery,
+} from '../../store/index.api'
 import { useState } from 'react'
 import { FaRegTrashAlt } from 'react-icons/fa'
 import UserCreateModal from '../../components/admin/UserCreateModal'
 import { useNavigate } from 'react-router-dom'
 
-const TABLE_HEAD = ['Адрес', 'Категория', 'Цена', 'Регион', 'Комната', 'Общая площадь', 'Действия']
+const TABLE_HEAD = [
+  'Адрес',
+  'Категория',
+  'Цена',
+  'Регион',
+  'Комната',
+  'Общая площадь',
+  'Действия',
+]
 
 const ApartmentPage = () => {
   const [open, setOpen] = useState(false)
@@ -30,9 +41,7 @@ const ApartmentPage = () => {
   const [deleteApartment] = useADeleteApartmentMutation()
   const totalPages = Math.ceil(data?.total / 20) ?? 1
 
-  const handleDelete = (id) => {
-    deleteApartment(id)
-  }
+  const handleDelete = (id) => deleteApartment(id)
 
   return (
     <Card className="h-full w-full">
@@ -63,7 +72,10 @@ const ApartmentPage = () => {
           <thead>
             <tr>
               {TABLE_HEAD.map((head) => (
-                <th key={head} className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4">
+                <th
+                  key={head}
+                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                >
                   <Typography
                     variant="small"
                     color="blue-gray"
@@ -77,29 +89,58 @@ const ApartmentPage = () => {
           </thead>
           <tbody>
             {data?.data?.map(
-              ({ id, address, category, region, price, room_count, total_area }, index) => {
+              (
+                {
+                  id,
+                  address,
+                  category,
+                  region,
+                  price,
+                  room_count,
+                  total_area,
+                },
+                index,
+              ) => {
                 const isLast = index === data?.data?.length - 1
-                const classes = isLast ? 'px-4 py-3' : 'px-4 py-3 border-b border-blue-gray-50'
+                const classes = isLast
+                  ? 'px-4 py-3'
+                  : 'px-4 py-3 border-b border-blue-gray-50'
 
                 return (
                   <tr key={id}>
                     <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
                         {address}
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
                         {category.name}
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
                         {price}
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <Typography variant="small" color="blue-gray" className="font-normal">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
                         {region.name}
                       </Typography>
                     </td>
@@ -139,7 +180,10 @@ const ApartmentPage = () => {
                         </IconButton>
                       </Tooltip>
                       <Tooltip content="Delete Apartment">
-                        <IconButton onClick={() => handleDelete(id)} variant="text">
+                        <IconButton
+                          onClick={() => handleDelete(id)}
+                          variant="text"
+                        >
                           <FaRegTrashAlt color="red" className="h-4 w-4" />
                         </IconButton>
                       </Tooltip>
@@ -161,7 +205,9 @@ const ApartmentPage = () => {
         >
           Назад
         </Button>
-        <div className="flex items-center gap-2">{page + ' / ' + totalPages}</div>
+        <div className="flex items-center gap-2">
+          {page + ' / ' + totalPages}
+        </div>
         <Button
           disabled={page === totalPages}
           color="blue"

@@ -1,7 +1,6 @@
 import { useGetAllCoordinatesQuery } from '../../store/index.api'
 import { formatPrice } from '../../utils/shared'
 import { useNavigate } from 'react-router-dom'
-import icon from '../../images/image/location.png'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@material-tailwind/react'

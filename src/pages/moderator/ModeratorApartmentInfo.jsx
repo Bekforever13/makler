@@ -5,13 +5,15 @@ import {
   useMEditApartmentStatusMutation,
   useMGetOneApartmentQuery,
 } from '../../store/index.api'
-import icon from '../../images/image/location.png'
+import { MapContainer, TileLayer, Marker } from 'react-leaflet'
 
 const ModeratorApartmentInfo = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const { data } = useMGetOneApartmentQuery(id)
   const [editStatus] = useMEditApartmentStatusMutation()
+
+  console.log(data)
 
   const handleClickAction = (status) => {
     editStatus({ id, status })
@@ -150,37 +152,44 @@ const ModeratorApartmentInfo = () => {
             </div>
           </div>
           <div className="flex flex-col gap-10">
-            <label className="flex flex-col w-full border-b-[1px]">
-              <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
-                Координаты:
-                <div className="w-1/2 h-full">
-                  {/* карта */}
-                  {/* <Map
-                    style={{ width: '100%', height: '50vh' }}
-                    defaultState={{
-                      center: [
-                        data?.data?.coordinates.latitude,
-                        data?.data?.coordinates.longitude,
-                      ],
-                      zoom: 13,
-                    }}
-                  >
-                    <Placemark
-                      options={{
-                        draggable: false,
-                        iconLayout: 'default#image',
-                        iconImageHref: icon,
-                        iconImageSize: [35, 35],
-                      }}
-                      geometry={[
-                        data?.data?.coordinates.latitude,
-                        data?.data?.coordinates.longitude,
-                      ]}
-                    />
-                  </Map> */}
-                </div>
-              </div>
-            </label>
+            {data?.data?.coordinates?.latitude &&
+              data?.data?.coordinates?.longitude && (
+                <label className="flex flex-col w-full border-b-[1px]">
+                  <div className="flex md:items-center justify-between w-full md:flex-row sm:flex-col sm:items-start">
+                    Координаты:
+                    <div className="w-1/2 h-full">
+                      <MapContainer
+                        center={[
+                          data?.data?.coordinates?.latitude ?? [
+                            42.465139, 59.613292,
+                          ],
+                          data?.data?.coordinates?.longitude ?? [
+                            42.465139, 59.613292,
+                          ],
+                        ]}
+                        zoom={13}
+                        scrollWheelZoom={true}
+                        style={{
+                          width: '100%',
+                          height: '300px',
+                        }}
+                      >
+                        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                        <Marker
+                          position={[
+                            data?.data?.coordinates?.latitude ?? [
+                              42.465139, 59.613292,
+                            ],
+                            data?.data?.coordinates?.longitude ?? [
+                              42.465139, 59.613292,
+                            ],
+                          ]}
+                        />
+                      </MapContainer>
+                    </div>
+                  </div>
+                </label>
+              )}
             <div className="flex items-start flex-wrap gap-5">
               {data?.data?.images.map((el) => (
                 <div key={el.id} className="w-[250px]">

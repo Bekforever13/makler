@@ -16,7 +16,6 @@ import {
   useGetSubcategoriesQuery,
 } from '../../store/index.api'
 import Select from 'react-select'
-import icon from '../../images/image/location.png'
 import { AiOutlineLoading } from 'react-icons/ai'
 
 const ApartmentEditPage = () => {

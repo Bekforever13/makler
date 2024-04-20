@@ -10,7 +10,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
-import { setCategoryToEdit } from '../../store/slices/categories.slice'
+import { setSubcategoryToEdit } from '../../store/slices/subcategory.slice'
 import { AiOutlineLoading } from 'react-icons/ai'
 
 const CreateSubcategoryModal = ({ open, setIsOpen }) => {
@@ -26,10 +26,10 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
   const { subcategoryToEdit } = useSelector((s) => s.subcategory)
   const [createSubcategory, { isLoading, isSuccess }] =
     useACreateSubcategoryMutation()
-  const { data: categoriesData, isSuccess: categoriesIsSuccess } =
-    useGetCategoriesQuery({ lan: 'ru' })
   const [editSubcategory, { isSuccess: EditSuccess, isLoading: EditLoading }] =
     useAEditSubcategoryMutation()
+  const { data: categoriesData, isSuccess: categoriesIsSuccess } =
+    useGetCategoriesQuery({ lan: 'ru' })
 
   const onSubmit = (data) => {
     if (subcategoryToEdit) {
@@ -62,7 +62,7 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
         kr: '',
       })
       setIsOpen(false)
-      dispatch(setCategoryToEdit(null))
+      dispatch(setSubcategoryToEdit(null))
     }
   }, [isSuccess, EditSuccess])
 
@@ -80,6 +80,17 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
   }, [subcategoryToEdit])
 
   useEffect(() => {
+    if (!open) {
+      reset({
+        ru: '',
+        qr: '',
+        kr: '',
+      })
+      dispatch(setSubcategoryToEdit(null))
+    }
+  }, [open])
+
+  useEffect(() => {
     if (categoriesData?.data) {
       const mappedData = categoriesData?.data.map((el) => ({
         value: el.id,
@@ -90,7 +101,12 @@ const CreateSubcategoryModal = ({ open, setIsOpen }) => {
   }, [categoriesIsSuccess])
 
   return (
-    <Dialog open={open} className="w-full shadow-none" size="lg">
+    <Dialog
+      open={open}
+      handler={() => setIsOpen(false)}
+      className="w-full shadow-none"
+      size="lg"
+    >
       <Card className="w-full rounded-md">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col items-start gap-5 p-5 w-full text-black">
